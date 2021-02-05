@@ -5,6 +5,10 @@ import java.sql.Driver;
 import java.sql.DriverManager;
 import java.util.Properties;
 
+
+/**
+ * Service to handle connecting to database
+ */
 public class DataConnectionService {
     private final String cnnString;
     private String cnn;
@@ -14,6 +18,10 @@ public class DataConnectionService {
     private String dbPassword;
     private Connection connection;
 
+    /**
+     * Class constructor, takes in project properties to build connection string
+     * @param properties
+     */
     public DataConnectionService(Properties properties)
     {
         cnn = properties.getProperty("cnn");
@@ -24,11 +32,19 @@ public class DataConnectionService {
         cnnString = "jdbc:mysql://" + cnn + "/" + dbName;
     }
 
+    /**
+     * Method to used by service to connect to database
+     * @throws Exception
+     */
     public void ConnectToDB() throws Exception
     {
         connection = DriverManager.getConnection(cnnString, dbUserName, dbPassword);
     }
 
+    /**
+     * Method used to terminate database connection
+     * @throws Exception
+     */
     public void DisconnectFromDB() throws Exception
     {
         connection.close();
