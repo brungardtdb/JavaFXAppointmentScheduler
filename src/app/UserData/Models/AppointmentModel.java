@@ -62,7 +62,7 @@ public class AppointmentModel
      * Getter for user ID.
      * @return Returns user ID.
      */
-    public int GetUSerID() { return this.userID; }
+    public int GetUserID() { return this.userID; }
 
     private String title;
 
