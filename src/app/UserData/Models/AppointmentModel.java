@@ -147,7 +147,4 @@ public class AppointmentModel
      * @return returns appointment end date.
      */
     public Date GetEndDate() { return this.endDate; }
-
-
-
 }
