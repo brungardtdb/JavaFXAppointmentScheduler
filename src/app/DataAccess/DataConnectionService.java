@@ -54,7 +54,7 @@ public class DataConnectionService
 
     /**
      * Method used by service to get database connection
-     * @return Returns the database connection
+     * @return Returns the database connection.
      */
     public Connection GetDBConnection()
     {
