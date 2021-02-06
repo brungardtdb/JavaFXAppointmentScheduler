@@ -1,6 +1,6 @@
 package app;
 
-import DataAccess.DataConnectionService;
+import DataAccess.DataServices.DataConnectionService;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
