@@ -1,4 +1,7 @@
-package DataAccess.UserData.Models;
+package UserData.Models;
+
+import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  * Model for customer data.
@@ -74,4 +77,49 @@ public class CustomerModel
      * @return Returns customer phone number.
      */
     public String GetPhoneNumber() { return this.phoneNumber; }
+
+    private ArrayList<AppointmentModel> appointments = new ArrayList<AppointmentModel>();
+
+    /**
+     * Adds appointment to customer appointments.
+     * @param appointment
+     */
+    public void AddAppointment(AppointmentModel appointment) { appointments.add(appointment); }
+
+    /**
+     * Gets appointment based on ID.
+     * @param id
+     * @return Returns appointment or null if no appointment is found.
+     */
+    public AppointmentModel GetAppointment(int id)
+    {
+        try
+        {
+            return appointments.stream()
+                    .filter(x -> x.GetAppointmentID() == id)
+                    .findFirst()
+                    .get();
+        } catch (Exception ex)
+        {
+            return null;
+        }
+    }
+
+    /**
+     * Removes appointment from appointments by ID if appointment is found.
+     * @param id
+     */
+    public void RemoveAppointment(int id)
+    {
+        appointments.removeIf(x -> x.GetAppointmentID() == id);
+    }
+
+    /**
+     * Method for getting customer appointments.
+     * @return Returns list of customer appointments.
+     */
+    public ArrayList<AppointmentModel> getAllAppointments()
+    {
+        return this.appointments;
+    }
 }

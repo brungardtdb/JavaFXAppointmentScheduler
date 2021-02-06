@@ -1,6 +1,6 @@
-package DataAccess.UserData.Models;
+package UserData.Models;
 
-import DataAccess.UserData.Enums.AppointmentType;
+import UserData.Enums.AppointmentType;
 import java.util.Date;
 
 /**
