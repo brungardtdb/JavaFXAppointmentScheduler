@@ -12,12 +12,14 @@ public class AppointmentModel
 
     /**
      * Setter for appointment ID.
+     *
      * @param id
      */
     public void  SetAppointmentID(int id) { this.appointmentID = id; }
 
     /**
      * Getter for appointment ID.
+     *
      * @return Returns appointment ID.
      */
     public int GetAppointmentID() { return this.appointmentID; }
@@ -26,12 +28,14 @@ public class AppointmentModel
 
     /**
      * Setter for contact ID.
+     *
      * @param id
      */
     public void SetContactID(int id) { this.contactID = id; }
 
     /**
      * Getter for contact ID.
+     *
      * @return Returns contact ID.
      */
     public int GetContactID() { return this.contactID; }
@@ -40,12 +44,14 @@ public class AppointmentModel
 
     /**
      * Setter for customer ID.
+     *
      * @param id
      */
     public void SetCustomerID(int id) { this.customerID = id; }
 
     /**
      * Getter for customer ID.
+     *
      * @return Returns customer ID.
      */
     public int GetCustomerID() { return this.customerID; }
@@ -54,12 +60,14 @@ public class AppointmentModel
 
     /**
      * Setter for user ID.
+     *
      * @param id
      */
     public void SetUserId(int id) { this.userID = id; }
 
     /**
      * Getter for user ID.
+     *
      * @return Returns user ID.
      */
     public int GetUserID() { return this.userID; }
@@ -68,12 +76,14 @@ public class AppointmentModel
 
     /**
      * Setter for appointment title.
+     *
      * @param title
      */
     public void SetTitle(String title) { this.title = title; }
 
     /**
      * Getter for appointment title.
+     *
      * @return Returns appointment title.
      */
     public String GetTitle() { return this.title; }
@@ -82,12 +92,14 @@ public class AppointmentModel
 
     /**
      * Setter for appointment description.
+     *
      * @param description
      */
     public void SetDescription(String description) { this.description = description; }
 
     /**
      * Getter for appointment description.
+     *
      * @return Returns appointment description.
      */
     public String GetDescription() { return this.description; }
@@ -96,12 +108,14 @@ public class AppointmentModel
 
     /**
      * Setter for appointment location.
+     *
      * @param location
      */
     public void SetLocation(String location) { this.location = location; }
 
     /**
      * Getter for appointment location.
+     *
      * @return Returns appointment location.
      */
     public String GetLocation() { return this.location; }
@@ -110,12 +124,14 @@ public class AppointmentModel
 
     /**
      * Setter for appointment type.
+     *
      * @param appointmentType
      */
     public void SetAppointmentType(AppointmentType appointmentType) { this.appointmentType = appointmentType; }
 
     /**
      * Getter for appointment type.
+     *
      * @return Returns appointment type.
      */
     public AppointmentType GetAppointmentType() { return this.appointmentType; }
@@ -124,12 +140,14 @@ public class AppointmentModel
 
     /**
      * Setter for appointment start date.
+     *
      * @param startDate
      */
     public void SetStartDate(Date startDate) { this.startDate = startDate; }
 
     /**
      * Getter for appointment start date.
+     *
      * @return Returns appointment start date.
      */
     public Date GetStartDate() { return this.startDate; }
@@ -138,12 +156,14 @@ public class AppointmentModel
 
     /**
      * Setter for appointment end date.
+     *
      * @param endDate
      */
     public void SetEndDate(Date endDate) { this.endDate = endDate; }
 
     /**
      * Getter for appointment end date.
+     *
      * @return returns appointment end date.
      */
     public Date GetEndDate() { return this.endDate; }
