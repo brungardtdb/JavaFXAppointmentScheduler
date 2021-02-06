@@ -9,7 +9,8 @@ import java.util.Properties;
 /**
  * Service to handle connecting to database
  */
-public class DataConnectionService {
+public class DataConnectionService
+{
     private final String cnnString;
     private String cnn;
     private String port;
@@ -48,5 +49,15 @@ public class DataConnectionService {
     public void DisconnectFromDB() throws Exception
     {
         connection.close();
+    }
+
+
+    /**
+     * Method used by service to get database connection
+     * @return Returns the database connection
+     */
+    public Connection GetDBConnection()
+    {
+        return this.connection;
     }
 }
