@@ -1,4 +1,4 @@
-package DataAccess.SQLDataServices;
+package DataAccess.MYSQLDataServices;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -63,4 +63,11 @@ public class DataConnectionService
     {
         return this.connection;
     }
+
+    /**
+     * Method for getting name of database for use in queries.
+     *
+     * @return Returns the name of the SQL database.
+     */
+    public String GetDBName() { return this.dbName; }
 }

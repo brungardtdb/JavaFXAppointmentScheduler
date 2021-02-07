@@ -7,12 +7,14 @@ import UserData.Models.AppointmentModel;
  */
 public interface IAppointmentData
 {
+
     /**
      * Creates appointment in database.
      *
      * @param appointment
+     * @return Returns appointment ID.
      */
-    public void CreateAppointment(AppointmentModel appointment);
+    public int CreateAppointment(AppointmentModel appointment);
 
     /**
      * Gets appointment from database.

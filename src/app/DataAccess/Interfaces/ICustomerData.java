@@ -7,12 +7,14 @@ import UserData.Models.CustomerModel;
  */
 public interface ICustomerData
 {
+
     /**
      * Adds customer to database.
      *
      * @param customer
+     * @return Returns customer ID.
      */
-    public void CreateCustomer(CustomerModel customer);
+    public int CreateCustomer(CustomerModel customer);
 
     /**
      * Gets customer from database.

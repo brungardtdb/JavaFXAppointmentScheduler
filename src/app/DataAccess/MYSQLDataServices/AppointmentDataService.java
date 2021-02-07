@@ -1,4 +1,4 @@
-package DataAccess.SQLDataServices;
+package DataAccess.MYSQLDataServices;
 
 import DataAccess.Interfaces.IAppointmentData;
 import UserData.Models.AppointmentModel;
@@ -26,10 +26,11 @@ public class AppointmentDataService implements IAppointmentData
      * Creates appointment in database.
      *
      * @param appointment
+     * @return Returns Appointment ID.
      */
-    public void CreateAppointment(AppointmentModel appointment)
+    public int CreateAppointment(AppointmentModel appointment)
     {
-
+        throw new UnsupportedOperationException();
     }
 
     /**

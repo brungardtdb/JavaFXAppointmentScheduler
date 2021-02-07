@@ -3,9 +3,9 @@ package DataAccess;
 import DataAccess.Enums.DataType;
 import DataAccess.Interfaces.IAppointmentData;
 import DataAccess.Interfaces.ICustomerData;
-import DataAccess.SQLDataServices.AppointmentDataService;
-import DataAccess.SQLDataServices.CustomerDataService;
-import DataAccess.SQLDataServices.DataConnectionService;
+import DataAccess.MYSQLDataServices.AppointmentDataService;
+import DataAccess.MYSQLDataServices.CustomerDataService;
+import DataAccess.MYSQLDataServices.DataConnectionService;
 
 import java.sql.Connection;
 import java.util.Properties;
@@ -38,6 +38,7 @@ public class DataAccessFactory
         switch (this.dataType)
         {
             case SQL: CreateConnection();
+            break;
             case NOSQL: throw new UnsupportedOperationException(noSQLError);
             default:throw new UnsupportedOperationException();
         }

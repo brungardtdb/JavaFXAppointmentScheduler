@@ -1,4 +1,4 @@
-package DataAccess.SQLDataServices;
+package DataAccess.MYSQLDataServices;
 
 import DataAccess.Interfaces.ICustomerData;
 import UserData.Models.CustomerModel;
@@ -27,9 +27,11 @@ public class CustomerDataService implements ICustomerData
      * Adds customer to database.
      *
      * @param customer
+     * @return Returns Customer ID.
      */
-    public void CreateCustomer(CustomerModel customer) {
-
+    public int CreateCustomer(CustomerModel customer)
+    {
+        throw new UnsupportedOperationException();
     }
 
     /**
