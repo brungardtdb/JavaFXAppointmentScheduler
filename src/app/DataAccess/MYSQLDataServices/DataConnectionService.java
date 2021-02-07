@@ -40,7 +40,7 @@ public class DataConnectionService
      */
     public void ConnectToDB() throws Exception
     {
-        connection = DriverManager.getConnection(cnnString, dbUserName, dbPassword);
+        this.connection = DriverManager.getConnection(cnnString, dbUserName, dbPassword);
     }
 
     /**

@@ -11,15 +11,19 @@ import java.sql.Connection;
 public class AppointmentDataService implements IAppointmentData
 {
     private final Connection connection;
+    private final String dbName;
+
 
     /**
-     * Constructor for SQL appointment data service, takes SQL connection as argument.
+     * onstructor for SQL appointment data service, takes SQL connection and DB name as arguments.
      *
      * @param connection
+     * @param dbName
      */
-    public AppointmentDataService(Connection connection)
+    public AppointmentDataService(Connection connection, String dbName)
     {
         this.connection = connection;
+        this.dbName = dbName;
     }
 
     /**
@@ -28,7 +32,7 @@ public class AppointmentDataService implements IAppointmentData
      * @param appointment
      * @return Returns Appointment ID.
      */
-    public int CreateAppointment(AppointmentModel appointment)
+    public int CreateAppointment(AppointmentModel appointment) throws Exception
     {
         throw new UnsupportedOperationException();
     }
@@ -39,7 +43,7 @@ public class AppointmentDataService implements IAppointmentData
      * @param appointment
      * @return Returns appointment if found.
      */
-    public AppointmentModel GetAppointment(AppointmentModel appointment)
+    public AppointmentModel GetAppointment(AppointmentModel appointment) throws Exception
     {
         return null;
     }
@@ -49,7 +53,7 @@ public class AppointmentDataService implements IAppointmentData
      *
      * @param appointment
      */
-    public void UpdateAppointment(AppointmentModel appointment)
+    public void UpdateAppointment(AppointmentModel appointment) throws Exception
     {
 
     }
@@ -59,7 +63,7 @@ public class AppointmentDataService implements IAppointmentData
      *
      * @param appointment
      */
-    public void DeleteAppointment(AppointmentModel appointment)
+    public void DeleteAppointment(AppointmentModel appointment) throws Exception
     {
 
     }

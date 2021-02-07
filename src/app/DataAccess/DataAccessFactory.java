@@ -7,6 +7,7 @@ import DataAccess.MYSQLDataServices.AppointmentDataService;
 import DataAccess.MYSQLDataServices.CustomerDataService;
 import DataAccess.MYSQLDataServices.DataConnectionService;
 
+import javax.xml.datatype.DatatypeConfigurationException;
 import java.sql.Connection;
 import java.util.Properties;
 
@@ -37,10 +38,10 @@ public class DataAccessFactory
 
         switch (this.dataType)
         {
-            case SQL: CreateConnection();
+            case SQL: this.dataConnectionService = new DataConnectionService(this.properties);
             break;
             case NOSQL: throw new UnsupportedOperationException(noSQLError);
-            default:throw new UnsupportedOperationException();
+            default: throw new UnsupportedOperationException();
         }
     }
 
@@ -54,8 +55,7 @@ public class DataAccessFactory
         switch (this.dataType)
         {
             case SQL:
-                this.dataConnectionService = new DataConnectionService(this.properties);
-                connection = this.dataConnectionService.GetDBConnection();
+                this.connection = this.dataConnectionService.GetDBConnection();
                 break;
             case NOSQL: throw new UnsupportedOperationException(noSQLError);
             default: throw new UnsupportedOperationException();
@@ -72,6 +72,7 @@ public class DataAccessFactory
         switch (this.dataType)
         {
             case SQL: this.dataConnectionService.ConnectToDB();
+            CreateConnection();
                     break;
             case NOSQL:
             default: throw new UnsupportedOperationException();
@@ -104,7 +105,7 @@ public class DataAccessFactory
     {
         switch (this.dataType)
         {
-            case SQL: return new CustomerDataService(this.connection);
+            case SQL: return new CustomerDataService(this.connection, this.dataConnectionService.GetDBName());
             case NOSQL:
             default: throw new UnsupportedOperationException();
         }
@@ -120,7 +121,7 @@ public class DataAccessFactory
     {
         switch (this.dataType)
         {
-            case SQL: return new AppointmentDataService(this.connection);
+            case SQL: return new AppointmentDataService(this.connection, this.dataConnectionService.GetDBName());
             case NOSQL:
             default: throw new UnsupportedOperationException();
         }

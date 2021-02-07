@@ -24,18 +24,20 @@ public class CustomerDataServiceTest
         app.PropertiesService propertiesService = new app.PropertiesService();
         Properties projectProperties = propertiesService.GetProperties();
         DataAccessFactory dataAccessFactory = new DataAccessFactory(DataType.SQL, projectProperties);
-        ICustomerData customerDataService = dataAccessFactory.GetCustomerDataService();
+        ICustomerData customerDataService;
         CustomerModel testCustomerModel = new CustomerModel();
 
         testCustomerModel.SetPhoneNumber("555-555-5555");
         testCustomerModel.SetPostalCode("84015");
         testCustomerModel.SetCustomerAddress("233 S Wacker Dr, Chicago, IL");
         testCustomerModel.SetCustomerName("John Doe");
+        testCustomerModel.SetDivisionID(103);
         int result;
 
         try
         {
             dataAccessFactory.ConnectToDB();
+            customerDataService = dataAccessFactory.GetCustomerDataService();
             result = customerDataService.CreateCustomer(testCustomerModel);
         }
         catch (Exception ex)
@@ -49,7 +51,5 @@ public class CustomerDataServiceTest
 
         Assertions.assertEquals(result, 4);
         Assertions.assertNotNull(result);
-        System.out.println(result);
-
     }
 }

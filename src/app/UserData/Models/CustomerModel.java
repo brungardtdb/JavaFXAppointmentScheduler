@@ -144,4 +144,26 @@ public class CustomerModel
     {
         return this.appointments;
     }
+
+    private int divisionID;
+
+    /**
+     * Setter for division ID.
+     *
+     * @param ID
+     */
+    public void SetDivisionID(int ID)
+    {
+        this.divisionID = ID;
+    }
+
+    /**
+     * Getter for division ID.
+     *
+     * @return Returns division ID.
+     */
+    public int GetDivisionID()
+    {
+        return this.divisionID;
+    }
 }
