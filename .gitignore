@@ -1,5 +1,4 @@
 /src/res
-/out/res
-/out
+/out/*
 .properties
 /out/production/AppointmentScheduleApp/res/app.properties
