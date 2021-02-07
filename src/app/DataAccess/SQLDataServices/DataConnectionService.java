@@ -20,6 +20,7 @@ public class DataConnectionService
 
     /**
      * Class constructor, takes in project properties to build connection string
+     *
      * @param properties
      */
     public DataConnectionService(Properties properties)
@@ -34,6 +35,7 @@ public class DataConnectionService
 
     /**
      * Method to used by service to connect to database
+     *
      * @throws Exception
      */
     public void ConnectToDB() throws Exception
@@ -43,6 +45,7 @@ public class DataConnectionService
 
     /**
      * Method used to terminate database connection
+     *
      * @throws Exception
      */
     public void DisconnectFromDB() throws Exception
@@ -53,6 +56,7 @@ public class DataConnectionService
 
     /**
      * Method used by service to get database connection
+     *
      * @return Returns the database connection.
      */
     public Connection GetDBConnection()

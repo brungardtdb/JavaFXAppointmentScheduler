@@ -98,6 +98,7 @@ public class CustomerModel
 
     /**
      * Gets appointment based on ID.
+     * The lambda in this method filters the list, searching for a matching ID.
      * I decided to use the stream and lambda combination in this method
      * because it was more succinct and readable, avoiding the need to loop through
      * the collection with some kind of foreach loop. I'm pretty comfortable with Linq in C#
@@ -114,7 +115,8 @@ public class CustomerModel
                     .filter(x -> x.GetAppointmentID() == id)
                     .findFirst()
                     .get();
-        } catch (Exception ex)
+        }
+        catch (Exception ex)
         {
             return null;
         }
@@ -122,6 +124,7 @@ public class CustomerModel
 
     /**
      * Removes appointment from appointments by ID if appointment is found.
+     * The lambda in this method filters through the appointments, and removes the appointment if an ID match is found.
      * Another example of a lambda being more succinct, here I was able to remove
      * the appointment using a single line instead of an if statement nested inside of a loop.
      *
