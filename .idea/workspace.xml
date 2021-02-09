@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="efe0c708-2113-4624-bce0-8eddac3d9022" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/description.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/mysql_mysql_connector_java_8_0_22.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/org_mockito_junit_jupiter_2_20_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AppointmentScheduleApp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/AppointmentScheduleApp.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/AppointmentScheduleApp/DataAccess/DataAccessFactory$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/AppointmentScheduleApp/DataAccess/DataAccessFactory.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/AppointmentScheduleApp/DataAccess/Enums/DataType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/AppointmentScheduleApp/DataAccess/Interfaces/IAppointmentData.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/AppointmentScheduleApp/DataAccess/Interfaces/ICustomerData.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/AppointmentScheduleApp/DataAccess/MYSQLDataServices/AppointmentDataService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/AppointmentScheduleApp/DataAccess/MYSQLDataServices/CustomerDataService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/AppointmentScheduleApp/DataAccess/MYSQLDataServices/DataConnectionService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/AppointmentScheduleApp/UserData/Enums/AppointmentType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/AppointmentScheduleApp/UserData/Models/AppointmentModel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/AppointmentScheduleApp/UserData/Models/CustomerModel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/AppointmentScheduleApp/app/Controller.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/AppointmentScheduleApp/app/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/AppointmentScheduleApp/app/PropertiesService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/AppointmentScheduleApp/sample.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/AppointmentScheduleApp/DataAccessTest/AppointmentDataServiceTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/AppointmentScheduleApp/DataAccessTest/CustomerDataServiceTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/AppointmentScheduleApp/UserData/Models/AppointmentModelTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/AppointmentScheduleApp/UserData/Models/CustomerModelTest.class" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1oAqO0w6tEsGdVRcQKx3oxawpyS" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showVisibilityIcons" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../JavaFX/openjfx-11.0.2_windows-x64_bin-sdk/javafx-sdk-11.0.2/lib" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.14550781" />
+    <property name="project.structure.side.proportion" value="0.29548565" />
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="VM_PARAMETERS" value="--module-path C:\JavaFX\openjfx-11.0.2_windows-x64_bin-sdk\javafx-sdk-11.0.2\lib --add-modules javafx.controls,javafx.fxml " />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="All in AppointmentScheduleApp" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="AppointmentScheduleApp" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.All in AppointmentScheduleApp" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="efe0c708-2113-4624-bce0-8eddac3d9022" name="Default Changelist" comment="" />
+      <created>1612739707789</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1612739707789</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="493" y="47" width="954" height="702" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1612911235139">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="493" y="47" width="954" height="702" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1612911235139" />
+    <state x="473" y="154" key="FileChooserDialogImpl" timestamp="1612911077712">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="473" y="154" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1612911077712" />
+    <state x="249" y="0" key="SettingsEditor" timestamp="1612911423656">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="249" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1612911423656" />
+    <state x="498" y="304" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1612911418066">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="498" y="304" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD/0.0.1536.824@0.0.1536.824" timestamp="1612911418066" />
+  </component>
+</project>
