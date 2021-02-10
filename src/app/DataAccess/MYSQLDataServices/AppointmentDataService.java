@@ -15,7 +15,7 @@ public class AppointmentDataService implements IAppointmentData
 
 
     /**
-     * onstructor for SQL appointment data service, takes SQL connection and DB name as arguments.
+     * Constructor for SQL appointment data service, takes SQL connection and DB name as arguments.
      *
      * @param connection
      * @param dbName

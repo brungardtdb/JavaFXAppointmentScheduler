@@ -13,23 +13,27 @@ public interface ICustomerData
      *
      * @param customer
      * @return Returns customer ID.
+     * @throws Exception Throws SQL Exception.
      */
     public int CreateCustomer(CustomerModel customer) throws Exception;
 
     /**
      * Gets customer from database.
      *
-     * @param customer
-     * @return Returns customer if found.
+     * @param ID
+     * @return Returns customer if found
+     * @throws Exception Throws SQL Exception.
      */
-    public CustomerModel GetCustomer(CustomerModel customer) throws Exception;
+    public CustomerModel GetCustomerByID(int ID) throws Exception;
 
     /**
      * Updates customer in database, overrides values with values from customer class parameter.
      *
      * @param customer
+     * @return Returns true if record was successfully updated.
+     * @throws Exception Throws SQL Exception.
      */
-    public void UpdateCustomer(CustomerModel customer) throws Exception;
+    public boolean UpdateCustomer(CustomerModel customer) throws Exception;
 
     /**
      * Deletes customer from database.

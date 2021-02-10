@@ -27,41 +27,72 @@ public class CustomerDataService implements ICustomerData
         this.dbName = dbName;
     }
 
-
     /**
      * Adds customer to database.
      *
      * @param customer
-     * @return Returns Customer ID.
+     * @return
+     * @throws Exception Throws SQL Exception.
      */
     public int CreateCustomer(CustomerModel customer) throws Exception
     {
+        int ID = GetNextID();
+        customer.SetCustomerID(ID);
+
         String insertQuery = "INSERT INTO " + dbName + ".customers " +
-                "(`Customer_Name`, `Address`, `Postal_Code`, `Phone`, `Division_ID`)"+
-                " VALUES (\'"+ customer.GetCustomerName() +
+                "(`Customer_ID`, `Customer_Name`, `Address`, `Postal_Code`, `Phone`, `Division_ID`)"+
+                " VALUES (\'"+ customer.GetCustomerID() +
+                "\', \'" + customer.GetCustomerName() +
                 "\', \'" + customer.GetCustomerAddress() +
                 "\', \'" + customer.GetPostalCode() +
                 "\', \'" + customer.GetPhoneNumber() + "\', " +
                 customer.GetDivisionID() + ")";
 
-        String userIDQuery = "SELECT Customer_ID FROM " + dbName + ".customers " +
-                "WHERE Customer_Name = \'" + customer.GetCustomerName() + "\' " +
-                "AND Address = \'" + customer.GetCustomerAddress() + "\' " +
-                "AND Postal_Code = \'" + customer.GetPostalCode() + "\' " +
-                "AND Phone = \'" + customer.GetPhoneNumber() + "\' " +
-                "AND Division_ID = " + customer.GetDivisionID();
-
         try (var statement = this.connection.prepareStatement(insertQuery))
         {
             int result = statement.executeUpdate();
+
+            if (result > 0)
+            {
+                return customer.GetCustomerID();
+            }
+            else
+            {
+                throw new Exception("User could not be created!");
+            }
         }
-        try(var statement = this.connection.prepareStatement(userIDQuery))
+        catch (Exception ex)
         {
-            int ID;
+            throw ex;
+        }
+    }
+
+    /**
+     * Gets customer from database.
+     *
+     * @param ID
+     * @return Returns customer if found
+     * @throws Exception Throws SQL Exception.
+     */
+    public CustomerModel GetCustomerByID(int ID) throws Exception
+    {
+        String query = "SELECT * " +
+                "FROM " + dbName + ".customers " +
+                "WHERE Customer_ID = " + ID;
+
+        CustomerModel customer = new CustomerModel();
+
+        try(var statement = this.connection.prepareStatement(query))
+        {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next())
             {
                 customer.SetCustomerID(resultSet.getInt("Customer_ID"));
+                customer.SetCustomerName(resultSet.getString("Customer_Name"));
+                customer.SetCustomerAddress(resultSet.getString("Address"));
+                customer.SetPostalCode(resultSet.getString("Postal_Code"));
+                customer.SetPhoneNumber(resultSet.getString("Phone"));
+                customer.SetDivisionID(resultSet.getInt("Division_ID"));
             }
         }
         catch (Exception ex)
@@ -69,27 +100,34 @@ public class CustomerDataService implements ICustomerData
             throw ex;
         }
 
-        return customer.GetCustomerID();
+        return customer;
     }
 
-    /**
-     * Gets customer from database.
-     *
-     * @param customer
-     * @return Returns customer if found.
-     */
-    public CustomerModel GetCustomer(CustomerModel customer) throws Exception
-    {
-        return null;
-    }
 
     /**
      * Updates customer in database, overrides values with values from customer class parameter.
      *
      * @param customer
+     * @return Returns true if record was successfully updated.
+     * @throws Exception Throws SQL Exception.
      */
-    public void UpdateCustomer(CustomerModel customer) throws Exception
+    public boolean UpdateCustomer(CustomerModel customer) throws Exception
     {
+        String updateQuery = "UPDATE " + dbName + ".customers " +
+                "SET " +
+                "Customer_Name = \'" + customer.GetCustomerName() + "\', " +
+                "Address = \'" + customer.GetCustomerAddress() + "\', " +
+                "Postal_Code = \'" + customer.GetPostalCode() + "\', " +
+                "Phone = \'" + customer.GetPhoneNumber() + "\', " +
+                "Division_ID = \'" + customer.GetDivisionID() + "\' " +
+                "WHERE Customer_ID = " + customer.GetCustomerID();
+
+        try(var statement = connection.prepareStatement(updateQuery))
+        {
+            int result = statement.executeUpdate();
+
+            return  (result > 0);
+        }
 
     }
 
@@ -102,4 +140,41 @@ public class CustomerDataService implements ICustomerData
     {
 
     }
+
+    // region helper methods
+
+    /**
+     * Helper method to get max customer ID from database, max ID is incremented to generate next sequential customer ID.
+     * @return Returns next sequential customer ID.
+     * @throws Exception Throws SQL Exception.
+     */
+    private int GetNextID() throws Exception
+    {
+        String userIDQuery = "SELECT MAX(Customer_ID) FROM " + dbName + ".customers ";
+        int ID = 1;
+
+        try(var statement = this.connection.prepareStatement(userIDQuery))
+        {
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                ID = resultSet.getInt("MAX(Customer_ID)");
+
+                if (resultSet.wasNull()) {
+                    ID = 1;
+                } else {
+                    ID++;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+
+        return ID;
+    }
+
+    // endregion
+
 }
