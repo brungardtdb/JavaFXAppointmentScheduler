@@ -37,7 +37,7 @@ public  class  Main {
     {
         app.PropertiesService propertiesService = new app.PropertiesService();
         Properties projectProperties = propertiesService.GetProperties();
-        DataAccessFactory dataAccessFactory = new DataAccessFactory(DataType.SQL, projectProperties);
+        DataAccessFactory dataAccessFactory = new DataAccessFactory(DataType.MYSQL, projectProperties);
 
         try
         {

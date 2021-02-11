@@ -2,6 +2,6 @@ package DataAccess.Enums;
 
 public enum DataType
 {
-    SQL,
-    NOSQL,
+    MYSQL,
+    MONGODB,
 }

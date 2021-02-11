@@ -14,7 +14,6 @@ public class CustomerDataService implements ICustomerData
     private final Connection connection;
     private final String dbName;
 
-
     /**
      * Constructor for SQL customer data service, takes SQL connection and DB name as arguments.
      *
@@ -26,6 +25,8 @@ public class CustomerDataService implements ICustomerData
         this.connection = connection;
         this.dbName = dbName;
     }
+
+    //region CRUD methods
 
     /**
      * Adds customer to database.
@@ -103,7 +104,6 @@ public class CustomerDataService implements ICustomerData
         return customer;
     }
 
-
     /**
      * Updates customer in database, overrides values with values from customer class parameter.
      *
@@ -128,18 +128,29 @@ public class CustomerDataService implements ICustomerData
 
             return  (result > 0);
         }
-
     }
 
     /**
      * Deletes customer from database.
      *
-     * @param customer
+     * @param ID
+     * @throws Exception
      */
-    public void DeleteCustomer(CustomerModel customer) throws Exception
+    public boolean DeleteCustomerByID(int ID) throws Exception
     {
+        String deleteQuery = "DELETE " +
+                "FROM " + dbName + ".customers " +
+                "WHERE Customer_ID = " + ID;
 
+        try(var statement = connection.prepareStatement(deleteQuery))
+        {
+            int result = statement.executeUpdate();
+
+            return (result > 0);
+        }
     }
+
+    //endregion
 
     // region helper methods
 

@@ -20,7 +20,7 @@ public class DataAccessFactory
 {
     private final DataType dataType;
     private final Properties properties;
-    private final String noSQLError = "NOSQL has not yet been implemented!";
+    private final String mongoError = "MongoDB has not yet been implemented!";
     private DataConnectionService dataConnectionService;
     private Connection connection;
 
@@ -38,9 +38,9 @@ public class DataAccessFactory
 
         switch (this.dataType)
         {
-            case SQL: this.dataConnectionService = new DataConnectionService(this.properties);
+            case MYSQL: this.dataConnectionService = new DataConnectionService(this.properties);
             break;
-            case NOSQL: throw new UnsupportedOperationException(noSQLError);
+            case MONGODB: throw new UnsupportedOperationException(mongoError);
             default: throw new UnsupportedOperationException();
         }
     }
@@ -54,10 +54,10 @@ public class DataAccessFactory
     {
         switch (this.dataType)
         {
-            case SQL:
+            case MYSQL:
                 this.connection = this.dataConnectionService.GetDBConnection();
                 break;
-            case NOSQL: throw new UnsupportedOperationException(noSQLError);
+            case MONGODB: throw new UnsupportedOperationException(mongoError);
             default: throw new UnsupportedOperationException();
         }
     }
@@ -71,10 +71,10 @@ public class DataAccessFactory
     {
         switch (this.dataType)
         {
-            case SQL: this.dataConnectionService.ConnectToDB();
+            case MYSQL: this.dataConnectionService.ConnectToDB();
             CreateConnection();
                     break;
-            case NOSQL:
+            case MONGODB:
             default: throw new UnsupportedOperationException();
         }
     }
@@ -88,9 +88,9 @@ public class DataAccessFactory
     {
         switch (this.dataType)
         {
-            case SQL: this.dataConnectionService.DisconnectFromDB();
+            case MYSQL: this.dataConnectionService.DisconnectFromDB();
                 break;
-            case NOSQL:
+            case MONGODB:
             default: throw new UnsupportedOperationException();
         }
     }
@@ -105,8 +105,8 @@ public class DataAccessFactory
     {
         switch (this.dataType)
         {
-            case SQL: return new CustomerDataService(this.connection, this.dataConnectionService.GetDBName());
-            case NOSQL:
+            case MYSQL: return new CustomerDataService(this.connection, this.dataConnectionService.GetDBName());
+            case MONGODB:
             default: throw new UnsupportedOperationException();
         }
     }
@@ -121,8 +121,8 @@ public class DataAccessFactory
     {
         switch (this.dataType)
         {
-            case SQL: return new AppointmentDataService(this.connection, this.dataConnectionService.GetDBName());
-            case NOSQL:
+            case MYSQL: return new AppointmentDataService(this.connection, this.dataConnectionService.GetDBName());
+            case MONGODB:
             default: throw new UnsupportedOperationException();
         }
     }

@@ -38,7 +38,8 @@ public interface ICustomerData
     /**
      * Deletes customer from database.
      *
-     * @param customer
+     * @param ID
+     * @throws Exception
      */
-    public void DeleteCustomer(CustomerModel customer) throws Exception;
+    public boolean DeleteCustomerByID(int ID) throws Exception;
 }

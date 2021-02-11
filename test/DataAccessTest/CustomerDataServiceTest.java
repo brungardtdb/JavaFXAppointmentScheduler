@@ -24,7 +24,7 @@ public class CustomerDataServiceTest
 
         app.PropertiesService propertiesService = new app.PropertiesService();
         Properties projectProperties = propertiesService.GetProperties();
-        DataAccessFactory dataAccessFactory = new DataAccessFactory(DataType.SQL, projectProperties);
+        DataAccessFactory dataAccessFactory = new DataAccessFactory(DataType.MYSQL, projectProperties);
         ICustomerData customerDataService;
         CustomerModel testCustomerModel;
 
@@ -55,17 +55,27 @@ public class CustomerDataServiceTest
     {
         app.PropertiesService propertiesService = new app.PropertiesService();
         Properties projectProperties = propertiesService.GetProperties();
-        DataAccessFactory dataAccessFactory = new DataAccessFactory(DataType.SQL, projectProperties);
+        DataAccessFactory dataAccessFactory = new DataAccessFactory(DataType.MYSQL, projectProperties);
         ICustomerData customerDataService;
-        CustomerModel testCustomerModel = new CustomerModel();
 
+        CustomerModel testCustomerModel = new CustomerModel();
         testCustomerModel.SetCustomerID(1);
         testCustomerModel.SetPhoneNumber("869-908-1875");
         testCustomerModel.SetPostalCode("01291");
         testCustomerModel.SetCustomerAddress("1919 Boardwalk");
         testCustomerModel.SetCustomerName("Dr. Daddy Warbucks");
         testCustomerModel.SetDivisionID(29);
+
+        CustomerModel customerNameFix = new CustomerModel();
+        customerNameFix.SetCustomerID(testCustomerModel.GetCustomerID());
+        customerNameFix.SetCustomerName("Daddy Warbucks");
+        customerNameFix.SetPhoneNumber(testCustomerModel.GetPhoneNumber());
+        customerNameFix.SetPostalCode(testCustomerModel.GetPostalCode());
+        customerNameFix.SetCustomerAddress(testCustomerModel.GetCustomerAddress());
+        customerNameFix.SetDivisionID(testCustomerModel.GetDivisionID());
+
         boolean result;
+        boolean nameFixResult;
         CustomerModel customerResult;
 
         try
@@ -74,6 +84,7 @@ public class CustomerDataServiceTest
             customerDataService = dataAccessFactory.GetCustomerDataService();
             result = customerDataService.UpdateCustomer(testCustomerModel);
             customerResult = customerDataService.GetCustomerByID(1);
+            nameFixResult = customerDataService.UpdateCustomer(customerNameFix);
         }
         catch (Exception ex)
         {
@@ -86,14 +97,15 @@ public class CustomerDataServiceTest
 
         Assertions.assertTrue(result);
         Assertions.assertEquals(customerResult.GetCustomerName(), "Dr. Daddy Warbucks");
+        Assertions.assertTrue(nameFixResult);
     }
 
     @Test
-    void CreateUserTest() throws Exception
+    void CreateDeleteUserTest() throws Exception
     {
         app.PropertiesService propertiesService = new app.PropertiesService();
         Properties projectProperties = propertiesService.GetProperties();
-        DataAccessFactory dataAccessFactory = new DataAccessFactory(DataType.SQL, projectProperties);
+        DataAccessFactory dataAccessFactory = new DataAccessFactory(DataType.MYSQL, projectProperties);
         ICustomerData customerDataService;
         CustomerModel testCustomerModel = new CustomerModel();
 
@@ -102,13 +114,15 @@ public class CustomerDataServiceTest
         testCustomerModel.SetCustomerAddress("233 S Wacker Dr, Chicago, IL");
         testCustomerModel.SetCustomerName("John Doe");
         testCustomerModel.SetDivisionID(103);
-        int result;
+        int createResult;
+        boolean deleteResult;
 
         try
         {
             dataAccessFactory.ConnectToDB();
             customerDataService = dataAccessFactory.GetCustomerDataService();
-            result = customerDataService.CreateCustomer(testCustomerModel);
+            createResult = customerDataService.CreateCustomer(testCustomerModel);
+            deleteResult = customerDataService.DeleteCustomerByID(createResult);
         }
         catch (Exception ex)
         {
@@ -119,7 +133,8 @@ public class CustomerDataServiceTest
             dataAccessFactory.DisconnectFromDB();
         }
 
-        Assertions.assertEquals(result, 4);
-        Assertions.assertNotNull(result);
+        Assertions.assertEquals(createResult, 4);
+        Assertions.assertNotNull(createResult);
+        Assertions.assertTrue(deleteResult);
     }
 }
