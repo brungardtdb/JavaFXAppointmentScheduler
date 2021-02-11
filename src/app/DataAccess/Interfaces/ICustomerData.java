@@ -7,13 +7,12 @@ import UserData.Models.CustomerModel;
  */
 public interface ICustomerData
 {
-
     /**
      * Adds customer to database.
      *
      * @param customer
      * @return Returns customer ID.
-     * @throws Exception Throws SQL Exception.
+     * @throws Exception
      */
     public int CreateCustomer(CustomerModel customer) throws Exception;
 
@@ -22,7 +21,7 @@ public interface ICustomerData
      *
      * @param ID
      * @return Returns customer if found
-     * @throws Exception Throws SQL Exception.
+     * @throws Exception
      */
     public CustomerModel GetCustomerByID(int ID) throws Exception;
 
@@ -31,7 +30,7 @@ public interface ICustomerData
      *
      * @param customer
      * @return Returns true if record was successfully updated.
-     * @throws Exception Throws SQL Exception.
+     * @throws Exception
      */
     public boolean UpdateCustomer(CustomerModel customer) throws Exception;
 
@@ -39,6 +38,7 @@ public interface ICustomerData
      * Deletes customer from database.
      *
      * @param ID
+     * @return Returns true if record was successfully deleted.
      * @throws Exception
      */
     public boolean DeleteCustomerByID(int ID) throws Exception;
