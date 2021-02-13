@@ -2,16 +2,19 @@ package DataAccess.Interfaces;
 
 import UserData.Models.AppointmentModel;
 
+import java.util.List;
+
 /**
  * Interface for appointment data CRUD operations
  */
 public interface IAppointmentData
 {
+
     /**
      * Creates appointment in database.
      *
-     * @param appointment
-     * @return Returns appointment ID.
+     * @param appointment The appointment object.
+     * @return The appointment ID.
      * @throws Exception
      */
     public int CreateAppointment(AppointmentModel appointment) throws Exception;
@@ -19,8 +22,8 @@ public interface IAppointmentData
     /**
      * Gets appointment from database.
      *
-     * @param ID
-     * @return Returns appointment if found.
+     * @param ID The appointment ID.
+     * @return The appointment object if found.
      * @throws Exception
      */
     public AppointmentModel GetAppointmentByID(int ID) throws Exception;
@@ -28,8 +31,8 @@ public interface IAppointmentData
     /**
      * Updates appointment in database, overrides values with values from appointment class parameter.
      *
-     * @param appointment
-     * @return Returns true if record was successfully updated.
+     * @param appointment The appointment object.
+     * @return True if appointment was successfully updated.
      * @throws Exception
      */
     public boolean UpdateAppointment(AppointmentModel appointment) throws Exception;
@@ -37,8 +40,8 @@ public interface IAppointmentData
     /**
      * Deletes appointment from database.
      *
-     * @param ID
-     * @return Returns true if record was successfully deleted.
+     * @param ID The appointment ID.
+     * @return True if the appointment was successfully deleted.
      * @throws Exception
      */
     public boolean DeleteAppointmentByID(int ID) throws Exception;
@@ -46,8 +49,18 @@ public interface IAppointmentData
     /**
      * Deletes all appointments for a given customer.
      *
-     * @param customerID
-     * @return Returns number of appointments deleted.
+     * @param customerID The customer ID.
+     * @return The number of appointment records that were deleted.
+     * @throws Exception
      */
-    public int DeleteAllCustomerAppointments(int customerID);
+    public int DeleteAllCustomerAppointments(int customerID) throws Exception;
+
+    /**
+     * Returns all appointments for a given customer.
+     *
+     * @param customerID The customer ID.
+     * @return A list of customer appointments.
+     * @throws Exception
+     */
+    public List<AppointmentModel> GetAllCustomerAppointments(int customerID) throws Exception;
 }

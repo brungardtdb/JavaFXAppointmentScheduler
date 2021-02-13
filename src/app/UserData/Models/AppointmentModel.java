@@ -63,7 +63,7 @@ public class AppointmentModel
      *
      * @param id
      */
-    public void SetUserId(int id) { this.userID = id; }
+    public void SetUserID(int id) { this.userID = id; }
 
     /**
      * Getter for user ID.

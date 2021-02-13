@@ -10,8 +10,8 @@ public interface ICustomerData
     /**
      * Adds customer to database.
      *
-     * @param customer
-     * @return Returns customer ID.
+     * @param customer The customer object. (everything must be filled out except ID)
+     * @return The customer ID.
      * @throws Exception
      */
     public int CreateCustomer(CustomerModel customer) throws Exception;
@@ -19,8 +19,8 @@ public interface ICustomerData
     /**
      * Gets customer from database.
      *
-     * @param ID
-     * @return Returns customer if found
+     * @param ID The customer ID.
+     * @return The customer if found.
      * @throws Exception
      */
     public CustomerModel GetCustomerByID(int ID) throws Exception;
@@ -28,8 +28,8 @@ public interface ICustomerData
     /**
      * Updates customer in database, overrides values with values from customer class parameter.
      *
-     * @param customer
-     * @return Returns true if record was successfully updated.
+     * @param customer The customer object.
+     * @return True if record was successfully updated.
      * @throws Exception
      */
     public boolean UpdateCustomer(CustomerModel customer) throws Exception;
@@ -37,7 +37,7 @@ public interface ICustomerData
     /**
      * Deletes customer from database.
      *
-     * @param ID
+     * @param ID The customer ID.
      * @return Returns true if record was successfully deleted.
      * @throws Exception
      */

@@ -17,8 +17,8 @@ public class CustomerDataService implements ICustomerData
     /**
      * Constructor for SQL customer data service, takes SQL connection and DB name as arguments.
      *
-     * @param connection
-     * @param dbName
+     * @param connection The database connection.
+     * @param dbName The database name.
      */
     public CustomerDataService(Connection connection, String dbName)
     {
@@ -31,9 +31,9 @@ public class CustomerDataService implements ICustomerData
     /**
      * Adds customer to database.
      *
-     * @param customer
-     * @return
-     * @throws Exception Throws SQL Exception.
+     * @param customer The customer object. (everything must be filled out except ID)
+     * @return The customer ID.
+     * @throws Exception SQL Exception.
      */
     public int CreateCustomer(CustomerModel customer) throws Exception
     {
@@ -57,10 +57,9 @@ public class CustomerDataService implements ICustomerData
             {
                 return customer.GetCustomerID();
             }
-            else
-            {
-                throw new Exception("User could not be created!");
-            }
+
+            throw new Exception("User could not be created!");
+
         }
         catch (Exception ex)
         {
@@ -71,9 +70,9 @@ public class CustomerDataService implements ICustomerData
     /**
      * Gets customer from database.
      *
-     * @param ID
-     * @return Returns customer if found
-     * @throws Exception Throws SQL Exception.
+     * @param ID The customer ID.
+     * @return The customer if found.
+     * @throws Exception SQL Exception.
      */
     public CustomerModel GetCustomerByID(int ID) throws Exception
     {
@@ -107,9 +106,9 @@ public class CustomerDataService implements ICustomerData
     /**
      * Updates customer in database, overrides values with values from customer class parameter.
      *
-     * @param customer
-     * @return Returns true if record was successfully updated.
-     * @throws Exception Throws SQL Exception.
+     * @param customer The customer object.
+     * @return True if record was successfully updated.
+     * @throws Exception SQL Exception.
      */
     public boolean UpdateCustomer(CustomerModel customer) throws Exception
     {
@@ -133,8 +132,9 @@ public class CustomerDataService implements ICustomerData
     /**
      * Deletes customer from database.
      *
-     * @param ID
-     * @throws Exception
+     * @param ID The customer ID.
+     * @return Returns true if record was successfully deleted.
+     * @throws Exception SQL Exception.
      */
     public boolean DeleteCustomerByID(int ID) throws Exception
     {
@@ -156,11 +156,16 @@ public class CustomerDataService implements ICustomerData
 
     /**
      * Helper method to get max customer ID from database, max ID is incremented to generate next sequential customer ID.
-     * @return Returns next sequential customer ID.
-     * @throws Exception Throws SQL Exception.
+     * @return The next sequential customer ID.
+     * @throws Exception SQL Exception.
      */
     private int GetNextID() throws Exception
     {
+        /* This is kind of a hacky way to do this, but the auto-increment functionality in the database
+        does not take into account objects that are being deleted and I want to avoid big jumps in IDs,
+        but I also cannot make changes to the database.
+        */
+
         String userIDQuery = "SELECT MAX(Customer_ID) FROM " + dbName + ".customers ";
         int ID = 1;
 
@@ -171,18 +176,19 @@ public class CustomerDataService implements ICustomerData
             while (resultSet.next()) {
                 ID = resultSet.getInt("MAX(Customer_ID)");
 
-                if (resultSet.wasNull()) {
+                if (resultSet.wasNull())
+                {
                     ID = 1;
-                } else {
-                    ID++;
+                    return ID;
                 }
+                ID++;
+                break;
             }
         }
         catch (Exception ex)
         {
             throw ex;
         }
-
         return ID;
     }
 

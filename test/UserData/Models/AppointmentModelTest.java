@@ -38,7 +38,7 @@ public class AppointmentModelTest
     @Test
     void UserIDTest()
     {
-        appointment.SetUserId(5);
+        appointment.SetUserID(5);
         Assertions.assertEquals(appointment.GetUserID(), 5);
         Assertions.assertNotEquals(appointment.GetUserID(), 50);
     }
