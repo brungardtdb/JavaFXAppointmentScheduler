@@ -30,7 +30,7 @@ public class DataConnectionService
         dbUserName = properties.getProperty("username");
         dbName = properties.getProperty("dbname");
         dbPassword = properties.getProperty("password");
-        cnnString = "jdbc:mysql://" + cnn + "/" + dbName;
+        cnnString = "jdbc:mysql://" + cnn + "/" + dbName + "?useTimezone=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
     }
 
     /**

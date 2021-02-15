@@ -4,9 +4,15 @@ import DataAccess.Interfaces.IAppointmentData;
 import UserData.Enums.AppointmentType;
 import UserData.Models.AppointmentModel;
 import UserData.Models.CustomerModel;
+import javafx.scene.chart.XYChart;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,7 +43,7 @@ public class AppointmentDataService implements IAppointmentData
      *
      * @param appointment The appointment object.
      * @return The appointment ID.
-     * @throws Exception
+     * @throws Exception SQL Exception.
      */
     public int CreateAppointment(AppointmentModel appointment) throws Exception
     {
@@ -47,19 +53,21 @@ public class AppointmentDataService implements IAppointmentData
         String insertQuery = "INSERT INTO " + dbName + ".appointments " +
                 "(`Appointment_ID`, `Title`, `Description`, `Location`, `Type`, `Start`, " +
                 "`End`, `Customer_ID`, `User_ID`, `Contact_ID`)"+
-                " VALUES (\'"+ appointment.GetAppointmentID() +
-                "\', \'" + appointment.GetTitle() +
-                "\', \'" + appointment.GetDescription() +
-                "\', \'" + appointment.GetLocation() +
-                "\', \'" + AppointmentTypeToString(appointment.GetAppointmentType()) +
-                "\', \'" + appointment.GetStartDate() +
-                "\', \'" + appointment.GetEndDate() +
-                "\', \'" + appointment.GetCustomerID() +
-                "\', \'" + appointment.GetUserID() +
-                appointment.GetContactID() + ")";
+               " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (var statement = this.connection.prepareStatement(insertQuery))
         {
+            statement.setInt(1, appointment.GetAppointmentID());
+            statement.setString(2, appointment.GetTitle());
+            statement.setString(3, appointment.GetDescription());
+            statement.setString(4, appointment.GetLocation());
+            statement.setString(5, AppointmentTypeToString(appointment.GetAppointmentType()));
+            statement.setDate(6, (Date) appointment.GetStartDate());
+            statement.setDate(7, (Date) appointment.GetEndDate());
+            statement.setInt(8, appointment.GetCustomerID());
+            statement.setInt(9, appointment.GetUserID());
+            statement.setInt(10, appointment.GetContactID());
+
             int result = statement.executeUpdate();
 
             if (result > 0)
@@ -81,39 +89,43 @@ public class AppointmentDataService implements IAppointmentData
      *
      * @param ID The appointment ID.
      * @return The appointment object if found.
-     * @throws Exception
+     * @throws Exception SQL Exception.
      */
     public AppointmentModel GetAppointmentByID(int ID) throws Exception
     {
         String query = "SELECT * " +
                 "FROM " + dbName + ".appointments " +
-                "WHERE Appointment_ID = " + ID;
+                "WHERE Appointment_ID = ?";
 
         AppointmentModel appointment = new AppointmentModel();
 
         try(var statement = this.connection.prepareStatement(query))
         {
+            statement.setInt(1, ID);
             ResultSet resultSet = statement.executeQuery();
+            DateFormat format = new SimpleDateFormat( "yyyy/MM/dd HH:mm:ss");
             while (resultSet.next())
-            {
+            {//'2020-05-28 12:00:00'
                 appointment.SetAppointmentID(resultSet.getInt("Appointment_ID"));
                 appointment.SetTitle(resultSet.getString("Title"));
                 appointment.SetDescription(resultSet.getString("Description"));
                 appointment.SetLocation(resultSet.getString("Location"));
                 appointment.SetAppointmentType(AppointmentTypeFromString(resultSet.getString("Type")));
-                appointment.SetStartDate(resultSet.getDate("Start"));
-                appointment.SetEndDate(resultSet.getDate("End"));
+                java.util.Date startDate = new Date(resultSet.getTimestamp("Start").getTime());
+                appointment.SetStartDate(startDate);
+                appointment.SetStartDate(new java.util.Date(resultSet.getTimestamp("Start").getTime()));
+                appointment.SetEndDate(new java.util.Date(resultSet.getTimestamp("End").getTime()));
                 appointment.SetCustomerID(resultSet.getInt("Customer_ID"));
                 appointment.SetUserID(resultSet.getInt("User_ID"));
                 appointment.SetContactID(resultSet.getInt("Contact_ID"));
             }
+
+            return appointment;
         }
         catch (Exception ex)
         {
             throw ex;
         }
-
-        return appointment;
     }
 
     /**
@@ -121,11 +133,44 @@ public class AppointmentDataService implements IAppointmentData
      *
      * @param appointment The appointment object.
      * @return True if appointment was successfully updated.
-     * @throws Exception
+     * @throws Exception SQL Exception.
      */
     public boolean UpdateAppointment(AppointmentModel appointment) throws Exception
     {
-        return false;
+        String updateAppointmentQuery = "UPDATE " + dbName + ".appointments " +
+                "SET " +
+                "Title = ?, " +
+                "Description = ?, " +
+                "Location = ?, " +
+                "Type = ?, " +
+                "Start = ?, " +
+                "End = ?, " +
+                "Customer_ID = ?, " +
+                "User_ID = ?, " +
+                "Contact_ID = ?, " +
+                "WHERE Appointment_ID = ?";
+
+        try(var statement = connection.prepareStatement(updateAppointmentQuery))
+        {
+            statement.setString(1, appointment.GetTitle());
+            statement.setString(2, appointment.GetDescription());
+            statement.setString(3, appointment.GetLocation());
+            statement.setString(4, AppointmentTypeToString(appointment.GetAppointmentType()));
+            statement.setDate(5, (Date) appointment.GetStartDate());
+            statement.setDate(6, (Date) appointment.GetEndDate());
+            statement.setInt(7, appointment.GetCustomerID());
+            statement.setInt(8, appointment.GetUserID());
+            statement.setInt(9, appointment.GetContactID());
+            statement.setInt(10, appointment.GetAppointmentID());
+
+            int result = statement.executeUpdate();
+
+            return  (result > 0);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
     }
 
     /**
@@ -137,7 +182,21 @@ public class AppointmentDataService implements IAppointmentData
      */
     public boolean DeleteAppointmentByID(int ID) throws Exception
     {
-        return false;
+        String deleteAppointmentQuery = "DELETE " +
+                "FROM " + dbName + ".appointments " +
+                "WHERE Appointment_ID = ?";
+
+        try(var statement = connection.prepareStatement(deleteAppointmentQuery))
+        {
+            statement.setInt(1, ID);
+            int result = statement.executeUpdate();
+
+            return (result > 0);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
     }
 
     /**
@@ -149,7 +208,20 @@ public class AppointmentDataService implements IAppointmentData
      */
     public int DeleteAllCustomerAppointments(int customerID) throws Exception
     {
-        return 0;
+        String deleteAppointmentsQuery = "DELETE " +
+                "FROM " + dbName + ".appointments " +
+                "WHERE Customer_ID = ?";
+
+        try(var statement = connection.prepareStatement(deleteAppointmentsQuery))
+        {
+            statement.setInt(1, customerID);
+            int result = statement.executeUpdate();
+            return result;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
     }
 
     /**
@@ -161,7 +233,81 @@ public class AppointmentDataService implements IAppointmentData
      */
     public List<AppointmentModel> GetAllCustomerAppointments(int customerID) throws Exception
     {
-        return null;
+        String selectCustomerAppointmentsQuery = "SELECT * FROM " + dbName + ".appointments " +
+                "WHERE Customer_ID = ?";
+
+        List<AppointmentModel> appointments = new ArrayList<AppointmentModel>();
+
+        try(var statement = connection.prepareStatement(selectCustomerAppointmentsQuery))
+        {
+            statement.setInt(1, customerID);
+            ResultSet resultSet = statement.executeQuery();
+
+            while(resultSet.next())
+            {
+                AppointmentModel appointment = new AppointmentModel();
+                appointment.SetAppointmentID(resultSet.getInt("Appointment_ID"));
+                appointment.SetTitle(resultSet.getString("Title"));
+                appointment.SetDescription(resultSet.getString("Description"));
+                appointment.SetLocation(resultSet.getString("Location"));
+                appointment.SetAppointmentType(AppointmentTypeFromString(resultSet.getString("Type")));
+                appointment.SetStartDate(resultSet.getDate("Start"));
+                appointment.SetEndDate(resultSet.getDate("End"));
+                appointment.SetCustomerID(resultSet.getInt("Customer_ID"));
+                appointment.SetUserID(resultSet.getInt("User_ID"));
+                appointment.SetContactID(resultSet.getInt("Contact_ID"));
+                appointments.add(appointment);
+            }
+
+            return appointments;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    /**
+     * Returns all appointments for a given contact.
+     *
+     * @param contactID The contact ID.
+     * @return A list of appointments for the given contact.
+     * @throws Exception A SQL Exception.
+     */
+    public List<AppointmentModel> GetAllAppointmentsByContactID(int contactID) throws Exception
+    {
+        String selectCustomerAppointmentsQuery = "SELECT * FROM " + dbName + ".appointments " +
+                "WHERE Contact_ID = ?";
+
+        List<AppointmentModel> appointments = new ArrayList<AppointmentModel>();
+
+        try(var statement = connection.prepareStatement(selectCustomerAppointmentsQuery))
+        {
+            statement.setInt(1, contactID);
+            ResultSet resultSet = statement.executeQuery();
+
+            while(resultSet.next())
+            {
+                AppointmentModel appointment = new AppointmentModel();
+                appointment.SetAppointmentID(resultSet.getInt("Appointment_ID"));
+                appointment.SetTitle(resultSet.getString("Title"));
+                appointment.SetDescription(resultSet.getString("Description"));
+                appointment.SetLocation(resultSet.getString("Location"));
+                appointment.SetAppointmentType(AppointmentTypeFromString(resultSet.getString("Type")));
+                appointment.SetStartDate(resultSet.getDate("Start"));
+                appointment.SetEndDate(resultSet.getDate("End"));
+                appointment.SetCustomerID(resultSet.getInt("Customer_ID"));
+                appointment.SetUserID(resultSet.getInt("User_ID"));
+                appointment.SetContactID(resultSet.getInt("Contact_ID"));
+                appointments.add(appointment);
+            }
+
+            return appointments;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
     }
 
     //endregion

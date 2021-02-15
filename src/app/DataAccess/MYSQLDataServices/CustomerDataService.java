@@ -1,10 +1,14 @@
 package DataAccess.MYSQLDataServices;
 
 import DataAccess.Interfaces.ICustomerData;
+import DataAccess.Interfaces.IAppointmentData;
+import DataAccess.MYSQLDataServices.AppointmentDataService;
 import UserData.Models.CustomerModel;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class that manages customer data in SQL database.
@@ -40,17 +44,19 @@ public class CustomerDataService implements ICustomerData
         int ID = GetNextID();
         customer.SetCustomerID(ID);
 
-        String insertQuery = "INSERT INTO " + dbName + ".customers " +
+        String insertCustomerQuery = "INSERT INTO " + dbName + ".customers " +
                 "(`Customer_ID`, `Customer_Name`, `Address`, `Postal_Code`, `Phone`, `Division_ID`)"+
-                " VALUES (\'"+ customer.GetCustomerID() +
-                "\', \'" + customer.GetCustomerName() +
-                "\', \'" + customer.GetCustomerAddress() +
-                "\', \'" + customer.GetPostalCode() +
-                "\', \'" + customer.GetPhoneNumber() + "\', " +
-                customer.GetDivisionID() + ")";
+                " VALUES (?, ?, ?, ?, ?, ?)";
 
-        try (var statement = this.connection.prepareStatement(insertQuery))
+        try (var statement = this.connection.prepareStatement(insertCustomerQuery))
         {
+            statement.setInt(1, customer.GetCustomerID());
+            statement.setString(2, customer.GetCustomerName());
+            statement.setString(3, customer.GetCustomerAddress());
+            statement.setString(4, customer.GetPostalCode());
+            statement.setString(5, customer.GetPhoneNumber());
+            statement.setInt(6, customer.GetDivisionID());
+
             int result = statement.executeUpdate();
 
             if (result > 0)
@@ -76,14 +82,15 @@ public class CustomerDataService implements ICustomerData
      */
     public CustomerModel GetCustomerByID(int ID) throws Exception
     {
-        String query = "SELECT * " +
+        String selectCustomerQuery = "SELECT * " +
                 "FROM " + dbName + ".customers " +
-                "WHERE Customer_ID = " + ID;
+                "WHERE Customer_ID = ?";
 
         CustomerModel customer = new CustomerModel();
 
-        try(var statement = this.connection.prepareStatement(query))
+        try(var statement = this.connection.prepareStatement(selectCustomerQuery))
         {
+            statement.setInt(1, ID);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next())
             {
@@ -94,13 +101,13 @@ public class CustomerDataService implements ICustomerData
                 customer.SetPhoneNumber(resultSet.getString("Phone"));
                 customer.SetDivisionID(resultSet.getInt("Division_ID"));
             }
+
+            return customer;
         }
         catch (Exception ex)
         {
             throw ex;
         }
-
-        return customer;
     }
 
     /**
@@ -112,20 +119,31 @@ public class CustomerDataService implements ICustomerData
      */
     public boolean UpdateCustomer(CustomerModel customer) throws Exception
     {
-        String updateQuery = "UPDATE " + dbName + ".customers " +
+        String updateCustomerQuery = "UPDATE " + dbName + ".customers " +
                 "SET " +
-                "Customer_Name = \'" + customer.GetCustomerName() + "\', " +
-                "Address = \'" + customer.GetCustomerAddress() + "\', " +
-                "Postal_Code = \'" + customer.GetPostalCode() + "\', " +
-                "Phone = \'" + customer.GetPhoneNumber() + "\', " +
-                "Division_ID = \'" + customer.GetDivisionID() + "\' " +
-                "WHERE Customer_ID = " + customer.GetCustomerID();
+                "Customer_Name = ?, " +
+                "Address = ?, " +
+                "Postal_Code = ?, " +
+                "Phone = ?, " +
+                "Division_ID = ? " +
+                "WHERE Customer_ID = ? ";
 
-        try(var statement = connection.prepareStatement(updateQuery))
+        try(var statement = connection.prepareStatement(updateCustomerQuery))
         {
+            statement.setString(1, customer.GetCustomerName());
+            statement.setString(2, customer.GetCustomerAddress());
+            statement.setString(3, customer.GetPostalCode());
+            statement.setString(4, customer.GetPhoneNumber());
+            statement.setInt(5, customer.GetDivisionID());
+            statement.setInt(6, customer.GetCustomerID());
+
             int result = statement.executeUpdate();
 
             return  (result > 0);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
         }
     }
 
@@ -138,15 +156,60 @@ public class CustomerDataService implements ICustomerData
      */
     public boolean DeleteCustomerByID(int ID) throws Exception
     {
-        String deleteQuery = "DELETE " +
+        String deleteCustomerQuery = "DELETE " +
                 "FROM " + dbName + ".customers " +
-                "WHERE Customer_ID = " + ID;
+                "WHERE Customer_ID = ?";
 
-        try(var statement = connection.prepareStatement(deleteQuery))
+        // All customer appointments must be deleted before customers are deleted.
+        IAppointmentData appointmentDataService = new AppointmentDataService(this.connection, dbName);
+        appointmentDataService.DeleteAllCustomerAppointments(ID);
+
+        try(var statement = connection.prepareStatement(deleteCustomerQuery))
         {
+            statement.setInt(1, ID);
             int result = statement.executeUpdate();
 
             return (result > 0);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    /**
+     * Returns all customers.
+     *
+     * @return A list of all customers.
+     * @throws Exception
+     */
+    public List<CustomerModel> GetAllCustomers() throws Exception
+    {
+        String selectAllCustomers = "SELECT * " +
+                "FROM " + dbName + ".customers";
+
+        List<CustomerModel> customers = new ArrayList<CustomerModel>();
+
+        try(var statement = connection.prepareStatement(selectAllCustomers))
+        {
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next())
+            {
+                CustomerModel customer = new CustomerModel();
+                customer.SetCustomerID(resultSet.getInt("Customer_ID"));
+                customer.SetCustomerName(resultSet.getString("Customer_Name"));
+                customer.SetCustomerAddress(resultSet.getString("Address"));
+                customer.SetPostalCode(resultSet.getString("Postal_Code"));
+                customer.SetPhoneNumber(resultSet.getString("Phone"));
+                customer.SetDivisionID(resultSet.getInt("Division_ID"));
+                customers.add(customer);
+            }
+
+            return customers;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
         }
     }
 

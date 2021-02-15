@@ -2,6 +2,8 @@ package DataAccess.Interfaces;
 
 import UserData.Models.CustomerModel;
 
+import java.util.List;
+
 /**
  * Interface for customer data CRUD operations
  */
@@ -42,4 +44,12 @@ public interface ICustomerData
      * @throws Exception
      */
     public boolean DeleteCustomerByID(int ID) throws Exception;
+
+    /**
+     * Returns all customers.
+     *
+     * @return A list of all customers.
+     * @throws Exception
+     */
+    public List<CustomerModel> GetAllCustomers() throws Exception;
 }

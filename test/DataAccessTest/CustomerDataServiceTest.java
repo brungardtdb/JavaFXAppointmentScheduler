@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import static org.mockito.ArgumentMatchers.booleanThat;
@@ -19,7 +21,7 @@ import static org.mockito.Mockito.when;
 public class CustomerDataServiceTest
 {
     @Test
-    void GetUserTest() throws Exception
+    void GetCustomerTest() throws Exception
     {
 
         app.PropertiesService propertiesService = new app.PropertiesService();
@@ -51,7 +53,7 @@ public class CustomerDataServiceTest
     }
 
     @Test
-    void UpdateUserTest() throws Exception
+    void UpdateCustomerTest() throws Exception
     {
         app.PropertiesService propertiesService = new app.PropertiesService();
         Properties projectProperties = propertiesService.GetProperties();
@@ -107,6 +109,7 @@ public class CustomerDataServiceTest
         Properties projectProperties = propertiesService.GetProperties();
         DataAccessFactory dataAccessFactory = new DataAccessFactory(DataType.MYSQL, projectProperties);
         ICustomerData customerDataService;
+        IAppointmentData appointmentDataService;
         CustomerModel testCustomerModel = new CustomerModel();
 
         testCustomerModel.SetPhoneNumber("555-555-5555");
@@ -116,13 +119,16 @@ public class CustomerDataServiceTest
         testCustomerModel.SetDivisionID(103);
         int createResult;
         boolean deleteResult;
+        List<AppointmentModel> appointments;
 
         try
         {
             dataAccessFactory.ConnectToDB();
             customerDataService = dataAccessFactory.GetCustomerDataService();
+            appointmentDataService = dataAccessFactory.GetAppointmentDataService();
             createResult = customerDataService.CreateCustomer(testCustomerModel);
             deleteResult = customerDataService.DeleteCustomerByID(createResult);
+            appointments = appointmentDataService.GetAllCustomerAppointments(createResult);
         }
         catch (Exception ex)
         {
@@ -136,5 +142,36 @@ public class CustomerDataServiceTest
         Assertions.assertEquals(createResult, 4);
         Assertions.assertNotNull(createResult);
         Assertions.assertTrue(deleteResult);
+        Assertions.assertEquals(appointments.size(), 0);
+    }
+
+    @Test
+    void GetAllCustomersTest() throws Exception
+    {
+        app.PropertiesService propertiesService = new app.PropertiesService();
+        Properties projectProperties = propertiesService.GetProperties();
+        DataAccessFactory dataAccessFactory = new DataAccessFactory(DataType.MYSQL, projectProperties);
+        ICustomerData customerDataService;
+        CustomerModel testCustomerModel;
+        List<CustomerModel> customers;
+
+        try
+        {
+            dataAccessFactory.ConnectToDB();
+            customerDataService = dataAccessFactory.GetCustomerDataService();
+            customers = customerDataService.GetAllCustomers();
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+        finally
+        {
+            dataAccessFactory.DisconnectFromDB();
+        }
+
+        Assertions.assertEquals(customers.size(), 3);
+        testCustomerModel = customers.get(0);
+        Assertions.assertEquals(testCustomerModel.GetCustomerName(), "Daddy Warbucks");
     }
 }
