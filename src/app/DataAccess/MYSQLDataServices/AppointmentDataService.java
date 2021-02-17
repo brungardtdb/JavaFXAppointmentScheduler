@@ -5,15 +5,22 @@ import UserData.Enums.AppointmentType;
 import UserData.Models.AppointmentModel;
 import UserData.Models.CustomerModel;
 import javafx.scene.chart.XYChart;
+import org.mockito.internal.verification.Times;
 
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * Class that manages appointment data in SQL database.
@@ -62,8 +69,8 @@ public class AppointmentDataService implements IAppointmentData
             statement.setString(3, appointment.GetDescription());
             statement.setString(4, appointment.GetLocation());
             statement.setString(5, AppointmentTypeToString(appointment.GetAppointmentType()));
-            statement.setDate(6, (Date) appointment.GetStartDate());
-            statement.setDate(7, (Date) appointment.GetEndDate());
+            statement.setTimestamp(6, ZonedDateTimeToTimestamp(appointment.GetStartDate()));
+            statement.setTimestamp(7, ZonedDateTimeToTimestamp(appointment.GetEndDate()));
             statement.setInt(8, appointment.GetCustomerID());
             statement.setInt(9, appointment.GetUserID());
             statement.setInt(10, appointment.GetContactID());
@@ -103,18 +110,15 @@ public class AppointmentDataService implements IAppointmentData
         {
             statement.setInt(1, ID);
             ResultSet resultSet = statement.executeQuery();
-            DateFormat format = new SimpleDateFormat( "yyyy/MM/dd HH:mm:ss");
             while (resultSet.next())
-            {//'2020-05-28 12:00:00'
+            {
                 appointment.SetAppointmentID(resultSet.getInt("Appointment_ID"));
                 appointment.SetTitle(resultSet.getString("Title"));
                 appointment.SetDescription(resultSet.getString("Description"));
                 appointment.SetLocation(resultSet.getString("Location"));
                 appointment.SetAppointmentType(AppointmentTypeFromString(resultSet.getString("Type")));
-                java.util.Date startDate = new Date(resultSet.getTimestamp("Start").getTime());
-                appointment.SetStartDate(startDate);
-                appointment.SetStartDate(new java.util.Date(resultSet.getTimestamp("Start").getTime()));
-                appointment.SetEndDate(new java.util.Date(resultSet.getTimestamp("End").getTime()));
+                appointment.SetStartDate(TimestampToZonedDateTime(resultSet.getTimestamp("Start")));
+                appointment.SetEndDate(TimestampToZonedDateTime(resultSet.getTimestamp("End")));
                 appointment.SetCustomerID(resultSet.getInt("Customer_ID"));
                 appointment.SetUserID(resultSet.getInt("User_ID"));
                 appointment.SetContactID(resultSet.getInt("Contact_ID"));
@@ -156,8 +160,8 @@ public class AppointmentDataService implements IAppointmentData
             statement.setString(2, appointment.GetDescription());
             statement.setString(3, appointment.GetLocation());
             statement.setString(4, AppointmentTypeToString(appointment.GetAppointmentType()));
-            statement.setDate(5, (Date) appointment.GetStartDate());
-            statement.setDate(6, (Date) appointment.GetEndDate());
+            statement.setTimestamp(5, ZonedDateTimeToTimestamp(appointment.GetStartDate()));
+            statement.setTimestamp(6, ZonedDateTimeToTimestamp(appointment.GetEndDate()));
             statement.setInt(7, appointment.GetCustomerID());
             statement.setInt(8, appointment.GetUserID());
             statement.setInt(9, appointment.GetContactID());
@@ -251,8 +255,8 @@ public class AppointmentDataService implements IAppointmentData
                 appointment.SetDescription(resultSet.getString("Description"));
                 appointment.SetLocation(resultSet.getString("Location"));
                 appointment.SetAppointmentType(AppointmentTypeFromString(resultSet.getString("Type")));
-                appointment.SetStartDate(resultSet.getDate("Start"));
-                appointment.SetEndDate(resultSet.getDate("End"));
+                appointment.SetStartDate(TimestampToZonedDateTime(resultSet.getTimestamp("Start")));
+                appointment.SetEndDate(TimestampToZonedDateTime(resultSet.getTimestamp("End")));
                 appointment.SetCustomerID(resultSet.getInt("Customer_ID"));
                 appointment.SetUserID(resultSet.getInt("User_ID"));
                 appointment.SetContactID(resultSet.getInt("Contact_ID"));
@@ -294,8 +298,8 @@ public class AppointmentDataService implements IAppointmentData
                 appointment.SetDescription(resultSet.getString("Description"));
                 appointment.SetLocation(resultSet.getString("Location"));
                 appointment.SetAppointmentType(AppointmentTypeFromString(resultSet.getString("Type")));
-                appointment.SetStartDate(resultSet.getDate("Start"));
-                appointment.SetEndDate(resultSet.getDate("End"));
+                appointment.SetStartDate(TimestampToZonedDateTime(resultSet.getTimestamp("Start")));
+                appointment.SetEndDate(TimestampToZonedDateTime(resultSet.getTimestamp("End")));
                 appointment.SetCustomerID(resultSet.getInt("Customer_ID"));
                 appointment.SetUserID(resultSet.getInt("User_ID"));
                 appointment.SetContactID(resultSet.getInt("Contact_ID"));
@@ -389,5 +393,29 @@ public class AppointmentDataService implements IAppointmentData
 
         return  null;
     }
+
+    /**
+     * @param timestamp
+     * @return
+     */
+    private ZonedDateTime TimestampToZonedDateTime(Timestamp timestamp)
+    {
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+        ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(timestamp.toInstant(), ZoneId.of("UTC"));
+        return zonedDateTime;
+    }
+
+    /**
+     * Converts ZonedDateTime to Java.SQL.Timestamp
+     *
+     * @param zonedDateTime ZonedDateTime of date to convert.
+     * @return The date converted to Java.SQL.Timestamp.
+     */
+    private java.sql.Timestamp ZonedDateTimeToTimestamp(ZonedDateTime zonedDateTime)
+    {
+        java.sql.Timestamp timestamp = new Timestamp(zonedDateTime.toInstant().toEpochMilli());
+        return timestamp;
+    }
+
     //endregion
 }

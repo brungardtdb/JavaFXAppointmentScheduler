@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.text.DateFormat;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.Properties;
 
@@ -16,7 +18,6 @@ public class AppointmentDataServiceTest
     @Test
     void GetAppointmentTest() throws Exception
     {
-
         app.PropertiesService propertiesService = new app.PropertiesService();
         Properties projectProperties = propertiesService.GetProperties();
         DataAccess.DataAccessFactory dataAccessFactory = new DataAccess.DataAccessFactory(DataAccess.Enums.DataType.MYSQL, projectProperties);
@@ -38,15 +39,16 @@ public class AppointmentDataServiceTest
             dataAccessFactory.DisconnectFromDB();
         }
 
-//        Date startDate = DateFormat.getDateInstance().parse("2020-05-28 12:00:00");
-//        Date endDate = DateFormat.getDateInstance().parse("2020-05-28 13:00:00");
+        ZonedDateTime startDate = ZonedDateTime.of(2020, 05, 28,12,0,0,0, ZoneId.of("UTC"));
+        ZonedDateTime endDate = ZonedDateTime.of(2020, 05, 28,13,0,0,0, ZoneId.of("UTC"));
+        ZonedDateTime otherDate = ZonedDateTime.of(2020, 07, 24,12,0,0,0, ZoneId.of("UTC"));
 
         Assertions.assertEquals(testAppointmentModel.GetTitle(), "title");
         Assertions.assertEquals(testAppointmentModel.GetDescription(), "description");
         Assertions.assertEquals(testAppointmentModel.GetLocation(), "location");
         Assertions.assertEquals(testAppointmentModel.GetAppointmentType(), AppointmentType.PLANNING);
-//        Assertions.assertEquals(testAppointmentModel.GetStartDate(), startDate);
-//        Assertions.assertEquals(testAppointmentModel.GetEndDate(), endDate);
+        Assertions.assertEquals(testAppointmentModel.GetStartDate(), startDate);
+        Assertions.assertEquals(testAppointmentModel.GetEndDate(), endDate);
         Assertions.assertEquals(testAppointmentModel.GetCustomerID(), 1);
         Assertions.assertEquals(testAppointmentModel.GetUserID(), 1);
         Assertions.assertEquals(testAppointmentModel.GetContactID(), 3);
