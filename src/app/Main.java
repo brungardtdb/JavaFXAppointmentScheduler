@@ -1,6 +1,9 @@
 package app;
 
-import DataAccess.DataServices.DataConnectionService;
+import DataAccess.DataAccessFactory;
+import DataAccess.Enums.DataType;
+import DataAccess.Interfaces.ICustomerData;
+import DataAccess.MYSQLDataServices.DataConnectionService;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -34,11 +37,11 @@ public  class  Main {
     {
         app.PropertiesService propertiesService = new app.PropertiesService();
         Properties projectProperties = propertiesService.GetProperties();
-        DataConnectionService dataConnectionService = new DataConnectionService(projectProperties);
+        DataAccessFactory dataAccessFactory = new DataAccessFactory(DataType.MYSQL, projectProperties);
 
         try
         {
-            dataConnectionService.ConnectToDB();
+            dataAccessFactory.ConnectToDB();
         }
         catch (Exception ex)
         {
@@ -46,7 +49,7 @@ public  class  Main {
         }
         finally
         {
-            dataConnectionService.DisconnectFromDB();
+            dataAccessFactory.DisconnectFromDB();
         }
     }
 }

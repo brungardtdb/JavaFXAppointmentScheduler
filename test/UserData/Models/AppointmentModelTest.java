@@ -3,9 +3,11 @@ package UserData.Models;
 import UserData.Enums.AppointmentType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 public class AppointmentModelTest
 {
@@ -38,7 +40,7 @@ public class AppointmentModelTest
     @Test
     void UserIDTest()
     {
-        appointment.SetUserId(5);
+        appointment.SetUserID(5);
         Assertions.assertEquals(appointment.GetUserID(), 5);
         Assertions.assertNotEquals(appointment.GetUserID(), 50);
     }
@@ -84,8 +86,8 @@ public class AppointmentModelTest
     @Test
     void StartDateTest()
     {
-        Date startDate = new Date(System.currentTimeMillis());
-        Date otherDate = new GregorianCalendar(2018, Calendar.JULY, 24).getTime();
+        ZonedDateTime startDate = ZonedDateTime.of(2018, 05, 28,12,0,0,0, ZoneId.of("UTC"));
+        ZonedDateTime otherDate = ZonedDateTime.of(2018, 07, 24,12,0,0,0, ZoneId.of("UTC"));
         appointment.SetStartDate(startDate);
         Assertions.assertEquals(appointment.GetStartDate(), startDate);
         Assertions.assertNotEquals(appointment.GetStartDate(), otherDate);
@@ -94,8 +96,8 @@ public class AppointmentModelTest
     @Test
     void EndDateTest()
     {
-        Date endDate = new Date(System.currentTimeMillis());
-        Date otherDate = new GregorianCalendar(2018, Calendar.JULY, 24).getTime();
+        ZonedDateTime endDate = ZonedDateTime.of(2018, 05, 28,13,0,0,0, ZoneId.of("UTC"));
+        ZonedDateTime otherDate = ZonedDateTime.of(2018, 07, 24,12,0,0,0, ZoneId.of("UTC"));
         appointment.SetEndDate(endDate);
         Assertions.assertEquals(appointment.GetEndDate(), endDate);
         Assertions.assertNotEquals(appointment.GetEndDate(), otherDate);

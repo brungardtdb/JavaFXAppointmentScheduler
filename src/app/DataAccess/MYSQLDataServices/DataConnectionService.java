@@ -1,7 +1,6 @@
-package DataAccess.DataServices;
+package DataAccess.MYSQLDataServices;
 
 import java.sql.Connection;
-import java.sql.Driver;
 import java.sql.DriverManager;
 import java.util.Properties;
 
@@ -21,6 +20,7 @@ public class DataConnectionService
 
     /**
      * Class constructor, takes in project properties to build connection string
+     *
      * @param properties
      */
     public DataConnectionService(Properties properties)
@@ -30,20 +30,22 @@ public class DataConnectionService
         dbUserName = properties.getProperty("username");
         dbName = properties.getProperty("dbname");
         dbPassword = properties.getProperty("password");
-        cnnString = "jdbc:mysql://" + cnn + "/" + dbName;
+        cnnString = "jdbc:mysql://" + cnn + "/" + dbName + "?useTimezone=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
     }
 
     /**
      * Method to used by service to connect to database
+     *
      * @throws Exception
      */
     public void ConnectToDB() throws Exception
     {
-        connection = DriverManager.getConnection(cnnString, dbUserName, dbPassword);
+        this.connection = DriverManager.getConnection(cnnString, dbUserName, dbPassword);
     }
 
     /**
      * Method used to terminate database connection
+     *
      * @throws Exception
      */
     public void DisconnectFromDB() throws Exception
@@ -54,10 +56,18 @@ public class DataConnectionService
 
     /**
      * Method used by service to get database connection
+     *
      * @return Returns the database connection.
      */
     public Connection GetDBConnection()
     {
         return this.connection;
     }
+
+    /**
+     * Method for getting name of database for use in queries.
+     *
+     * @return Returns the name of the SQL database.
+     */
+    public String GetDBName() { return this.dbName; }
 }
