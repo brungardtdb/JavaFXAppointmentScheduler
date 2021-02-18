@@ -119,6 +119,7 @@ public class CustomerDataServiceTest
         testCustomerModel.SetDivisionID(103);
         int createResult;
         boolean deleteResult;
+        AppointmentModel testAppointment;
         List<AppointmentModel> appointments;
 
         try
@@ -127,6 +128,11 @@ public class CustomerDataServiceTest
             customerDataService = dataAccessFactory.GetCustomerDataService();
             appointmentDataService = dataAccessFactory.GetAppointmentDataService();
             createResult = customerDataService.CreateCustomer(testCustomerModel);
+            testAppointment = appointmentDataService.GetAppointmentByID(1);
+            testAppointment.SetCustomerID(4);
+            appointmentDataService.CreateAppointment(testAppointment);
+            appointmentDataService.CreateAppointment(testAppointment);
+            appointmentDataService.CreateAppointment(testAppointment);
             deleteResult = customerDataService.DeleteCustomerByID(createResult);
             appointments = appointmentDataService.GetAllCustomerAppointments(createResult);
         }
