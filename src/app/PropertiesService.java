@@ -9,10 +9,10 @@ import java.util.Properties;
 
 public class PropertiesService {
 
-    public java.util.Properties GetProperties() throws  Exception
+    public java.util.Properties GetProperties(String fileName) throws  Exception
     {
         String projectPath = new File("").getAbsolutePath();
-        String propertiesPath = projectPath.concat("\\src\\res\\app.properties");
+        String propertiesPath = projectPath.concat("\\src\\res\\" + fileName);
         System.out.println(propertiesPath);
         java.util.Properties projectProperties = new java.util.Properties();
         InputStream stream = new FileInputStream(propertiesPath);

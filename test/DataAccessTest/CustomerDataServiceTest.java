@@ -25,7 +25,7 @@ public class CustomerDataServiceTest
     {
 
         app.PropertiesService propertiesService = new app.PropertiesService();
-        Properties projectProperties = propertiesService.GetProperties();
+        Properties projectProperties = propertiesService.GetProperties("app.properties");
         DataAccessFactory dataAccessFactory = new DataAccessFactory(DataType.MYSQL, projectProperties);
         ICustomerData customerDataService;
         CustomerModel testCustomerModel;
@@ -56,7 +56,7 @@ public class CustomerDataServiceTest
     void UpdateCustomerTest() throws Exception
     {
         app.PropertiesService propertiesService = new app.PropertiesService();
-        Properties projectProperties = propertiesService.GetProperties();
+        Properties projectProperties = propertiesService.GetProperties("app.properties");
         DataAccessFactory dataAccessFactory = new DataAccessFactory(DataType.MYSQL, projectProperties);
         ICustomerData customerDataService;
 
@@ -106,7 +106,7 @@ public class CustomerDataServiceTest
     void CreateDeleteUserTest() throws Exception
     {
         app.PropertiesService propertiesService = new app.PropertiesService();
-        Properties projectProperties = propertiesService.GetProperties();
+        Properties projectProperties = propertiesService.GetProperties("app.properties");
         DataAccessFactory dataAccessFactory = new DataAccessFactory(DataType.MYSQL, projectProperties);
         ICustomerData customerDataService;
         IAppointmentData appointmentDataService;
@@ -155,7 +155,7 @@ public class CustomerDataServiceTest
     void GetAllCustomersTest() throws Exception
     {
         app.PropertiesService propertiesService = new app.PropertiesService();
-        Properties projectProperties = propertiesService.GetProperties();
+        Properties projectProperties = propertiesService.GetProperties("app.properties");
         DataAccessFactory dataAccessFactory = new DataAccessFactory(DataType.MYSQL, projectProperties);
         ICustomerData customerDataService;
         CustomerModel testCustomerModel;
