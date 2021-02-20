@@ -12,7 +12,7 @@ import java.util.Properties;
  */
 public class LocalizationService
 {
-    // Use Singleton design pattern, we should only need one method for localization.
+    // Use Singleton design pattern, we should only need one class for localization.
     static LocalizationService localizationService = new LocalizationService();
 
     /**
