@@ -403,7 +403,6 @@ public class AppointmentDataService implements IAppointmentData
      */
     private ZonedDateTime TimestampToZonedDateTime(Timestamp timestamp)
     {
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
         ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(timestamp.toInstant(), ZoneId.of("UTC"));
         return zonedDateTime;
     }

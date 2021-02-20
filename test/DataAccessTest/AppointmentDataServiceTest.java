@@ -20,7 +20,7 @@ public class AppointmentDataServiceTest
     void GetAppointmentTest() throws Exception
     {
         app.PropertiesService propertiesService = new app.PropertiesService();
-        Properties projectProperties = propertiesService.GetProperties();
+        Properties projectProperties = propertiesService.GetProperties("app.properties");
         DataAccess.DataAccessFactory dataAccessFactory = new DataAccess.DataAccessFactory(DataAccess.Enums.DataType.MYSQL, projectProperties);
         IAppointmentData appointmentDataService;
         AppointmentModel testAppointmentModel;
@@ -59,7 +59,7 @@ public class AppointmentDataServiceTest
     void CreateDeleteAppointmentTest() throws Exception
     {
         app.PropertiesService propertiesService = new app.PropertiesService();
-        Properties projectProperties = propertiesService.GetProperties();
+        Properties projectProperties = propertiesService.GetProperties("app.properties");
         DataAccess.DataAccessFactory dataAccessFactory = new DataAccess.DataAccessFactory(DataAccess.Enums.DataType.MYSQL, projectProperties);
         IAppointmentData appointmentDataService;
         ZonedDateTime startDate = ZonedDateTime.of(2020, 05, 28,13,0,0,0, ZoneId.of("UTC"));
@@ -105,7 +105,7 @@ public class AppointmentDataServiceTest
     void UpdateAppointmentTest() throws Exception
     {
         app.PropertiesService propertiesService = new app.PropertiesService();
-        Properties projectProperties = propertiesService.GetProperties();
+        Properties projectProperties = propertiesService.GetProperties("app.properties");
         DataAccess.DataAccessFactory dataAccessFactory = new DataAccess.DataAccessFactory(DataAccess.Enums.DataType.MYSQL, projectProperties);
         IAppointmentData appointmentDataService;
         AppointmentModel testAppointmentModel;
@@ -140,7 +140,7 @@ public class AppointmentDataServiceTest
     void GetDeleteAllCustomerAppointmentsTest() throws Exception
     {
         app.PropertiesService propertiesService = new app.PropertiesService();
-        Properties projectProperties = propertiesService.GetProperties();
+        Properties projectProperties = propertiesService.GetProperties("app.properties");
         DataAccess.DataAccessFactory dataAccessFactory = new DataAccess.DataAccessFactory(DataAccess.Enums.DataType.MYSQL, projectProperties);
         IAppointmentData appointmentDataService;
         AppointmentModel testAppointmentModel;
@@ -176,7 +176,7 @@ public class AppointmentDataServiceTest
     void GetAppointmentsByContactIDTest() throws Exception
     {
         app.PropertiesService propertiesService = new app.PropertiesService();
-        Properties projectProperties = propertiesService.GetProperties();
+        Properties projectProperties = propertiesService.GetProperties("app.properties");
         DataAccess.DataAccessFactory dataAccessFactory = new DataAccess.DataAccessFactory(DataAccess.Enums.DataType.MYSQL, projectProperties);
         IAppointmentData appointmentDataService;
         AppointmentModel testAppointmentModel;
