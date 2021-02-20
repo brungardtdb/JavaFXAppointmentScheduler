@@ -5,6 +5,7 @@ import UserData.Enums.AppointmentType;
 import UserData.Models.AppointmentModel;
 import UserData.Models.CustomerModel;
 import javafx.scene.chart.XYChart;
+import org.apiguardian.api.API;
 import org.mockito.internal.verification.Times;
 
 import java.sql.Connection;
@@ -55,7 +56,7 @@ public class AppointmentDataService implements IAppointmentData
     public int CreateAppointment(AppointmentModel appointment) throws Exception
     {
         int ID = GetNextID();
-        appointment.SetCustomerID(ID);
+        appointment.SetAppointmentID(ID);
 
         String insertQuery = "INSERT INTO " + dbName + ".appointments " +
                 "(`Appointment_ID`, `Title`, `Description`, `Location`, `Type`, `Start`, " +
@@ -151,7 +152,7 @@ public class AppointmentDataService implements IAppointmentData
                 "End = ?, " +
                 "Customer_ID = ?, " +
                 "User_ID = ?, " +
-                "Contact_ID = ?, " +
+                "Contact_ID = ? " +
                 "WHERE Appointment_ID = ?";
 
         try(var statement = connection.prepareStatement(updateAppointmentQuery))
@@ -395,8 +396,10 @@ public class AppointmentDataService implements IAppointmentData
     }
 
     /**
-     * @param timestamp
-     * @return
+     * Converts Java.SQL.Timestamp to ZonedDateTime.
+     *
+     * @param timestamp Timestamp of date to convert.
+     * @return The date converted to ZonedDateTime.
      */
     private ZonedDateTime TimestampToZonedDateTime(Timestamp timestamp)
     {
@@ -406,7 +409,7 @@ public class AppointmentDataService implements IAppointmentData
     }
 
     /**
-     * Converts ZonedDateTime to Java.SQL.Timestamp
+     * Converts ZonedDateTime to Java.SQL.Timestamp.
      *
      * @param zonedDateTime ZonedDateTime of date to convert.
      * @return The date converted to Java.SQL.Timestamp.
