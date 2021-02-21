@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="app.UI.JavaFX.Controllers.LoginController"
+            prefHeight="400.0" prefWidth="500.0"
+            stylesheets="./app/UI/style.css">
+
+    <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+
+    <top>
+        <!--VBOX to hold Zone ID Label-->
+        <VBox alignment="TOP_CENTER">
+            <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+            <Label fx:id="zoneIDLabel" />
+        </VBox>
+
+    </top>
+
+    <center>
+
+        <!--VBOX to hold login form-->
+        <VBox alignment="TOP_CENTER">
+            <padding><Insets top="0" right="15" bottom="0" left="15"/></padding>
+
+            <!--Form Label-->
+            <Label  fx:id="logInLabel">
+                <padding><Insets bottom="15" /></padding>
+            </Label>
+
+            <!--GridPane for entering username/password -->
+            <GridPane>
+
+                <Label fx:id="userNameLabel" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <padding><Insets top="15" right="15"/></padding>
+                </Label>
+
+                <TextField fx:id="userNameTextField" GridPane.columnIndex="2" GridPane.rowIndex="1"></TextField>
+
+                <Label fx:id="passwordLabel" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                    <padding><Insets top="15" right="15"/></padding>
+                </Label>
+
+                <PasswordField fx:id="passwordField" GridPane.columnIndex="2" GridPane.rowIndex="2"></PasswordField>
+
+            </GridPane>
+        </VBox>
+    </center>
+
+    <bottom>
+
+    <!--Save Button-->
+            <HBox spacing="10" alignment="TOP_CENTER">
+
+                <Button fx:id="saveButton" onAction="#handleSaveLogin">
+                    <padding><Insets top="5" left="5" bottom="5" right="5"/></padding>
+                </Button>
+
+                <!--Cancel Button-->
+                <Button fx:id="cancelButton" onAction="#handleCancelLogin">
+                    <padding><Insets top="5" left="5" bottom="5" right="5"/></padding>
+                </Button>
+            </HBox>
+
+    </bottom>
+
+</BorderPane>
