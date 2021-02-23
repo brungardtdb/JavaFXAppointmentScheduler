@@ -1,6 +1,6 @@
 package app.DataLocalization;
 
-import app.PropertiesService;
+import app.Util.PropertiesService;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;

@@ -2,13 +2,12 @@ package DataAccessTest;
 
 import UserData.Enums.AppointmentType;
 import UserData.Models.AppointmentModel;
+import app.Util.PropertiesService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.text.DateFormat;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
@@ -19,7 +18,7 @@ public class AppointmentDataServiceTest
     @Test
     void GetAppointmentTest() throws Exception
     {
-        app.PropertiesService propertiesService = new app.PropertiesService();
+        PropertiesService propertiesService = new PropertiesService();
         Properties projectProperties = propertiesService.GetProperties("app.properties");
         DataAccess.DataAccessFactory dataAccessFactory = new DataAccess.DataAccessFactory(DataAccess.Enums.DataType.MYSQL, projectProperties);
         IAppointmentData appointmentDataService;
@@ -58,7 +57,7 @@ public class AppointmentDataServiceTest
     @Test
     void CreateDeleteAppointmentTest() throws Exception
     {
-        app.PropertiesService propertiesService = new app.PropertiesService();
+        PropertiesService propertiesService = new PropertiesService();
         Properties projectProperties = propertiesService.GetProperties("app.properties");
         DataAccess.DataAccessFactory dataAccessFactory = new DataAccess.DataAccessFactory(DataAccess.Enums.DataType.MYSQL, projectProperties);
         IAppointmentData appointmentDataService;
@@ -104,7 +103,7 @@ public class AppointmentDataServiceTest
     @Test
     void UpdateAppointmentTest() throws Exception
     {
-        app.PropertiesService propertiesService = new app.PropertiesService();
+        PropertiesService propertiesService = new PropertiesService();
         Properties projectProperties = propertiesService.GetProperties("app.properties");
         DataAccess.DataAccessFactory dataAccessFactory = new DataAccess.DataAccessFactory(DataAccess.Enums.DataType.MYSQL, projectProperties);
         IAppointmentData appointmentDataService;
@@ -139,7 +138,7 @@ public class AppointmentDataServiceTest
     @Test
     void GetDeleteAllCustomerAppointmentsTest() throws Exception
     {
-        app.PropertiesService propertiesService = new app.PropertiesService();
+        PropertiesService propertiesService = new PropertiesService();
         Properties projectProperties = propertiesService.GetProperties("app.properties");
         DataAccess.DataAccessFactory dataAccessFactory = new DataAccess.DataAccessFactory(DataAccess.Enums.DataType.MYSQL, projectProperties);
         IAppointmentData appointmentDataService;
@@ -175,7 +174,7 @@ public class AppointmentDataServiceTest
     @Test
     void GetAppointmentsByContactIDTest() throws Exception
     {
-        app.PropertiesService propertiesService = new app.PropertiesService();
+        PropertiesService propertiesService = new PropertiesService();
         Properties projectProperties = propertiesService.GetProperties("app.properties");
         DataAccess.DataAccessFactory dataAccessFactory = new DataAccess.DataAccessFactory(DataAccess.Enums.DataType.MYSQL, projectProperties);
         IAppointmentData appointmentDataService;

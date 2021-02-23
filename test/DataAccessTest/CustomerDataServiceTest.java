@@ -4,19 +4,14 @@ import DataAccess.DataAccessFactory;
 import DataAccess.Enums.DataType;
 import DataAccess.Interfaces.IAppointmentData;
 import DataAccess.Interfaces.ICustomerData;
-import DataAccess.MYSQLDataServices.CustomerDataService;
 import UserData.Models.AppointmentModel;
 import UserData.Models.CustomerModel;
+import app.Util.PropertiesService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-
-import static org.mockito.ArgumentMatchers.booleanThat;
-import static org.mockito.Mockito.when;
 
 public class CustomerDataServiceTest
 {
@@ -24,7 +19,7 @@ public class CustomerDataServiceTest
     void GetCustomerTest() throws Exception
     {
 
-        app.PropertiesService propertiesService = new app.PropertiesService();
+        PropertiesService propertiesService = new PropertiesService();
         Properties projectProperties = propertiesService.GetProperties("app.properties");
         DataAccessFactory dataAccessFactory = new DataAccessFactory(DataType.MYSQL, projectProperties);
         ICustomerData customerDataService;
@@ -55,7 +50,7 @@ public class CustomerDataServiceTest
     @Test
     void UpdateCustomerTest() throws Exception
     {
-        app.PropertiesService propertiesService = new app.PropertiesService();
+        PropertiesService propertiesService = new PropertiesService();
         Properties projectProperties = propertiesService.GetProperties("app.properties");
         DataAccessFactory dataAccessFactory = new DataAccessFactory(DataType.MYSQL, projectProperties);
         ICustomerData customerDataService;
@@ -105,7 +100,7 @@ public class CustomerDataServiceTest
     @Test
     void CreateDeleteUserTest() throws Exception
     {
-        app.PropertiesService propertiesService = new app.PropertiesService();
+        PropertiesService propertiesService = new PropertiesService();
         Properties projectProperties = propertiesService.GetProperties("app.properties");
         DataAccessFactory dataAccessFactory = new DataAccessFactory(DataType.MYSQL, projectProperties);
         ICustomerData customerDataService;
@@ -154,7 +149,7 @@ public class CustomerDataServiceTest
     @Test
     void GetAllCustomersTest() throws Exception
     {
-        app.PropertiesService propertiesService = new app.PropertiesService();
+        PropertiesService propertiesService = new PropertiesService();
         Properties projectProperties = propertiesService.GetProperties("app.properties");
         DataAccessFactory dataAccessFactory = new DataAccessFactory(DataType.MYSQL, projectProperties);
         ICustomerData customerDataService;

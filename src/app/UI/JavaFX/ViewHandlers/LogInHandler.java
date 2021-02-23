@@ -1,9 +1,9 @@
-package app.UI.JavaFX;
+package app.UI.JavaFX.ViewHandlers;
 
 import DataAccess.DataAccessFactory;
 import DataAccess.Enums.DataType;
 import app.DataLocalization.LocalizationService;
-import app.PropertiesService;
+import app.Util.PropertiesService;
 import app.UI.JavaFX.Controllers.LoginController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +15,9 @@ import java.time.ZoneId;
 import java.util.Locale;
 
 
+/**
+ * Class for creating the login form.
+ */
 public class LogInHandler extends Application
 {
     private final PropertiesService propertiesService = new PropertiesService();
@@ -28,20 +31,25 @@ public class LogInHandler extends Application
     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/app/UI/JavaFX/Views/LoginView.fxml"));
     Parent root = null;
 
+    /**
+     * Constructor for login handler class.
+     *
+     * @throws Exception Java.io.FileNotFoundException.
+     */
     public LogInHandler() throws Exception { }
 
+    /**
+     * Method for starting application.
+     *
+     * @param stage The application stage.
+     * @throws Exception Java.io.FileNotFoundException.
+     */
     @Override
     public void start(Stage stage) throws Exception
     {
-        //Parent root = FXMLLoader.load(getClass().getResource("/app/UI/JavaFX/Views/LoginView.fxml"));
         root = (Parent) fxmlLoader.load();
         LoginController controller =  fxmlLoader.getController();
-        controller.SetLocalization(localizationService);
-        controller.SetDataAccessFactory(dataAccessFactory);
-        controller.SetLocale(locale);
-        controller.SetZoneID(zoneID);
-        controller.SetPropertiesService(propertiesService);
-        controller.Initialize();
+        controller.Initialize(localizationService, dataAccessFactory, locale, zoneID, propertiesService);
         stage.setTitle(loginString);
         stage.setScene(new Scene(root, 400, 250));
         stage.show();
