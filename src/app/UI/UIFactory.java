@@ -1,4 +1,4 @@
-package app.UI.JavaFX;
+package app.UI;
 
 import app.UI.Enums.UserInterfaceType;
 import app.UI.JavaFX.ViewHandlers.LogInHandler;

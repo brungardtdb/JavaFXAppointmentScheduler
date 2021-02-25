@@ -20,19 +20,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="efe0c708-2113-4624-bce0-8eddac3d9022" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/AlertService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/Util/ValidationService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/Validation/ValidationTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/AppointmentScheduleApp/DataAccess/Interfaces/IAppointmentData.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/AppointmentScheduleApp/DataAccess/Interfaces/IAppointmentData.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/AppointmentScheduleApp/DataAccess/MYSQLDataServices/AppointmentDataService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/AppointmentScheduleApp/DataAccess/MYSQLDataServices/AppointmentDataService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/AppointmentScheduleApp/DataAccessTest/AppointmentDataServiceTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/AppointmentScheduleApp/DataAccessTest/AppointmentDataServiceTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/DataAccess/Interfaces/IAppointmentData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/DataAccess/Interfaces/IAppointmentData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/DataAccess/MYSQLDataServices/AppointmentDataService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/DataAccess/MYSQLDataServices/AppointmentDataService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/DataAccess/MYSQLDataServices/DataConnectionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/DataAccess/MYSQLDataServices/DataConnectionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/ViewHandlers/LogInHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/ViewHandlers/LogInHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/DataAccessTest/AppointmentDataServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/DataAccessTest/AppointmentDataServiceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/UI/UIFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/UI/Enums/ViewType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/UIFactory.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -205,22 +196,22 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="473" y="154" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1613850970242" />
-    <state width="1493" height="162" key="GridCell.Tab.0.bottom" timestamp="1614213556409">
+    <state width="1493" height="162" key="GridCell.Tab.0.bottom" timestamp="1614216167441">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="162" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1614213556409" />
-    <state width="1493" height="162" key="GridCell.Tab.0.center" timestamp="1614213556409">
+    <state width="1493" height="162" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1614216167441" />
+    <state width="1493" height="162" key="GridCell.Tab.0.center" timestamp="1614216167441">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="162" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1614213556409" />
-    <state width="1493" height="162" key="GridCell.Tab.0.left" timestamp="1614213556409">
+    <state width="1493" height="162" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1614216167441" />
+    <state width="1493" height="162" key="GridCell.Tab.0.left" timestamp="1614216167441">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="162" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1614213556409" />
-    <state width="1493" height="162" key="GridCell.Tab.0.right" timestamp="1614213556409">
+    <state width="1493" height="162" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1614216167441" />
+    <state width="1493" height="162" key="GridCell.Tab.0.right" timestamp="1614216167441">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="162" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1614213556409" />
+    <state width="1493" height="162" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1614216167441" />
     <state width="1493" height="290" key="GridCell.Tab.1.bottom" timestamp="1614211708440">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

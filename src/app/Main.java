@@ -1,7 +1,7 @@
 package app;
 
 import app.UI.Enums.UserInterfaceType;
-import app.UI.JavaFX.UIFactory;
+import app.UI.UIFactory;
 
 public class Main
 {
