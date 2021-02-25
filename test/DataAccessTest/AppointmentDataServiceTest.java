@@ -209,4 +209,31 @@ public class AppointmentDataServiceTest
 
         Assertions.assertEquals(contactAppointments.size(), 3);
     }
+
+    @Test
+    void GetAllAppointmentsTest() throws Exception
+    {
+        PropertiesService propertiesService = new PropertiesService();
+        Properties projectProperties = propertiesService.GetProperties("app.properties");
+        DataAccess.DataAccessFactory dataAccessFactory = new DataAccess.DataAccessFactory(DataAccess.Enums.DataType.MYSQL, projectProperties);
+        IAppointmentData appointmentDataService;
+        List<AppointmentModel> allAppointments;
+
+        try
+        {
+            dataAccessFactory.ConnectToDB();
+            appointmentDataService = dataAccessFactory.GetAppointmentDataService();
+            allAppointments = appointmentDataService.GetAllAppointments();
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+        finally
+        {
+            dataAccessFactory.DisconnectFromDB();
+        }
+
+        Assertions.assertEquals(allAppointments.size(), 2);
+    }
 }

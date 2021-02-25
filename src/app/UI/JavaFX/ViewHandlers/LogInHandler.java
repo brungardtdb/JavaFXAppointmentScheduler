@@ -3,16 +3,20 @@ package app.UI.JavaFX.ViewHandlers;
 import DataAccess.DataAccessFactory;
 import DataAccess.Enums.DataType;
 import app.DataLocalization.LocalizationService;
+import app.UI.JavaFX.AlertService;
 import app.Util.PropertiesService;
 import app.UI.JavaFX.Controllers.LoginController;
+import app.Util.ValidationService;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import net.bytebuddy.asm.Advice;
 
 import java.time.ZoneId;
 import java.util.Locale;
+import java.util.Properties;
 
 
 /**
@@ -20,14 +24,13 @@ import java.util.Locale;
  */
 public class LogInHandler extends Application
 {
-    private final PropertiesService propertiesService = new PropertiesService();
-    private final LocalizationService localizationService = LocalizationService.getInstance();
-    private final DataAccess.DataAccessFactory dataAccessFactory = new DataAccessFactory(DataType.MYSQL, propertiesService.GetProperties("app.properties"));
-    Locale locale = new Locale("fr"); //used for testing
-    ZoneId zoneID = ZoneId.of("America/Montreal");
-//    Locale locale = Locale.getDefault();
-//    ZoneId zoneID = ZoneId.systemDefault();
-    String loginString = LocalizationService.getInstance().GetLocalizedMessage("loginTitle", locale);
+    PropertiesService propertiesService = new PropertiesService();
+    LocalizationService localizationService =  LocalizationService.getInstance();
+    DataAccessFactory dataAccessFactory =  new DataAccess.DataAccessFactory(DataAccess.Enums.DataType.MYSQL, propertiesService.GetProperties("app.properties"));
+    Locale locale = Locale.getDefault();
+    ZoneId zoneId = ZoneId.systemDefault();
+    AlertService alertService =  new AlertService();
+    ValidationService validationService = ValidationService.getInstance();
     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/app/UI/JavaFX/Views/LoginView.fxml"));
     Parent root = null;
 
@@ -47,11 +50,25 @@ public class LogInHandler extends Application
     @Override
     public void start(Stage stage) throws Exception
     {
-        root = (Parent) fxmlLoader.load();
-        LoginController controller =  fxmlLoader.getController();
-        controller.Initialize(localizationService, dataAccessFactory, locale, zoneID, propertiesService);
-        stage.setTitle(loginString);
-        stage.setScene(new Scene(root, 400, 250));
-        stage.show();
+        try
+        {
+            this.dataAccessFactory.ConnectToDB();
+            //Locale locale = new Locale("fr"); //used for testing
+            Locale locale = Locale.getDefault();
+            String loginString = LocalizationService.getInstance().GetLocalizedMessage("loginTitle", locale);
+
+            root = (Parent) fxmlLoader.load();
+            LoginController controller =  fxmlLoader.getController();
+            controller.Initialize(propertiesService, localizationService, dataAccessFactory, locale,
+                    zoneId, alertService, validationService);
+            stage.setTitle(loginString);
+            stage.setScene(new Scene(root, 400, 250));
+            stage.show();
+        }
+        catch (Exception ex)
+        {
+            this.dataAccessFactory.DisconnectFromDB();
+            throw ex;
+        }
     }
 }

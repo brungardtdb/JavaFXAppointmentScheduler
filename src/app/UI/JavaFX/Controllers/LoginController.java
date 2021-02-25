@@ -1,7 +1,11 @@
 package app.UI.JavaFX.Controllers;
 
+import UserData.Models.AppointmentModel;
 import app.DataLocalization.LocalizationService;
+import app.UI.JavaFX.AlertService;
 import app.Util.PropertiesService;
+
+import app.Util.ValidationService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -14,12 +18,10 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
-import java.util.function.BinaryOperator;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.function.UnaryOperator;
+import java.util.function.*;
 
 /**
  * Controller for login form.
@@ -29,8 +31,10 @@ public class LoginController
     private LocalizationService localizationService;
     private DataAccess.DataAccessFactory dataAccessFactory;
     private PropertiesService propertiesService;
+    private ValidationService validationService;
     private Locale locale;
     private ZoneId zoneID;
+    private AlertService alertService;
     @FXML private  Label logInLabel;
     @FXML private Label zoneIDLabel;
     @FXML private Label userNameLabel;
@@ -45,28 +49,31 @@ public class LoginController
      *
      * @throws Exception
      */
-    public LoginController() throws Exception { }
+    public LoginController() throws Exception {}
 
     /**
      * Method for initializing form.
      *
-     * I would prefer to use constructor injection here, but I couldn't find a great way to do that with JavaFX.
-     *
-     * @param localizationService The service used for data localization.
-     * @param dataAccessFactory The service used to access database.
+     * @param propertiesService The service for interacting with properties files.
+     * @param localizationService The service for localizing data.
+     * @param dataAccessFactory The service for data access layer.
      * @param locale The user's locale.
-     * @param zoneID The user's zone ID.
-     * @param propertiesService The service used for fetching properties files.
+     * @param zoneId The user's ZoneID
+     * @param alertService The service for providing custom alerts to the user.
+     * @param validationService The service for performing business logic validations.
      * @throws Exception Java.io.FileNotFoundException.
      */
-    public void Initialize(LocalizationService localizationService, DataAccess.DataAccessFactory dataAccessFactory,
-    Locale locale, ZoneId zoneID, PropertiesService propertiesService) throws Exception
+    public void Initialize(PropertiesService propertiesService, LocalizationService localizationService,
+                           DataAccess.DataAccessFactory dataAccessFactory, Locale locale, ZoneId zoneId,
+                           AlertService alertService, ValidationService validationService) throws Exception
     {
+        this.propertiesService = propertiesService;
         this.localizationService = localizationService;
         this.dataAccessFactory = dataAccessFactory;
         this.locale = locale;
-        this.zoneID = zoneID;
-        this.propertiesService = propertiesService;
+        this.zoneID = zoneId;
+        this.alertService = alertService;
+        this.validationService = validationService;
 
         // Set up user interface
         String localizedZoneID = localizationService.GetLocalizedMessage("zoneid", this.locale);
@@ -80,41 +87,73 @@ public class LoginController
         cancelButton.setText(cancelButtonText);
     }
 
+    /**
+     * Button event that handles login attempts.
+     *
+     * @param actionEvent A button click event.
+     * @throws Exception
+     */
     public void handleSaveLogin(ActionEvent actionEvent) throws Exception
     {
-        boolean loginIsValid = LoginIsValid(userNameTextField.getText(), passwordField.getText());
+        boolean loginIsValid = validationService.ValidateUsernamePassword(userNameTextField.getText(),
+                passwordField.getText(), this.propertiesService);
+
         LogAttempt(userNameTextField.getText(), passwordField.getText(), loginIsValid);
 
-        if (loginIsValid)
+        // show error message for invalid logins
+        if (!loginIsValid)
         {
-            // TODO - OPEN MAIN WINDOW
+           ShowLogInError();
+           return;
         }
+
+        // check for upcoming appointments
+        String titleAndHeader = "";
+        String content = "";
+        boolean upcomingAppointment = CheckForUpcomingAppointments();
+
+        if (upcomingAppointment)
+        {
+            titleAndHeader = localizationService.GetLocalizedMessage("upcomingappointment", locale);
+            content = localizationService.GetLocalizedMessage("upcomingappointmentmessage", locale);
+        }
+
+        if (!upcomingAppointment)
+        {
+            titleAndHeader = localizationService.GetLocalizedMessage("noupcomingappointment", locale);
+            content = localizationService.GetLocalizedMessage("noupcomingappointmentmessage", locale);
+        }
+
+        this.alertService.ShowAlert(Alert.AlertType.INFORMATION, titleAndHeader, titleAndHeader, content);
+
+        // TODO - OPEN MAIN WINDOW
     }
 
-    public void handleCancelLogin(ActionEvent actionEvent)
+    /**
+     * Button event for closing the form.
+     *
+     * @param actionEvent A button click event.
+     * @throws Exception
+     */
+    public void handleCancelLogin(ActionEvent actionEvent) throws Exception
     {
+        this.dataAccessFactory.DisconnectFromDB();
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
     }
 
-    private boolean LoginIsValid(String username, String password)
-    {
-        if (username.isEmpty() || username.isBlank() || password.isEmpty() || password.isBlank())
-            return false;
-
-        try
-        {
-            Properties adminProperties = this.propertiesService.GetProperties("app.properties");
-            Predicate<String> validUserName = s -> s.toLowerCase().equals(adminProperties.getProperty("adminusername").toLowerCase());
-            Predicate<String> validPassword = s -> s.equals(adminProperties.getProperty("adminpassword"));
-            return validUserName.test(username) && validPassword.test(password);
-        }
-        catch (Exception ex)
-        {
-            return false;
-        }
-    }
-
+    /**
+     * The method for logging each login attempt.
+     *
+     * I used a lambda expression here to help me log to the file without creating any extra classes.
+     * This may violate the Single Responsibility principle of SOLID, but I couldn't see breaking it out into it's
+     * own class unless we are going to do some more sophisticated logging.
+     *
+     * @param username The user entry for username.
+     * @param password The user entry for password.
+     * @param attemptIsSuccessful Whether or not the attempt was successful.
+     * @throws Exception Java.io Exception.
+     */
     private void LogAttempt(String username, String password, boolean attemptIsSuccessful) throws Exception
     {
         if (!attemptIsSuccessful)
@@ -143,8 +182,55 @@ public class LoginController
             throw new Exception(localizationService.GetLocalizedMessage("logerror", this.locale));
     }
 
-    private void ShowLogInError()
+    /**
+     * Method for displaying an error when login is unsuccessful.
+     *
+     * @throws Exception Java.io.FileNotFoundException.
+     */
+    private void ShowLogInError() throws Exception
     {
-        // TODO  - show error when login fails
+
+        String titleAndHeader = localizationService.GetLocalizedMessage("invalidlogin", locale);
+        String content = localizationService.GetLocalizedMessage("invalidloginerror", locale);
+
+        this.alertService.ShowAlert(Alert.AlertType.ERROR, titleAndHeader, titleAndHeader, content);
+    }
+
+    /**
+     * Method that checks for upcoming appointments (within 15 minutes)
+     *
+     * @return True if there is an upcoming appointment, otherwise false.
+     * @throws Exception
+     */
+    private boolean CheckForUpcomingAppointments() throws Exception
+    {
+        Boolean output = false;
+        DataAccess.Interfaces.IAppointmentData appointmentData = this.dataAccessFactory.GetAppointmentDataService();
+        List<AppointmentModel>  appointments;
+        try
+        {
+            appointments = appointmentData.GetAllAppointments();
+        }
+        catch (Exception ex)
+        {
+            this.dataAccessFactory.DisconnectFromDB();
+            throw ex;
+        }
+
+        // Iterate through list of appointments, checking start time of each, return true if a match is found
+        for (int i = 0; i < appointments.size(); i++)
+        {
+            AppointmentModel appointment = appointments.get(i);
+
+            if (this.validationService.ValidateUpcomingAppointment(appointment.GetStartDate()))
+                return true; // Return early if we find a match
+        }
+
+        // for UI testing
+//        ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(Instant.now(), ZoneId.systemDefault()).plusMinutes(6);
+//        if (this.validationService.ValidateUpcomingAppointment(zonedDateTime))
+//            return true;
+
+        return false; // Return false if no match is found
     }
 }

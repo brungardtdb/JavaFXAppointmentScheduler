@@ -234,7 +234,7 @@ public class AppointmentDataService implements IAppointmentData
      *
      * @param customerID The customer ID.
      * @return A list of customer appointments.
-     * @throws Exception
+     * @throws Exception A SQL Exception.
      */
     public List<AppointmentModel> GetAllCustomerAppointments(int customerID) throws Exception
     {
@@ -289,6 +289,46 @@ public class AppointmentDataService implements IAppointmentData
         try(var statement = connection.prepareStatement(selectCustomerAppointmentsQuery))
         {
             statement.setInt(1, contactID);
+            ResultSet resultSet = statement.executeQuery();
+
+            while(resultSet.next())
+            {
+                AppointmentModel appointment = new AppointmentModel();
+                appointment.SetAppointmentID(resultSet.getInt("Appointment_ID"));
+                appointment.SetTitle(resultSet.getString("Title"));
+                appointment.SetDescription(resultSet.getString("Description"));
+                appointment.SetLocation(resultSet.getString("Location"));
+                appointment.SetAppointmentType(AppointmentTypeFromString(resultSet.getString("Type")));
+                appointment.SetStartDate(TimestampToZonedDateTime(resultSet.getTimestamp("Start")));
+                appointment.SetEndDate(TimestampToZonedDateTime(resultSet.getTimestamp("End")));
+                appointment.SetCustomerID(resultSet.getInt("Customer_ID"));
+                appointment.SetUserID(resultSet.getInt("User_ID"));
+                appointment.SetContactID(resultSet.getInt("Contact_ID"));
+                appointments.add(appointment);
+            }
+
+            return appointments;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    /**
+     * Returns all appointments.
+     *
+     * @return A list of all appointments.
+     * @throws Exception SQL Exception.
+     */
+    public List<AppointmentModel> GetAllAppointments() throws Exception
+    {
+        String selectAppointmentsQuery = "SELECT * FROM " + dbName + ".appointments";
+
+        List<AppointmentModel> appointments = new ArrayList<AppointmentModel>();
+
+        try(var statement = connection.prepareStatement(selectAppointmentsQuery))
+        {
             ResultSet resultSet = statement.executeQuery();
 
             while(resultSet.next())

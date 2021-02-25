@@ -72,4 +72,12 @@ public interface IAppointmentData
      * @throws Exception
      */
     public List<AppointmentModel> GetAllAppointmentsByContactID(int contactID) throws Exception;
+
+    /**
+     * Returns all appointments.
+     *
+     * @return A list of all appointments.
+     * @throws Exception
+     */
+    public List<AppointmentModel> GetAllAppointments() throws Exception;
 }

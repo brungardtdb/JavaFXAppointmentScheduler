@@ -40,6 +40,8 @@ public class DataConnectionService
      */
     public void ConnectToDB() throws Exception
     {
+        /* Not sure if this is the best route to go, but I was told we would want the DB connection to be open
+        the entire time the application was running or performance would suffer */
         this.connection = DriverManager.getConnection(cnnString, dbUserName, dbPassword);
     }
 
