@@ -3,6 +3,7 @@ package app.UI.JavaFX.Controllers;
 import UserData.Models.AppointmentModel;
 import app.DataLocalization.LocalizationService;
 import app.UI.JavaFX.AlertService;
+import app.UI.JavaFX.ViewHandlers.MainHandler;
 import app.Util.PropertiesService;
 
 import app.Util.ValidationService;
@@ -35,6 +36,7 @@ public class LoginController
     private Locale locale;
     private ZoneId zoneID;
     private AlertService alertService;
+
     @FXML private  Label logInLabel;
     @FXML private Label zoneIDLabel;
     @FXML private Label userNameLabel;
@@ -126,7 +128,14 @@ public class LoginController
 
         this.alertService.ShowAlert(Alert.AlertType.INFORMATION, titleAndHeader, titleAndHeader, content);
 
-        // TODO - OPEN MAIN WINDOW
+        // open main form and pass in dependencies
+        MainHandler mainHandler = new MainHandler(this.propertiesService, this.localizationService, this.dataAccessFactory,
+                this.locale, this.zoneID, this.alertService, this.validationService);
+        mainHandler.GetMainView();
+
+        // close login form
+        Stage stage = (Stage) cancelButton.getScene().getWindow();
+        stage.close();
     }
 
     /**

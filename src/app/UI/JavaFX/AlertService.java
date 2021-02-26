@@ -23,6 +23,6 @@ public class AlertService
         alert.setHeaderText(alertHeader);
         alert.setContentText(alertContent);
         alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-        alert.show();
+        alert.showAndWait();
     }
 }
