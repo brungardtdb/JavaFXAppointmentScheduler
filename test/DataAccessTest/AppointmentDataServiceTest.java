@@ -43,15 +43,15 @@ public class AppointmentDataServiceTest
         ZonedDateTime endDate = ZonedDateTime.of(2020, 05, 28,13,0,0,0, ZoneId.of("UTC"));
         ZonedDateTime otherDate = ZonedDateTime.of(2020, 07, 24,12,0,0,0, ZoneId.of("UTC"));
 
-        Assertions.assertEquals(testAppointmentModel.GetTitle(), "title");
-        Assertions.assertEquals(testAppointmentModel.GetDescription(), "description");
-        Assertions.assertEquals(testAppointmentModel.GetLocation(), "location");
-        Assertions.assertEquals(testAppointmentModel.GetAppointmentType(), AppointmentType.PLANNING);
-        Assertions.assertEquals(testAppointmentModel.GetStartDate(), startDate);
-        Assertions.assertEquals(testAppointmentModel.GetEndDate(), endDate);
-        Assertions.assertEquals(testAppointmentModel.GetCustomerID(), 1);
-        Assertions.assertEquals(testAppointmentModel.GetUserID(), 1);
-        Assertions.assertEquals(testAppointmentModel.GetContactID(), 3);
+        Assertions.assertEquals(testAppointmentModel.getTitle(), "title");
+        Assertions.assertEquals(testAppointmentModel.getDescription(), "description");
+        Assertions.assertEquals(testAppointmentModel.getLocation(), "location");
+        Assertions.assertEquals(testAppointmentModel.getAppointmentType(), AppointmentType.PLANNING);
+        Assertions.assertEquals(testAppointmentModel.getStartDate(), startDate);
+        Assertions.assertEquals(testAppointmentModel.getEndDate(), endDate);
+        Assertions.assertEquals(testAppointmentModel.getCustomerID(), 1);
+        Assertions.assertEquals(testAppointmentModel.getUserID(), 1);
+        Assertions.assertEquals(testAppointmentModel.getContactID(), 3);
     }
 
     @Test
@@ -68,15 +68,15 @@ public class AppointmentDataServiceTest
         List<AppointmentModel> appointments;
 
         AppointmentModel testAppointmentModel = new AppointmentModel();
-        testAppointmentModel.SetTitle("Test Appointment");
-        testAppointmentModel.SetDescription("Testing Testing 123...");
-        testAppointmentModel.SetAppointmentType(AppointmentType.DEBRIEFING);
-        testAppointmentModel.SetStartDate(startDate);
-        testAppointmentModel.SetEndDate(endDate);
-        testAppointmentModel.SetContactID(3);
-        testAppointmentModel.SetCustomerID(1);
-        testAppointmentModel.SetUserID(1);
-        testAppointmentModel.SetLocation("233 S Wacker Dr, Chicago, IL");
+        testAppointmentModel.setTitle("Test Appointment");
+        testAppointmentModel.setDescription("Testing Testing 123...");
+        testAppointmentModel.setAppointmentType(AppointmentType.DEBRIEFING);
+        testAppointmentModel.setStartDate(startDate);
+        testAppointmentModel.setEndDate(endDate);
+        testAppointmentModel.setContactID(3);
+        testAppointmentModel.setCustomerID(1);
+        testAppointmentModel.setUserID(1);
+        testAppointmentModel.setLocation("233 S Wacker Dr, Chicago, IL");
 
         try
         {
@@ -116,10 +116,10 @@ public class AppointmentDataServiceTest
             dataAccessFactory.ConnectToDB();
             appointmentDataService = dataAccessFactory.GetAppointmentDataService();
             testAppointmentModel = appointmentDataService.GetAppointmentByID(1);
-            testAppointmentModel.SetAppointmentType(AppointmentType.DEBRIEFING);
+            testAppointmentModel.setAppointmentType(AppointmentType.DEBRIEFING);
             updateResult = appointmentDataService.UpdateAppointment(testAppointmentModel);
             secondTestAppointmentModel = appointmentDataService.GetAppointmentByID(1);
-            testAppointmentModel.SetAppointmentType(AppointmentType.PLANNING);
+            testAppointmentModel.setAppointmentType(AppointmentType.PLANNING);
             appointmentDataService.UpdateAppointment(testAppointmentModel);
         }
         catch (Exception ex)
@@ -131,7 +131,7 @@ public class AppointmentDataServiceTest
             dataAccessFactory.DisconnectFromDB();
         }
 
-        Assertions.assertEquals(secondTestAppointmentModel.GetAppointmentType(), AppointmentType.DEBRIEFING);
+        Assertions.assertEquals(secondTestAppointmentModel.getAppointmentType(), AppointmentType.DEBRIEFING);
         Assertions.assertTrue(updateResult);
     }
 
@@ -151,7 +151,7 @@ public class AppointmentDataServiceTest
             dataAccessFactory.ConnectToDB();
             appointmentDataService = dataAccessFactory.GetAppointmentDataService();
             testAppointmentModel = appointmentDataService.GetAppointmentByID(1);
-            testAppointmentModel.SetCustomerID(3);
+            testAppointmentModel.setCustomerID(3);
             appointmentDataService.CreateAppointment(testAppointmentModel);
             appointmentDataService.CreateAppointment(testAppointmentModel);
             appointmentDataService.CreateAppointment(testAppointmentModel);
@@ -189,7 +189,7 @@ public class AppointmentDataServiceTest
             dataAccessFactory.ConnectToDB();
             appointmentDataService = dataAccessFactory.GetAppointmentDataService();
             testAppointmentModel = appointmentDataService.GetAppointmentByID(1);
-            testAppointmentModel.SetContactID(1);
+            testAppointmentModel.setContactID(1);
             firstAppointmentID = appointmentDataService.CreateAppointment(testAppointmentModel);
             secondAppointmentID = appointmentDataService.CreateAppointment(testAppointmentModel);
             thirdAppointmentID = appointmentDataService.CreateAppointment(testAppointmentModel);

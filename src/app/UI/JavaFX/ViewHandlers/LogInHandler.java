@@ -27,6 +27,8 @@ public class LogInHandler extends Application
     PropertiesService propertiesService = new PropertiesService();
     LocalizationService localizationService =  LocalizationService.getInstance();
     DataAccessFactory dataAccessFactory =  new DataAccess.DataAccessFactory(DataAccess.Enums.DataType.MYSQL, propertiesService.GetProperties("app.properties"));
+//    Locale locale = new Locale("fr"); //used for testing
+//    ZoneId zoneId = ZoneId.of("America/Montreal"); // used for testing
     Locale locale = Locale.getDefault();
     ZoneId zoneId = ZoneId.systemDefault();
     AlertService alertService =  new AlertService();
@@ -53,9 +55,7 @@ public class LogInHandler extends Application
         try
         {
             this.dataAccessFactory.ConnectToDB();
-            //Locale locale = new Locale("fr"); //used for testing
-            Locale locale = Locale.getDefault();
-            String loginString = LocalizationService.getInstance().GetLocalizedMessage("loginTitle", locale);
+            String loginString = LocalizationService.getInstance().GetLocalizedMessage("loginTitle", this.locale);
 
             root = (Parent) fxmlLoader.load();
             LoginController controller =  fxmlLoader.getController();

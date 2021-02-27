@@ -231,7 +231,7 @@ public class LoginController
         {
             AppointmentModel appointment = appointments.get(i);
 
-            if (this.validationService.ValidateUpcomingAppointment(appointment.GetStartDate()))
+            if (this.validationService.ValidateUpcomingZonedDateTime(appointment.getStartDate()))
                 return true; // Return early if we find a match
         }
 

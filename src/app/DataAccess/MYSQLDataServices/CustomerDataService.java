@@ -42,7 +42,7 @@ public class CustomerDataService implements ICustomerData
     public int CreateCustomer(CustomerModel customer) throws Exception
     {
         int ID = GetNextID();
-        customer.SetCustomerID(ID);
+        customer.setCustomerID(ID);
 
         String insertCustomerQuery = "INSERT INTO " + dbName + ".customers " +
                 "(`Customer_ID`, `Customer_Name`, `Address`, `Postal_Code`, `Phone`, `Division_ID`)"+
@@ -50,18 +50,18 @@ public class CustomerDataService implements ICustomerData
 
         try (var statement = this.connection.prepareStatement(insertCustomerQuery))
         {
-            statement.setInt(1, customer.GetCustomerID());
-            statement.setString(2, customer.GetCustomerName());
-            statement.setString(3, customer.GetCustomerAddress());
-            statement.setString(4, customer.GetPostalCode());
-            statement.setString(5, customer.GetPhoneNumber());
-            statement.setInt(6, customer.GetDivisionID());
+            statement.setInt(1, customer.getCustomerID());
+            statement.setString(2, customer.getCustomerName());
+            statement.setString(3, customer.getCustomerAddress());
+            statement.setString(4, customer.getPostalCode());
+            statement.setString(5, customer.getPhoneNumber());
+            statement.setInt(6, customer.getDivisionID());
 
             int result = statement.executeUpdate();
 
             if (result > 0)
             {
-                return customer.GetCustomerID();
+                return customer.getCustomerID();
             }
 
             throw new Exception("User could not be created!");
@@ -94,12 +94,12 @@ public class CustomerDataService implements ICustomerData
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next())
             {
-                customer.SetCustomerID(resultSet.getInt("Customer_ID"));
-                customer.SetCustomerName(resultSet.getString("Customer_Name"));
-                customer.SetCustomerAddress(resultSet.getString("Address"));
-                customer.SetPostalCode(resultSet.getString("Postal_Code"));
-                customer.SetPhoneNumber(resultSet.getString("Phone"));
-                customer.SetDivisionID(resultSet.getInt("Division_ID"));
+                customer.setCustomerID(resultSet.getInt("Customer_ID"));
+                customer.setCustomerName(resultSet.getString("Customer_Name"));
+                customer.setCustomerAddress(resultSet.getString("Address"));
+                customer.setPostalCode(resultSet.getString("Postal_Code"));
+                customer.setPhoneNumber(resultSet.getString("Phone"));
+                customer.setDivisionID(resultSet.getInt("Division_ID"));
             }
 
             return customer;
@@ -130,12 +130,12 @@ public class CustomerDataService implements ICustomerData
 
         try(var statement = connection.prepareStatement(updateCustomerQuery))
         {
-            statement.setString(1, customer.GetCustomerName());
-            statement.setString(2, customer.GetCustomerAddress());
-            statement.setString(3, customer.GetPostalCode());
-            statement.setString(4, customer.GetPhoneNumber());
-            statement.setInt(5, customer.GetDivisionID());
-            statement.setInt(6, customer.GetCustomerID());
+            statement.setString(1, customer.getCustomerName());
+            statement.setString(2, customer.getCustomerAddress());
+            statement.setString(3, customer.getPostalCode());
+            statement.setString(4, customer.getPhoneNumber());
+            statement.setInt(5, customer.getDivisionID());
+            statement.setInt(6, customer.getCustomerID());
 
             int result = statement.executeUpdate();
 
@@ -196,12 +196,12 @@ public class CustomerDataService implements ICustomerData
             while(resultSet.next())
             {
                 CustomerModel customer = new CustomerModel();
-                customer.SetCustomerID(resultSet.getInt("Customer_ID"));
-                customer.SetCustomerName(resultSet.getString("Customer_Name"));
-                customer.SetCustomerAddress(resultSet.getString("Address"));
-                customer.SetPostalCode(resultSet.getString("Postal_Code"));
-                customer.SetPhoneNumber(resultSet.getString("Phone"));
-                customer.SetDivisionID(resultSet.getInt("Division_ID"));
+                customer.setCustomerID(resultSet.getInt("Customer_ID"));
+                customer.setCustomerName(resultSet.getString("Customer_Name"));
+                customer.setCustomerAddress(resultSet.getString("Address"));
+                customer.setPostalCode(resultSet.getString("Postal_Code"));
+                customer.setPhoneNumber(resultSet.getString("Phone"));
+                customer.setDivisionID(resultSet.getInt("Division_ID"));
                 customers.add(customer);
             }
 

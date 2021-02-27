@@ -9,17 +9,17 @@ public class CustomerModelTest
     @Test
     void CustomerIDTest()
     {
-        customer.SetCustomerID(5);
-        Assertions.assertEquals(customer.GetCustomerID(), 5);
-        Assertions.assertNotEquals(customer.GetCustomerID(), 50);
+        customer.setCustomerID(5);
+        Assertions.assertEquals(customer.getCustomerID(), 5);
+        Assertions.assertNotEquals(customer.getCustomerID(), 50);
     }
 
     @Test
     void CustomerNameTest()
     {
-        customer.SetCustomerName("Julian Assange");
-        Assertions.assertEquals(customer.GetCustomerName(), "Julian Assange");
-        Assertions.assertNotEquals(customer.GetCustomerName(), "John Doe");
+        customer.setCustomerName("Julian Assange");
+        Assertions.assertEquals(customer.getCustomerName(), "Julian Assange");
+        Assertions.assertNotEquals(customer.getCustomerName(), "John Doe");
     }
 
     @Test
@@ -27,9 +27,9 @@ public class CustomerModelTest
     {
         String address = "20 W 34th St, New York, NY";
         String secondAddress = "233 S Wacker Dr, Chicago, IL";
-        customer.SetCustomerAddress((address));
-        Assertions.assertEquals(customer.GetCustomerAddress(), address);
-        Assertions.assertNotEquals(customer.GetCustomerAddress(), secondAddress);
+        customer.setCustomerAddress((address));
+        Assertions.assertEquals(customer.getCustomerAddress(), address);
+        Assertions.assertNotEquals(customer.getCustomerAddress(), secondAddress);
     }
 
     @Test
@@ -37,9 +37,9 @@ public class CustomerModelTest
     {
         String postalCode = "60606";
         String secondPostalCode = "10112";
-        customer.SetPostalCode(postalCode);
-        Assertions.assertEquals(customer.GetPostalCode(), postalCode);
-        Assertions.assertNotEquals(customer.GetPostalCode(), secondPostalCode);
+        customer.setPostalCode(postalCode);
+        Assertions.assertEquals(customer.getPostalCode(), postalCode);
+        Assertions.assertNotEquals(customer.getPostalCode(), secondPostalCode);
     }
 
     @Test
@@ -47,21 +47,21 @@ public class CustomerModelTest
     {
         String phoneNumber = "777-777-7777";
         String secondPhoneNumber = "555-555-5555";
-        customer.SetPhoneNumber(phoneNumber);
-        Assertions.assertEquals(customer.GetPhoneNumber(), phoneNumber);
-        Assertions.assertNotEquals(customer.GetPhoneNumber(), secondPhoneNumber);
+        customer.setPhoneNumber(phoneNumber);
+        Assertions.assertEquals(customer.getPhoneNumber(), phoneNumber);
+        Assertions.assertNotEquals(customer.getPhoneNumber(), secondPhoneNumber);
     }
 
     @Test
     void CustomerAppointmentTest()
     {
         AppointmentModel appointment = new AppointmentModel();
-        appointment.SetAppointmentID(5);
-        customer.AddAppointment(appointment);
+        appointment.setAppointmentID(5);
+        customer.addAppointment(appointment);
         Assertions.assertEquals(customer.getAllAppointments().size(), 1);
-        Assertions.assertNull(customer.GetAppointment(6));
-        Assertions.assertNotNull(customer.GetAppointment(5));
-        customer.RemoveAppointment(5);
+        Assertions.assertNull(customer.getAppointment(6));
+        Assertions.assertNotNull(customer.getAppointment(5));
+        customer.removeAppointment(5);
         Assertions.assertEquals(customer.getAllAppointments().size(), 0);
     }
 }

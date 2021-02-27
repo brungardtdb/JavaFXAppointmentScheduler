@@ -56,7 +56,7 @@ public class AppointmentDataService implements IAppointmentData
     public int CreateAppointment(AppointmentModel appointment) throws Exception
     {
         int ID = GetNextID();
-        appointment.SetAppointmentID(ID);
+        appointment.setAppointmentID(ID);
 
         String insertQuery = "INSERT INTO " + dbName + ".appointments " +
                 "(`Appointment_ID`, `Title`, `Description`, `Location`, `Type`, `Start`, " +
@@ -65,22 +65,22 @@ public class AppointmentDataService implements IAppointmentData
 
         try (var statement = this.connection.prepareStatement(insertQuery))
         {
-            statement.setInt(1, appointment.GetAppointmentID());
-            statement.setString(2, appointment.GetTitle());
-            statement.setString(3, appointment.GetDescription());
-            statement.setString(4, appointment.GetLocation());
-            statement.setString(5, AppointmentTypeToString(appointment.GetAppointmentType()));
-            statement.setTimestamp(6, ZonedDateTimeToTimestamp(appointment.GetStartDate()));
-            statement.setTimestamp(7, ZonedDateTimeToTimestamp(appointment.GetEndDate()));
-            statement.setInt(8, appointment.GetCustomerID());
-            statement.setInt(9, appointment.GetUserID());
-            statement.setInt(10, appointment.GetContactID());
+            statement.setInt(1, appointment.getAppointmentID());
+            statement.setString(2, appointment.getTitle());
+            statement.setString(3, appointment.getDescription());
+            statement.setString(4, appointment.getLocation());
+            statement.setString(5, AppointmentTypeToString(appointment.getAppointmentType()));
+            statement.setTimestamp(6, ZonedDateTimeToTimestamp(appointment.getStartDate()));
+            statement.setTimestamp(7, ZonedDateTimeToTimestamp(appointment.getEndDate()));
+            statement.setInt(8, appointment.getCustomerID());
+            statement.setInt(9, appointment.getUserID());
+            statement.setInt(10, appointment.getContactID());
 
             int result = statement.executeUpdate();
 
             if (result > 0)
             {
-                return appointment.GetAppointmentID();
+                return appointment.getAppointmentID();
             }
 
             throw new Exception("Appointment could not be created!");
@@ -113,16 +113,16 @@ public class AppointmentDataService implements IAppointmentData
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next())
             {
-                appointment.SetAppointmentID(resultSet.getInt("Appointment_ID"));
-                appointment.SetTitle(resultSet.getString("Title"));
-                appointment.SetDescription(resultSet.getString("Description"));
-                appointment.SetLocation(resultSet.getString("Location"));
-                appointment.SetAppointmentType(AppointmentTypeFromString(resultSet.getString("Type")));
-                appointment.SetStartDate(TimestampToZonedDateTime(resultSet.getTimestamp("Start")));
-                appointment.SetEndDate(TimestampToZonedDateTime(resultSet.getTimestamp("End")));
-                appointment.SetCustomerID(resultSet.getInt("Customer_ID"));
-                appointment.SetUserID(resultSet.getInt("User_ID"));
-                appointment.SetContactID(resultSet.getInt("Contact_ID"));
+                appointment.setAppointmentID(resultSet.getInt("Appointment_ID"));
+                appointment.setTitle(resultSet.getString("Title"));
+                appointment.setDescription(resultSet.getString("Description"));
+                appointment.setLocation(resultSet.getString("Location"));
+                appointment.setAppointmentType(AppointmentTypeFromString(resultSet.getString("Type")));
+                appointment.setStartDate(TimestampToZonedDateTime(resultSet.getTimestamp("Start")));
+                appointment.setEndDate(TimestampToZonedDateTime(resultSet.getTimestamp("End")));
+                appointment.setCustomerID(resultSet.getInt("Customer_ID"));
+                appointment.setUserID(resultSet.getInt("User_ID"));
+                appointment.setContactID(resultSet.getInt("Contact_ID"));
             }
 
             return appointment;
@@ -157,16 +157,16 @@ public class AppointmentDataService implements IAppointmentData
 
         try(var statement = connection.prepareStatement(updateAppointmentQuery))
         {
-            statement.setString(1, appointment.GetTitle());
-            statement.setString(2, appointment.GetDescription());
-            statement.setString(3, appointment.GetLocation());
-            statement.setString(4, AppointmentTypeToString(appointment.GetAppointmentType()));
-            statement.setTimestamp(5, ZonedDateTimeToTimestamp(appointment.GetStartDate()));
-            statement.setTimestamp(6, ZonedDateTimeToTimestamp(appointment.GetEndDate()));
-            statement.setInt(7, appointment.GetCustomerID());
-            statement.setInt(8, appointment.GetUserID());
-            statement.setInt(9, appointment.GetContactID());
-            statement.setInt(10, appointment.GetAppointmentID());
+            statement.setString(1, appointment.getTitle());
+            statement.setString(2, appointment.getDescription());
+            statement.setString(3, appointment.getLocation());
+            statement.setString(4, AppointmentTypeToString(appointment.getAppointmentType()));
+            statement.setTimestamp(5, ZonedDateTimeToTimestamp(appointment.getStartDate()));
+            statement.setTimestamp(6, ZonedDateTimeToTimestamp(appointment.getEndDate()));
+            statement.setInt(7, appointment.getCustomerID());
+            statement.setInt(8, appointment.getUserID());
+            statement.setInt(9, appointment.getContactID());
+            statement.setInt(10, appointment.getAppointmentID());
 
             int result = statement.executeUpdate();
 
@@ -251,16 +251,16 @@ public class AppointmentDataService implements IAppointmentData
             while(resultSet.next())
             {
                 AppointmentModel appointment = new AppointmentModel();
-                appointment.SetAppointmentID(resultSet.getInt("Appointment_ID"));
-                appointment.SetTitle(resultSet.getString("Title"));
-                appointment.SetDescription(resultSet.getString("Description"));
-                appointment.SetLocation(resultSet.getString("Location"));
-                appointment.SetAppointmentType(AppointmentTypeFromString(resultSet.getString("Type")));
-                appointment.SetStartDate(TimestampToZonedDateTime(resultSet.getTimestamp("Start")));
-                appointment.SetEndDate(TimestampToZonedDateTime(resultSet.getTimestamp("End")));
-                appointment.SetCustomerID(resultSet.getInt("Customer_ID"));
-                appointment.SetUserID(resultSet.getInt("User_ID"));
-                appointment.SetContactID(resultSet.getInt("Contact_ID"));
+                appointment.setAppointmentID(resultSet.getInt("Appointment_ID"));
+                appointment.setTitle(resultSet.getString("Title"));
+                appointment.setDescription(resultSet.getString("Description"));
+                appointment.setLocation(resultSet.getString("Location"));
+                appointment.setAppointmentType(AppointmentTypeFromString(resultSet.getString("Type")));
+                appointment.setStartDate(TimestampToZonedDateTime(resultSet.getTimestamp("Start")));
+                appointment.setEndDate(TimestampToZonedDateTime(resultSet.getTimestamp("End")));
+                appointment.setCustomerID(resultSet.getInt("Customer_ID"));
+                appointment.setUserID(resultSet.getInt("User_ID"));
+                appointment.setContactID(resultSet.getInt("Contact_ID"));
                 appointments.add(appointment);
             }
 
@@ -294,16 +294,16 @@ public class AppointmentDataService implements IAppointmentData
             while(resultSet.next())
             {
                 AppointmentModel appointment = new AppointmentModel();
-                appointment.SetAppointmentID(resultSet.getInt("Appointment_ID"));
-                appointment.SetTitle(resultSet.getString("Title"));
-                appointment.SetDescription(resultSet.getString("Description"));
-                appointment.SetLocation(resultSet.getString("Location"));
-                appointment.SetAppointmentType(AppointmentTypeFromString(resultSet.getString("Type")));
-                appointment.SetStartDate(TimestampToZonedDateTime(resultSet.getTimestamp("Start")));
-                appointment.SetEndDate(TimestampToZonedDateTime(resultSet.getTimestamp("End")));
-                appointment.SetCustomerID(resultSet.getInt("Customer_ID"));
-                appointment.SetUserID(resultSet.getInt("User_ID"));
-                appointment.SetContactID(resultSet.getInt("Contact_ID"));
+                appointment.setAppointmentID(resultSet.getInt("Appointment_ID"));
+                appointment.setTitle(resultSet.getString("Title"));
+                appointment.setDescription(resultSet.getString("Description"));
+                appointment.setLocation(resultSet.getString("Location"));
+                appointment.setAppointmentType(AppointmentTypeFromString(resultSet.getString("Type")));
+                appointment.setStartDate(TimestampToZonedDateTime(resultSet.getTimestamp("Start")));
+                appointment.setEndDate(TimestampToZonedDateTime(resultSet.getTimestamp("End")));
+                appointment.setCustomerID(resultSet.getInt("Customer_ID"));
+                appointment.setUserID(resultSet.getInt("User_ID"));
+                appointment.setContactID(resultSet.getInt("Contact_ID"));
                 appointments.add(appointment);
             }
 
@@ -334,16 +334,16 @@ public class AppointmentDataService implements IAppointmentData
             while(resultSet.next())
             {
                 AppointmentModel appointment = new AppointmentModel();
-                appointment.SetAppointmentID(resultSet.getInt("Appointment_ID"));
-                appointment.SetTitle(resultSet.getString("Title"));
-                appointment.SetDescription(resultSet.getString("Description"));
-                appointment.SetLocation(resultSet.getString("Location"));
-                appointment.SetAppointmentType(AppointmentTypeFromString(resultSet.getString("Type")));
-                appointment.SetStartDate(TimestampToZonedDateTime(resultSet.getTimestamp("Start")));
-                appointment.SetEndDate(TimestampToZonedDateTime(resultSet.getTimestamp("End")));
-                appointment.SetCustomerID(resultSet.getInt("Customer_ID"));
-                appointment.SetUserID(resultSet.getInt("User_ID"));
-                appointment.SetContactID(resultSet.getInt("Contact_ID"));
+                appointment.setAppointmentID(resultSet.getInt("Appointment_ID"));
+                appointment.setTitle(resultSet.getString("Title"));
+                appointment.setDescription(resultSet.getString("Description"));
+                appointment.setLocation(resultSet.getString("Location"));
+                appointment.setAppointmentType(AppointmentTypeFromString(resultSet.getString("Type")));
+                appointment.setStartDate(TimestampToZonedDateTime(resultSet.getTimestamp("Start")));
+                appointment.setEndDate(TimestampToZonedDateTime(resultSet.getTimestamp("End")));
+                appointment.setCustomerID(resultSet.getInt("Customer_ID"));
+                appointment.setUserID(resultSet.getInt("User_ID"));
+                appointment.setContactID(resultSet.getInt("Contact_ID"));
                 appointments.add(appointment);
             }
 

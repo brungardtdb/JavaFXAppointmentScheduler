@@ -123,9 +123,16 @@
                         </Label>
 
                     <!--Sort appointments by week-->
-                        <RadioButton fx:id="sortByWeek" onAction="#weeklyChecked" selected="true">
+
+                        <RadioButton fx:id="sortByAll" onAction="#allChecked" selected="true">
                             <toggleGroup>
                                 <ToggleGroup fx:id="sortAppointmentsBy"/>
+                            </toggleGroup>
+                        </RadioButton>
+
+                        <RadioButton fx:id="sortByWeek" onAction="#weeklyChecked">
+                            <toggleGroup>
+                                <fx:reference source="sortAppointmentsBy"/>
                             </toggleGroup>
                         </RadioButton>
 
@@ -135,6 +142,7 @@
                                 <fx:reference source ="sortAppointmentsBy"/>
                             </toggleGroup>
                         </RadioButton>
+
                     </HBox>
 
                     <!-- HBox for appointment table -->
