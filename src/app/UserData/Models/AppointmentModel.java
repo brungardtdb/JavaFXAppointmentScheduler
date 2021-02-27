@@ -17,14 +17,14 @@ public class AppointmentModel
      *
      * @param id The appointment ID.
      */
-    public void  SetAppointmentID(int id) { this.appointmentID = id; }
+    public void  setAppointmentID(int id) { this.appointmentID = id; }
 
     /**
      * Getter for appointment ID.
      *
      * @return The appointment ID.
      */
-    public int GetAppointmentID() { return this.appointmentID; }
+    public int getAppointmentID() { return this.appointmentID; }
 
     private int contactID;
 
@@ -33,14 +33,14 @@ public class AppointmentModel
      *
      * @param id The contact ID.
      */
-    public void SetContactID(int id) { this.contactID = id; }
+    public void setContactID(int id) { this.contactID = id; }
 
     /**
      * Getter for contact ID.
      *
      * @return The contact ID.
      */
-    public int GetContactID() { return this.contactID; }
+    public int getContactID() { return this.contactID; }
 
     private int customerID;
 
@@ -49,14 +49,14 @@ public class AppointmentModel
      *
      * @param id The customer ID.
      */
-    public void SetCustomerID(int id) { this.customerID = id; }
+    public void setCustomerID(int id) { this.customerID = id; }
 
     /**
      * Getter for customer ID.
      *
      * @return The customer ID.
      */
-    public int GetCustomerID() { return this.customerID; }
+    public int getCustomerID() { return this.customerID; }
 
     private int userID;
 
@@ -65,14 +65,14 @@ public class AppointmentModel
      *
      * @param id The user ID.
      */
-    public void SetUserID(int id) { this.userID = id; }
+    public void setUserID(int id) { this.userID = id; }
 
     /**
      * Getter for user ID.
      *
      * @return The user ID.
      */
-    public int GetUserID() { return this.userID; }
+    public int getUserID() { return this.userID; }
 
     private String title;
 
@@ -81,14 +81,14 @@ public class AppointmentModel
      *
      * @param title The appointment title.
      */
-    public void SetTitle(String title) { this.title = title; }
+    public void setTitle(String title) { this.title = title; }
 
     /**
      * Getter for appointment title.
      *
      * @return The appointment title.
      */
-    public String GetTitle() { return this.title; }
+    public String getTitle() { return this.title; }
 
     private String description;
 
@@ -97,14 +97,14 @@ public class AppointmentModel
      *
      * @param description The appointment description.
      */
-    public void SetDescription(String description) { this.description = description; }
+    public void setDescription(String description) { this.description = description; }
 
     /**
      * Getter for appointment description.
      *
      * @return The appointment description.
      */
-    public String GetDescription() { return this.description; }
+    public String getDescription() { return this.description; }
 
     private String location;
 
@@ -113,14 +113,14 @@ public class AppointmentModel
      *
      * @param location The appointment location.
      */
-    public void SetLocation(String location) { this.location = location; }
+    public void setLocation(String location) { this.location = location; }
 
     /**
      * Getter for appointment location.
      *
      * @return The appointment location.
      */
-    public String GetLocation() { return this.location; }
+    public String getLocation() { return this.location; }
 
     private AppointmentType appointmentType;
 
@@ -129,31 +129,30 @@ public class AppointmentModel
      *
      * @param appointmentType The appointment type.
      */
-    public void SetAppointmentType(AppointmentType appointmentType) { this.appointmentType = appointmentType; }
+    public void setAppointmentType(AppointmentType appointmentType) { this.appointmentType = appointmentType; }
 
     /**
      * Getter for appointment type.
      *
      * @return The appointment type.
      */
-    public AppointmentType GetAppointmentType() { return this.appointmentType; }
+    public AppointmentType getAppointmentType() { return this.appointmentType; }
 
     private ZonedDateTime startDate;
-
 
     /**
      * Setter for appointment start date.
      *
      * @param zonedDateTime The appointment start date.
      */
-    public void SetStartDate(ZonedDateTime zonedDateTime) { this.startDate = zonedDateTime; }
+    public void setStartDate(ZonedDateTime zonedDateTime) { this.startDate = zonedDateTime; }
 
     /**
      * Getter for appointment start date.
      *
      * @return The appointment start date.
      */
-    public ZonedDateTime GetStartDate() { return this.startDate; }
+    public ZonedDateTime getStartDate() { return this.startDate; }
 
     private ZonedDateTime endDate;
 
@@ -163,7 +162,7 @@ public class AppointmentModel
      *
      * @param zonedDateTime The end date for appointment.
      */
-    public void SetEndDate(ZonedDateTime zonedDateTime) { this.endDate = zonedDateTime; }
+    public void setEndDate(ZonedDateTime zonedDateTime) { this.endDate = zonedDateTime; }
 
 
     /**
@@ -171,5 +170,5 @@ public class AppointmentModel
      *
      * @return The end date for appointment.
      */
-    public ZonedDateTime GetEndDate() { return this.endDate; }
+    public ZonedDateTime getEndDate() { return this.endDate; }
 }

@@ -14,14 +14,14 @@ public class CustomerModel
      *
      * @param id
      */
-    public void SetCustomerID(int id) { this.customerID = id; }
+    public void setCustomerID(int id) { this.customerID = id; }
 
     /**
      * Getter for customer ID.
      *
      * @return Returns customer ID.
      */
-    public int GetCustomerID() { return this.customerID; }
+    public int getCustomerID() { return this.customerID; }
 
     private String customerName;
 
@@ -30,14 +30,14 @@ public class CustomerModel
      *
      * @param customerName
      */
-    public void SetCustomerName(String customerName) { this.customerName = customerName; }
+    public void setCustomerName(String customerName) { this.customerName = customerName; }
 
     /**
      * Getter for customer name.
      *
      * @return Returns customer name.
      */
-    public String GetCustomerName() { return this.customerName; }
+    public String getCustomerName() { return this.customerName; }
 
     private String customerAddress;
 
@@ -46,14 +46,14 @@ public class CustomerModel
      *
      * @param customerAddress
      */
-    public void SetCustomerAddress(String customerAddress) { this.customerAddress = customerAddress; }
+    public void setCustomerAddress(String customerAddress) { this.customerAddress = customerAddress; }
 
     /**
      * Getter for customer address.
      *
      * @return Returns customer address.
      */
-    public String GetCustomerAddress() { return this.customerAddress; }
+    public String getCustomerAddress() { return this.customerAddress; }
 
     private String postalCode;
 
@@ -62,14 +62,14 @@ public class CustomerModel
      *
      * @param postalCode
      */
-    public void SetPostalCode(String postalCode) { this.postalCode = postalCode; }
+    public void setPostalCode(String postalCode) { this.postalCode = postalCode; }
 
     /**
      * Getter for customer postal code.
      *
      * @return Returns postal code.
      */
-    public String GetPostalCode() { return this.postalCode; }
+    public String getPostalCode() { return this.postalCode; }
 
     private String phoneNumber;
 
@@ -78,14 +78,14 @@ public class CustomerModel
      *
      * @param phoneNumber
      */
-    public void SetPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
+    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
 
     /**
      * Getter for customer phone number.
      *
      * @return Returns customer phone number.
      */
-    public String GetPhoneNumber() { return this.phoneNumber; }
+    public String getPhoneNumber() { return this.phoneNumber; }
 
     private ArrayList<AppointmentModel> appointments = new ArrayList<AppointmentModel>();
 
@@ -94,7 +94,7 @@ public class CustomerModel
      *
      * @param appointment
      */
-    public void AddAppointment(AppointmentModel appointment) { appointments.add(appointment); }
+    public void addAppointment(AppointmentModel appointment) { appointments.add(appointment); }
 
     /**
      * Gets appointment based on ID.
@@ -107,12 +107,12 @@ public class CustomerModel
      * @param id
      * @return Returns appointment or null if no appointment is found.
      */
-    public AppointmentModel GetAppointment(int id)
+    public AppointmentModel getAppointment(int id)
     {
         try
         {
             return appointments.stream()
-                    .filter(x -> x.GetAppointmentID() == id)
+                    .filter(x -> x.getAppointmentID() == id)
                     .findFirst()
                     .get();
         }
@@ -130,9 +130,9 @@ public class CustomerModel
      *
      * @param id
      */
-    public void RemoveAppointment(int id)
+    public void removeAppointment(int id)
     {
-        appointments.removeIf(x -> x.GetAppointmentID() == id);
+        appointments.removeIf(x -> x.getAppointmentID() == id);
     }
 
     /**
@@ -152,7 +152,7 @@ public class CustomerModel
      *
      * @param ID
      */
-    public void SetDivisionID(int ID)
+    public void setDivisionID(int ID)
     {
         this.divisionID = ID;
     }
@@ -162,7 +162,7 @@ public class CustomerModel
      *
      * @return Returns division ID.
      */
-    public int GetDivisionID()
+    public int getDivisionID()
     {
         return this.divisionID;
     }

@@ -40,11 +40,11 @@ public class CustomerDataServiceTest
             dataAccessFactory.DisconnectFromDB();
         }
 
-        Assertions.assertEquals(testCustomerModel.GetCustomerName(), "Daddy Warbucks");
-        Assertions.assertEquals(testCustomerModel.GetCustomerAddress(), "1919 Boardwalk");
-        Assertions.assertEquals(testCustomerModel.GetPostalCode(), "01291");
-        Assertions.assertEquals(testCustomerModel.GetPhoneNumber(), "869-908-1875");
-        Assertions.assertEquals(testCustomerModel.GetDivisionID(), 29);
+        Assertions.assertEquals(testCustomerModel.getCustomerName(), "Daddy Warbucks");
+        Assertions.assertEquals(testCustomerModel.getCustomerAddress(), "1919 Boardwalk");
+        Assertions.assertEquals(testCustomerModel.getPostalCode(), "01291");
+        Assertions.assertEquals(testCustomerModel.getPhoneNumber(), "869-908-1875");
+        Assertions.assertEquals(testCustomerModel.getDivisionID(), 29);
     }
 
     @Test
@@ -56,20 +56,20 @@ public class CustomerDataServiceTest
         ICustomerData customerDataService;
 
         CustomerModel testCustomerModel = new CustomerModel();
-        testCustomerModel.SetCustomerID(1);
-        testCustomerModel.SetPhoneNumber("869-908-1875");
-        testCustomerModel.SetPostalCode("01291");
-        testCustomerModel.SetCustomerAddress("1919 Boardwalk");
-        testCustomerModel.SetCustomerName("Dr. Daddy Warbucks");
-        testCustomerModel.SetDivisionID(29);
+        testCustomerModel.setCustomerID(1);
+        testCustomerModel.setPhoneNumber("869-908-1875");
+        testCustomerModel.setPostalCode("01291");
+        testCustomerModel.setCustomerAddress("1919 Boardwalk");
+        testCustomerModel.setCustomerName("Dr. Daddy Warbucks");
+        testCustomerModel.setDivisionID(29);
 
         CustomerModel customerNameFix = new CustomerModel();
-        customerNameFix.SetCustomerID(testCustomerModel.GetCustomerID());
-        customerNameFix.SetCustomerName("Daddy Warbucks");
-        customerNameFix.SetPhoneNumber(testCustomerModel.GetPhoneNumber());
-        customerNameFix.SetPostalCode(testCustomerModel.GetPostalCode());
-        customerNameFix.SetCustomerAddress(testCustomerModel.GetCustomerAddress());
-        customerNameFix.SetDivisionID(testCustomerModel.GetDivisionID());
+        customerNameFix.setCustomerID(testCustomerModel.getCustomerID());
+        customerNameFix.setCustomerName("Daddy Warbucks");
+        customerNameFix.setPhoneNumber(testCustomerModel.getPhoneNumber());
+        customerNameFix.setPostalCode(testCustomerModel.getPostalCode());
+        customerNameFix.setCustomerAddress(testCustomerModel.getCustomerAddress());
+        customerNameFix.setDivisionID(testCustomerModel.getDivisionID());
 
         boolean result;
         boolean nameFixResult;
@@ -93,7 +93,7 @@ public class CustomerDataServiceTest
         }
 
         Assertions.assertTrue(result);
-        Assertions.assertEquals(customerResult.GetCustomerName(), "Dr. Daddy Warbucks");
+        Assertions.assertEquals(customerResult.getCustomerName(), "Dr. Daddy Warbucks");
         Assertions.assertTrue(nameFixResult);
     }
 
@@ -107,11 +107,11 @@ public class CustomerDataServiceTest
         IAppointmentData appointmentDataService;
         CustomerModel testCustomerModel = new CustomerModel();
 
-        testCustomerModel.SetPhoneNumber("555-555-5555");
-        testCustomerModel.SetPostalCode("84015");
-        testCustomerModel.SetCustomerAddress("233 S Wacker Dr, Chicago, IL");
-        testCustomerModel.SetCustomerName("John Doe");
-        testCustomerModel.SetDivisionID(103);
+        testCustomerModel.setPhoneNumber("555-555-5555");
+        testCustomerModel.setPostalCode("84015");
+        testCustomerModel.setCustomerAddress("233 S Wacker Dr, Chicago, IL");
+        testCustomerModel.setCustomerName("John Doe");
+        testCustomerModel.setDivisionID(103);
         int createResult;
         boolean deleteResult;
         AppointmentModel testAppointment;
@@ -124,7 +124,7 @@ public class CustomerDataServiceTest
             appointmentDataService = dataAccessFactory.GetAppointmentDataService();
             createResult = customerDataService.CreateCustomer(testCustomerModel);
             testAppointment = appointmentDataService.GetAppointmentByID(1);
-            testAppointment.SetCustomerID(4);
+            testAppointment.setCustomerID(4);
             appointmentDataService.CreateAppointment(testAppointment);
             appointmentDataService.CreateAppointment(testAppointment);
             appointmentDataService.CreateAppointment(testAppointment);
@@ -173,6 +173,6 @@ public class CustomerDataServiceTest
 
         Assertions.assertEquals(customers.size(), 3);
         testCustomerModel = customers.get(0);
-        Assertions.assertEquals(testCustomerModel.GetCustomerName(), "Daddy Warbucks");
+        Assertions.assertEquals(testCustomerModel.getCustomerName(), "Daddy Warbucks");
     }
 }
