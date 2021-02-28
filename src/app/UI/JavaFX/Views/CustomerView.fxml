@@ -6,9 +6,113 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
+<?import javafx.geometry.Insets?>
+<BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="app.UI.JavaFX.Views.CustomerView"
-            prefHeight="400.0" prefWidth="600.0">
+            fx:controller="app.UI.JavaFX.Controllers.CustomerController"
+            prefHeight="450.0" prefWidth="400.0"
+            stylesheets="./app/UI/style.css">
 
-</AnchorPane>
+    <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+
+    <top>
+        <!-- Label for customer form -->
+        <Label fx:id="customerLabel" alignment="TOP_CENTER">
+            <padding><Insets bottom="15" /></padding>
+        </Label>
+    </top>
+
+    <center>
+        <!-- GridPane to host options for adding/modifying customers -->
+        <VBox alignment="TOP_CENTER">
+            <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+
+            <GridPane alignment="TOP_CENTER">
+
+                <!-- Customer ID -->
+                <Label fx:id="customerIDLabel" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <padding><Insets top="15" right="15"/></padding>
+                </Label>
+
+                <TextField fx:id="customerIDField" GridPane.columnIndex="2" GridPane.rowIndex="1" disable="true"></TextField>
+
+                <!-- Customer Name -->
+                <Label fx:id="customerNameLabel" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                    <padding><Insets top="15" right="15"/></padding>
+                </Label>
+
+                <TextField fx:id="customerNameField" GridPane.columnIndex="2" GridPane.rowIndex="2"></TextField>
+
+                <!-- Customer Phone -->
+                <Label fx:id="customerPhoneLabel" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                    <padding><Insets top="15" right="15"/></padding>
+                </Label>
+
+                <TextField fx:id="customerPhoneField" GridPane.columnIndex="2" GridPane.rowIndex="3"></TextField>
+
+                <!-- Customer Address -->
+                <Label fx:id="customerAddressLabel" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                    <padding><Insets top="15" right="15"/></padding>
+                </Label>
+
+                <TextField fx:id="customerAddressField" GridPane.columnIndex="2" GridPane.rowIndex="4"></TextField>
+
+                <Label fx:id="customerVillageLabel" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                    <padding><Insets top="15" right="15"/></padding>
+                </Label>
+
+                <TextField fx:id="customerVillageField" GridPane.columnIndex="2" GridPane.rowIndex="5" disable="true"></TextField>
+
+                <Label fx:id="customerCityLabel" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                    <padding><Insets top="15" right="15"/></padding>
+                </Label>
+
+                <TextField fx:id="customerCityField" GridPane.columnIndex="2" GridPane.rowIndex="6"></TextField>
+
+                <!-- Customer Postal Code -->
+                <Label fx:id="customerZipLabel" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                    <padding><Insets top="15" right="15"/></padding>
+                </Label>
+
+                <TextField fx:id="customerZipField" GridPane.columnIndex="2" GridPane.rowIndex="7"></TextField>
+
+                <!-- Customer Country -->
+                <Label fx:id="customerCountryLabel" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                    <padding><Insets top="15" right="15"/></padding>
+                </Label>
+
+                <ComboBox fx:id="customerCountry" GridPane.columnIndex="2" GridPane.rowIndex="8"></ComboBox>
+
+                <!-- Customer Division -->
+                <Label fx:id="customerDivisionLabel" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                    <padding><Insets top="15" right="15"/></padding>
+                </Label>
+
+                <ComboBox fx:id="customerDivision" GridPane.columnIndex="2" GridPane.rowIndex="9"></ComboBox>
+
+            </GridPane>
+
+        </VBox>
+
+    </center>
+
+    <bottom>
+        <HBox spacing="10" alignment="TOP_CENTER">
+
+            <Button fx:id="saveCustomer" onAction="#handleSaveCustomer">
+                <padding><Insets top="5" left="5" bottom="5" right="5"/></padding>
+            </Button>
+
+            <!--Cancel Button-->
+            <Button fx:id="cancelCustomer" onAction="#handleCancelCustomer">
+                <padding><Insets top="5" left="5" bottom="5" right="5"/></padding>
+            </Button>
+
+        </HBox>
+
+
+
+    </bottom>
+
+
+</BorderPane>

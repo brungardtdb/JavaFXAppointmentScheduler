@@ -95,11 +95,11 @@ public class LocalizationService
      * Formats addresses for UK.
      *
      * @param street Street for address.
+     * @param village Village for address.
      * @param city City for address.
-     * @param country Country for address.
      * @return The formatted address.
      */
-    private String FormatUKAddress(String street, String city, String country) { return street + ", " + city + ", " + country; }
+    private String FormatUKAddress(String street, String village, String city) { return street + ", " + village + ", " + city; }
 
     /**
      * Returns string message in proper language for given locale.

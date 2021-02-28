@@ -4,6 +4,7 @@ import UserData.Models.AppointmentModel;
 import UserData.Models.CustomerModel;
 import app.DataLocalization.LocalizationService;
 import app.UI.JavaFX.AlertService;
+import app.UI.JavaFX.ViewHandlers.CustomerHandler;
 import app.Util.PropertiesService;
 import app.Util.ValidationService;
 import javafx.collections.FXCollections;
@@ -140,17 +141,43 @@ public class MainController
 
     public void handleAddCustomer(ActionEvent actionEvent)
     {
-
+        CustomerHandler customerHandler = new CustomerHandler(this.propertiesService, this.localizationService,
+                this.dataAccessFactory, this.locale, this.zoneId, this.alertService, this.validationService,
+                this, false);
+        customerHandler.GetCustomerView();
     }
 
-    public void handleModifyCustomer(ActionEvent actionEvent)
+    public void handleModifyCustomer(ActionEvent actionEvent) throws Exception
     {
+        CustomerModel customer = GetCustomerToModify();
+        if (customer != null)
+        {
+            CustomerHandler customerHandler = new CustomerHandler(this.propertiesService, this.localizationService,
+                    this.dataAccessFactory, this.locale, this.zoneId, this.alertService, this.validationService,
+                    this, true);
+            customerHandler.GetCustomer(customer);
+            customerHandler.GetCustomerView();
+            return;
+        }
 
+        // Display warning if no customer was selected
+        String titleAndHeader = localizationService.GetLocalizedMessage("invalidselection", this.locale);
+        String body = localizationService.GetLocalizedMessage("pleaseselectcustomer", this.locale);
+        this.alertService.ShowAlert(Alert.AlertType.WARNING,titleAndHeader, titleAndHeader, body);
     }
 
     public void handleDeleteCustomer(ActionEvent actionEvent)
     {
 
+    }
+
+    private CustomerModel GetCustomerToModify()
+    {
+        if (customerTable.getSelectionModel().getSelectedItem() != null)
+        {
+            return ((CustomerModel) customerTable.getSelectionModel().getSelectedItem());
+        }
+        return null;
     }
 
     public void handleAddAppointment(ActionEvent actionEvent)
@@ -166,6 +193,15 @@ public class MainController
     public void handleDeleteAppointment(ActionEvent actionEvent)
     {
 
+    }
+
+    private AppointmentModel GetAppointmentToModify()
+    {
+        if (appointmentTable.getSelectionModel().getSelectedItem() != null)
+        {
+            return ((AppointmentModel) appointmentTable.getSelectionModel().getSelectedItem());
+        }
+        return null;
     }
 
     /**
