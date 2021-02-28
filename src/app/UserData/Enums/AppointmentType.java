@@ -1,4 +1,4 @@
-package UserData.Enums;
+package app.UserData.Enums;
 
 /**
  * Enumeration to specify type of appointment.

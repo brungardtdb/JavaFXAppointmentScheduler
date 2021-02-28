@@ -1,6 +1,7 @@
 package app.UI.JavaFX.ViewHandlers;
 
-import UserData.Models.AppointmentModel;
+import app.UserData.Models.AppointmentModel;
+import app.DataAccess.DataAccessFactory;
 import app.DataLocalization.LocalizationService;
 import app.UI.JavaFX.AlertService;
 import app.UI.JavaFX.Controllers.MainController;
@@ -26,14 +27,14 @@ public class MainHandler
 {
     private PropertiesService propertiesService;
     private LocalizationService localizationService;
-    private DataAccess.DataAccessFactory dataAccessFactory;
+    private DataAccessFactory dataAccessFactory;
     private Locale locale;
     ZoneId zoneId;
     AlertService alertService;
     ValidationService validationService;
 
     public MainHandler(PropertiesService propertiesService, LocalizationService localizationService,
-                       DataAccess.DataAccessFactory dataAccessFactory, Locale locale, ZoneId zoneId,
+                       DataAccessFactory dataAccessFactory, Locale locale, ZoneId zoneId,
                        AlertService alertService, ValidationService validationService)
     {
         this.propertiesService = propertiesService;

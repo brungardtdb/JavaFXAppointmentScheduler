@@ -1,6 +1,6 @@
-package UserData.Models;
+package app.UserData.Models;
 
-import UserData.Enums.AppointmentType;
+import app.UserData.Enums.AppointmentType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

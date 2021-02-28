@@ -1,9 +1,9 @@
-package DataAccess;
+package app.DataAccess;
 
-import DataAccess.Enums.DataType;
-import DataAccess.Interfaces.IAppointmentData;
-import DataAccess.Interfaces.ICustomerData;
-import DataAccess.MYSQLDataServices.AppointmentDataService;
+import app.DataAccess.Enums.DataType;
+import app.DataAccess.Interfaces.IAppointmentData;
+import app.DataAccess.Interfaces.ICustomerData;
+import app.DataAccess.MYSQLDataServices.AppointmentDataService;
 import DataAccess.MYSQLDataServices.CustomerDataService;
 import DataAccess.MYSQLDataServices.DataConnectionService;
 

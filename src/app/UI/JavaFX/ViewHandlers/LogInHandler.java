@@ -1,7 +1,7 @@
 package app.UI.JavaFX.ViewHandlers;
 
-import DataAccess.DataAccessFactory;
-import DataAccess.Enums.DataType;
+import app.DataAccess.DataAccessFactory;
+import app.DataAccess.Enums.DataType;
 import app.DataLocalization.LocalizationService;
 import app.UI.JavaFX.AlertService;
 import app.Util.PropertiesService;
@@ -26,7 +26,7 @@ public class LogInHandler extends Application
 {
     PropertiesService propertiesService = new PropertiesService();
     LocalizationService localizationService =  LocalizationService.getInstance();
-    DataAccessFactory dataAccessFactory =  new DataAccess.DataAccessFactory(DataAccess.Enums.DataType.MYSQL, propertiesService.GetProperties("app.properties"));
+    DataAccessFactory dataAccessFactory =  new DataAccessFactory(DataType.MYSQL, propertiesService.GetProperties("app.properties"));
 //    Locale locale = new Locale("fr"); //used for testing
 //    ZoneId zoneId = ZoneId.of("America/Montreal"); // used for testing
     Locale locale = Locale.getDefault();

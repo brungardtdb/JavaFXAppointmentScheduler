@@ -1,7 +1,10 @@
 package app.UI.JavaFX.Controllers;
 
-import UserData.Models.AppointmentModel;
-import UserData.Models.CustomerModel;
+import app.UserData.Models.AppointmentModel;
+import app.UserData.Models.CustomerModel;
+import app.DataAccess.DataAccessFactory;
+import app.DataAccess.Interfaces.IAppointmentData;
+import app.DataAccess.Interfaces.ICustomerData;
 import app.DataLocalization.LocalizationService;
 import app.UI.JavaFX.AlertService;
 import app.UI.JavaFX.ViewHandlers.CustomerHandler;
@@ -32,7 +35,7 @@ public class MainController
 {
     private PropertiesService propertiesService;
     private LocalizationService localizationService;
-    private DataAccess.DataAccessFactory dataAccessFactory;
+    private DataAccessFactory dataAccessFactory;
     private Locale locale;
     ZoneId zoneId;
     AlertService alertService;
@@ -90,7 +93,7 @@ public class MainController
      * @throws Exception
      */
     public void Initialize(PropertiesService propertiesService, LocalizationService localizationService,
-                           DataAccess.DataAccessFactory dataAccessFactory, Locale locale, ZoneId zoneId,
+                           DataAccessFactory dataAccessFactory, Locale locale, ZoneId zoneId,
                            AlertService alertService, ValidationService validationService) throws Exception
     {
         this.propertiesService = propertiesService;
@@ -220,7 +223,7 @@ public class MainController
     {
         try
         {
-            DataAccess.Interfaces.ICustomerData customerData = dataAccessFactory.GetCustomerDataService();
+            ICustomerData customerData = dataAccessFactory.GetCustomerDataService();
             ArrayList<CustomerModel> customerModelArrayList = (ArrayList<CustomerModel>) customerData.GetAllCustomers();
             ObservableList<CustomerModel> customers = FXCollections.observableArrayList(customerModelArrayList);
 
@@ -248,7 +251,7 @@ public class MainController
     {        
         try 
         {
-            DataAccess.Interfaces.IAppointmentData appointmentData = dataAccessFactory.GetAppointmentDataService();
+            IAppointmentData appointmentData = dataAccessFactory.GetAppointmentDataService();
             ArrayList<AppointmentModel> appointmentModelArrayList = (ArrayList<AppointmentModel>) appointmentData.GetAllAppointments();
             ArrayList<AppointmentModel> updatedAppointments = new ArrayList<AppointmentModel>();
 

@@ -1,6 +1,9 @@
 package app.UI.JavaFX.Controllers;
 
-import UserData.Models.AppointmentModel;
+import app.UserData.Models.AppointmentModel;
+import app.DataAccess.Interfaces.IAppointmentData;
+import app.DataAccess.Interfaces.ICustomerData;
+import app.DataAccess.DataAccessFactory;
 import app.DataLocalization.LocalizationService;
 import app.UI.JavaFX.AlertService;
 import app.UI.JavaFX.ViewHandlers.MainHandler;
@@ -30,7 +33,7 @@ import java.util.function.*;
 public class LoginController
 {
     private LocalizationService localizationService;
-    private DataAccess.DataAccessFactory dataAccessFactory;
+    private DataAccessFactory dataAccessFactory;
     private PropertiesService propertiesService;
     private ValidationService validationService;
     private Locale locale;
@@ -66,7 +69,7 @@ public class LoginController
      * @throws Exception Java.io.FileNotFoundException.
      */
     public void Initialize(PropertiesService propertiesService, LocalizationService localizationService,
-                           DataAccess.DataAccessFactory dataAccessFactory, Locale locale, ZoneId zoneId,
+                           DataAccessFactory dataAccessFactory, Locale locale, ZoneId zoneId,
                            AlertService alertService, ValidationService validationService) throws Exception
     {
         this.propertiesService = propertiesService;
@@ -214,7 +217,7 @@ public class LoginController
     private boolean CheckForUpcomingAppointments() throws Exception
     {
         Boolean output = false;
-        DataAccess.Interfaces.IAppointmentData appointmentData = this.dataAccessFactory.GetAppointmentDataService();
+        IAppointmentData appointmentData = this.dataAccessFactory.GetAppointmentDataService();
         List<AppointmentModel>  appointments;
         try
         {

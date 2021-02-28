@@ -1,7 +1,7 @@
 package app.UI.JavaFX.Controllers;
 
-import DataAccess.DataAccessFactory;
-import UserData.Models.CustomerModel;
+import app.DataAccess.DataAccessFactory;
+import app.UserData.Models.CustomerModel;
 import app.DataLocalization.LocalizationService;
 import app.UI.JavaFX.AlertService;
 import app.Util.PropertiesService;
@@ -22,7 +22,7 @@ public class CustomerController
 {
     private PropertiesService propertiesService;
     private LocalizationService localizationService;
-    private DataAccess.DataAccessFactory dataAccessFactory;
+    private DataAccessFactory dataAccessFactory;
     private Locale locale;
     ZoneId zoneId;
     AlertService alertService;
