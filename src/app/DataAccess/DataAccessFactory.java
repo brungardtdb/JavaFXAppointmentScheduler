@@ -2,12 +2,15 @@ package app.DataAccess;
 
 import app.DataAccess.Enums.DataType;
 import app.DataAccess.Interfaces.IAppointmentData;
+import app.DataAccess.Interfaces.ICountryData;
 import app.DataAccess.Interfaces.ICustomerData;
+import app.DataAccess.Interfaces.IDivisionData;
 import app.DataAccess.MYSQLDataServices.AppointmentDataService;
 import DataAccess.MYSQLDataServices.CustomerDataService;
 import DataAccess.MYSQLDataServices.DataConnectionService;
+import app.DataAccess.MYSQLDataServices.CountryDataService;
+import app.DataAccess.MYSQLDataServices.DivisionDataService;
 
-import javax.xml.datatype.DatatypeConfigurationException;
 import java.sql.Connection;
 import java.util.Properties;
 
@@ -28,8 +31,8 @@ public class DataAccessFactory
     /**
      * Constructor for data access factory, takes data access type and project properties as arguments.
      *
-     * @param dataType
-     * @param properties
+     * @param dataType The specified database type.
+     * @param properties The properties for the project.
      * @throws Exception Throws UnsupportedOperationException if unsupported database type is used.
      */
     public DataAccessFactory(DataType dataType, Properties properties) throws Exception {
@@ -74,7 +77,7 @@ public class DataAccessFactory
             case MYSQL: this.dataConnectionService.ConnectToDB();
             CreateConnection();
                     break;
-            case MONGODB:
+            case MONGODB: throw new UnsupportedOperationException(mongoError);
             default: throw new UnsupportedOperationException();
         }
     }
@@ -90,7 +93,7 @@ public class DataAccessFactory
         {
             case MYSQL: this.dataConnectionService.DisconnectFromDB();
                 break;
-            case MONGODB:
+            case MONGODB: throw new UnsupportedOperationException(mongoError);
             default: throw new UnsupportedOperationException();
         }
     }
@@ -98,7 +101,7 @@ public class DataAccessFactory
     /**
      * Gets service for customer data based on corresponding database type.
      *
-     * @return Returns customer data service.
+     * @return The customer data service.
      * @throws Exception Throws UnsupportedOperationException if unsupported database type is used.
      */
     public ICustomerData GetCustomerDataService() throws Exception
@@ -106,7 +109,7 @@ public class DataAccessFactory
         switch (this.dataType)
         {
             case MYSQL: return new CustomerDataService(this.connection, this.dataConnectionService.GetDBName());
-            case MONGODB:
+            case MONGODB: throw new UnsupportedOperationException(mongoError);
             default: throw new UnsupportedOperationException();
         }
     }
@@ -114,7 +117,7 @@ public class DataAccessFactory
     /**
      * Gets service for appointment data based on corresponding database type.
      *
-     * @return Returns appointment data service.
+     * @return The appointment data service.
      * @throws Exception Throws UnsupportedOperationException if unsupported database type is used.
      */
     public IAppointmentData GetAppointmentDataService() throws Exception
@@ -122,8 +125,41 @@ public class DataAccessFactory
         switch (this.dataType)
         {
             case MYSQL: return new AppointmentDataService(this.connection, this.dataConnectionService.GetDBName());
-            case MONGODB:
+            case MONGODB: throw new UnsupportedOperationException(mongoError);
             default: throw new UnsupportedOperationException();
         }
     }
+
+    /**
+     * Gets service for country data based on corresponding database type.
+     *
+     * @return The country data service.
+     * @throws Exception Throws UnsupportedOperationException if unsupported database type is used.
+     */
+    public ICountryData GetCountryDataService() throws Exception
+    {
+        switch (this.dataType)
+        {
+            case MYSQL: return new CountryDataService(this.connection, this.dataConnectionService.GetDBName());
+            case MONGODB: throw new UnsupportedOperationException(mongoError);
+            default: throw new UnsupportedOperationException();
+        }
+    }
+
+    /**
+     * Gets service for division data based on corresponding database type.
+     *
+     * @return The division data service.
+     * @throws Exception Throws UnsupportedOperationException if unsupported database type is used.
+     */
+    public IDivisionData GetDivisionDataService() throws Exception
+    {
+        switch (this.dataType)
+        {
+            case MYSQL: return new DivisionDataService(this.connection, this.dataConnectionService.GetDBName());
+            case MONGODB: throw new UnsupportedOperationException(mongoError);
+            default: throw new UnsupportedOperationException();
+        }
+    }
+
 }

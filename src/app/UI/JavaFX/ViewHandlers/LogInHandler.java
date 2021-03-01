@@ -67,7 +67,6 @@ public class LogInHandler extends Application
         }
         catch (Exception ex)
         {
-            this.dataAccessFactory.DisconnectFromDB();
             throw ex;
         }
     }
