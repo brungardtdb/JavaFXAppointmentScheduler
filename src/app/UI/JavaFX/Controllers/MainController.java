@@ -142,6 +142,11 @@ public class MainController
         UpdateTables();
     }
 
+    /**
+     * Method for adding a customer, opens the customer form.
+     *
+     * @param actionEvent The "Add" button click event for customer.
+     */
     public void handleAddCustomer(ActionEvent actionEvent)
     {
         CustomerHandler customerHandler = new CustomerHandler(this.propertiesService, this.localizationService,
@@ -150,6 +155,12 @@ public class MainController
         customerHandler.GetCustomerView();
     }
 
+    /**
+     * Method for modifying a customer, opens the customer form.
+     *
+     * @param actionEvent The "Modify" button click event for customer.
+     * @throws Exception Java.io.FileNotFoundException.
+     */
     public void handleModifyCustomer(ActionEvent actionEvent) throws Exception
     {
         CustomerModel customer = GetCustomerToModify();
@@ -169,11 +180,46 @@ public class MainController
         this.alertService.ShowAlert(Alert.AlertType.WARNING,titleAndHeader, titleAndHeader, body);
     }
 
-    public void handleDeleteCustomer(ActionEvent actionEvent)
+    /**
+     * Method for deleting a customer.
+     *
+     * @param actionEvent The "Delete" button click event for customer.
+     * @throws Exception Java.io.FileNotFoundException.
+     */
+    public void handleDeleteCustomer(ActionEvent actionEvent) throws Exception
     {
+        String titleAndHeader = this.localizationService.GetLocalizedMessage("deletecustomer", this.locale);
+        String body = this.localizationService.GetLocalizedMessage("confirmdeletecustomer", this.locale);
+        ICustomerData customerDataService = this.dataAccessFactory.GetCustomerDataService();
 
+        if (alertService.ShowConfirmation(titleAndHeader, titleAndHeader, body))
+        {
+            CustomerModel customerToDelete = GetCustomerToModify();
+            if (customerToDelete == null)
+            {
+                // Display warning if no customer was selected
+                titleAndHeader = localizationService.GetLocalizedMessage("invalidselection", this.locale);
+                body = localizationService.GetLocalizedMessage("pleaseselectcustomer", this.locale);
+                this.alertService.ShowAlert(Alert.AlertType.WARNING,titleAndHeader, titleAndHeader, body);
+                return;
+            }
+
+            if (customerDataService.DeleteCustomerByID(customerToDelete.getCustomerID()))
+            {
+                String deleteMessage = this.localizationService.GetLocalizedMessage("customerdeleteconfirmation", this.locale)
+                        + "\n" + customerToDelete.getCustomerName();
+                alertService.ShowAlert(Alert.AlertType.INFORMATION, titleAndHeader, titleAndHeader, deleteMessage);
+                UpdateCustomerTable();
+                return;
+            }
+        }
     }
 
+    /**
+     * Method for retrieving selected customer from table.
+     *
+     * @return Customer if one is selected, otherwise null.
+     */
     private CustomerModel GetCustomerToModify()
     {
         if (customerTable.getSelectionModel().getSelectedItem() != null)
@@ -198,6 +244,11 @@ public class MainController
 
     }
 
+    /**
+     * Method for retrieving selected appointment from table.
+     *
+     * @return Appointment if one is selected, otherwise null.
+     */
     private AppointmentModel GetAppointmentToModify()
     {
         if (appointmentTable.getSelectionModel().getSelectedItem() != null)

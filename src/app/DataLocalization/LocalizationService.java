@@ -71,15 +71,30 @@ public class LocalizationService
      * Formats address based on zone ID.
      *
      * @param street Street for address.
+     * @param village Village for address.
      * @param city City for address.
-     * @param country Country for address.
      * @param zoneId Zone ID for address.
      * @return The formatted address.
      */
-    public String FormatAddress(String street, String city, String country, ZoneId zoneId)
+    public String FormatAddress(String street, String village, String city, ZoneId zoneId)
     {
         return zoneId.equals(ZoneId.of("Europe/London")) ?
-                FormatUKAddress(street, city, country) : FormatUSandCAAddress(street, city);
+                FormatUKAddress(street, village, city) : FormatUSandCAAddress(street, city);
+    }
+
+    /**
+     * Formats address based on zone ID.
+     *
+     * @param street Street for address.
+     * @param village Village for address.
+     * @param city City for address.
+     * @param ukManualOverride A manual override for UK addresses (true=UK)
+     * @return The formatted address.
+     */
+    public String FormatAddress(String street, String village, String city, boolean ukManualOverride)
+    {
+        return ukManualOverride ?
+                FormatUKAddress(street, village, city) : FormatUSandCAAddress(street, city);
     }
 
     /**

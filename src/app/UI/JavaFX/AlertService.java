@@ -1,7 +1,10 @@
 package app.UI.JavaFX;
 
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Region;
+
+import java.util.Optional;
 
 /**
  * Service for sending alerts to the user.
@@ -25,4 +28,30 @@ public class AlertService
         alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         alert.showAndWait();
     }
+
+    /**
+     * Method for asking for confirmation from user.
+     *
+     * @param confirmationTitle The confirmation title.
+     * @param confirmationHeader The confirmation header.
+     * @param confirmationContent The confirmation message body.
+     * @return True if "ok" was selected, otherwise false.
+     */
+    public boolean ShowConfirmation(String confirmationTitle, String confirmationHeader, String confirmationContent)
+    {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(confirmationTitle);
+        alert.setHeaderText(confirmationHeader);
+        alert.setContentText(confirmationContent);
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+
+        Optional<ButtonType> confirmation = alert.showAndWait();
+
+        if (confirmation.get() == ButtonType.OK)
+        {
+            return true;
+        }
+        return false;
+    }
+
 }

@@ -2,8 +2,8 @@ package app.UI.JavaFX.Controllers;
 
 import app.DataAccess.DataAccessFactory;
 import app.DataAccess.Interfaces.ICountryData;
+import app.DataAccess.Interfaces.ICustomerData;
 import app.DataAccess.Interfaces.IDivisionData;
-import app.DataAccess.MYSQLDataServices.CountryDataService;
 import app.UserData.Models.CountryModel;
 import app.UserData.Models.CustomerModel;
 import app.DataLocalization.LocalizationService;
@@ -20,8 +20,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -44,6 +42,7 @@ public class CustomerController
     private MainController mainController;
     private boolean modifyingCustomer;
     private CustomerModel customer;
+    private boolean isUK;
     List<CountryModel> countries = new ArrayList<CountryModel>();
     List<DivisionModel> divisions = new ArrayList<DivisionModel>();
 
@@ -88,6 +87,7 @@ public class CustomerController
         this.countryDataService = this.dataAccessFactory.GetCountryDataService();
         this.divisionDataService = this.dataAccessFactory.GetDivisionDataService();
 
+        // Set up form
         String message = modifyingCustomer ? "modifycustomer" : "addcustomer";
         customerLabel.setText(this.localizationService.GetLocalizedMessage(message, this.locale));
         customerIDLabel.setText(this.localizationService.GetLocalizedMessage("ID", this.locale));
@@ -136,27 +136,7 @@ public class CustomerController
         this.customerIDField.setText(String.valueOf(this.customer.getCustomerID()));
         this.customerNameField.setText(this.customer.getCustomerName());
         this.customerPhoneField.setText(this.customer.getPhoneNumber());
-
-        String customerAddress = this.customer.getCustomerAddress();
-        if (customerAddress != null && !customerAddress.isEmpty())
-        {
-            String[] address = customerAddress.split(",", 3);
-            switch (address.length)
-            {
-                case 3:
-                    this.customerAddressField.setText(address[0]);
-                    this.customerVillageField.setText(address[1]);
-                    this.customerCityField.setText(address[3]);
-                    break;
-                case 2:
-                    this.customerAddressField.setText(address[0]);
-                    this.customerCityField.setText(address[1]);
-                    break;
-                default:
-                    this.customerAddressField.setText(address[0]);
-            }
-        }
-
+        GetCustomerAddress();
         this.customerZipField.setText(this.customer.getPostalCode());
         int divID = this.customer.getDivisionID();
 
@@ -176,9 +156,28 @@ public class CustomerController
         customerDivision.getSelectionModel().select(currentCustomerDivision.getDivision());
     }
 
-    public void saveCustomerData()
+    private void GetCustomerAddress()
     {
-
+        String customerAddress = this.customer.getCustomerAddress();
+        // Parse address, village, and city from address using comma delimiter
+        if (customerAddress != null && !customerAddress.isEmpty())
+        {
+            String[] address = customerAddress.split(",", 3);
+            switch (address.length)
+            {
+                case 3:
+                    this.customerAddressField.setText(address[0]);
+                    this.customerVillageField.setText(address[1]);
+                    this.customerCityField.setText(address[3]);
+                    break;
+                case 2:
+                    this.customerAddressField.setText(address[0]);
+                    this.customerCityField.setText(address[1]);
+                    break;
+                default:
+                    this.customerAddressField.setText(address[0]);
+            }
+        }
     }
 
     public void SetDivisonValues(String country)
@@ -188,6 +187,7 @@ public class CustomerController
         switch (country)
         {
             case "U.S":
+                isUK = false;
                 filteredDivisions = divisions.stream()
                         .filter(x -> x.getCountryID() == 1)
                         .collect(Collectors.toList());
@@ -198,6 +198,7 @@ public class CustomerController
                 customerVillageField.setDisable(true);
                 break;
             case "UK":
+                isUK = true;
                 filteredDivisions = divisions.stream()
                         .filter(x -> x.getCountryID() == 2)
                         .collect(Collectors.toList());
@@ -208,6 +209,7 @@ public class CustomerController
                 customerVillageField.setDisable(false);
                 break;
             case "Canada":
+                isUK = false;
                 filteredDivisions = divisions.stream()
                         .filter(x -> x.getCountryID() == 3)
                         .collect(Collectors.toList());
@@ -223,9 +225,90 @@ public class CustomerController
         }
     }
 
-    public void handleSaveCustomer(ActionEvent actionEvent)
+    private boolean ValidateFormInput()
     {
-        this.mainController.UpdateCustomerTable();
+        if (modifyingCustomer && customerIDField.getText().isEmpty())
+            return false;
+
+        if (customerNameField.getText().isEmpty())
+            return false;
+
+        if (customerNameField.getText().isEmpty())
+            return false;
+
+        if (customerPhoneField.getText().isEmpty())
+            return false;
+
+        if (customerAddressField.getText().isEmpty())
+            return false;
+
+        if (customerVillageField.getText().isEmpty() && isUK)
+            return false;
+
+        if (customerCityField.getText().isEmpty())
+            return false;
+
+        if (customerZipField.getText().isEmpty())
+            return false;
+
+        if (customerCountry.getSelectionModel().isEmpty())
+            return false;
+
+        if (customerDivision.getSelectionModel().isEmpty())
+            return false;
+
+        return true;
+    }
+
+    public void SaveCustomer() throws Exception {
+        CustomerModel customerData = new CustomerModel();
+
+        customerData.setCustomerName(customerNameField.getText());
+        customerData.setPhoneNumber(customerPhoneField.getText());
+
+        String village = isUK ? customerVillageField.getText() : "";
+        customerData.setCustomerAddress(this.localizationService.FormatAddress(
+                customerAddressField.getText(),
+                village,
+                customerCityField.getText(),
+                isUK
+        ));
+
+        customerData.setPostalCode(customerZipField.getText());
+
+        Optional<DivisionModel> division = divisions.stream().filter(x ->
+                x.getDivision().equals(customerDivision.getSelectionModel().getSelectedItem())).findFirst();
+
+        DivisionModel customerDivision = division.get();
+
+        customerData.setDivisionID(customerDivision.getDivisionID());
+
+        ICustomerData customerDataService = this.dataAccessFactory.GetCustomerDataService();
+
+        if (modifyingCustomer)
+        {
+            customerData.setCustomerID(this.customer.getCustomerID());
+            customerDataService.UpdateCustomer(customerData);
+            return;
+        }
+
+        customerDataService.CreateCustomer(customerData);
+    }
+
+    public void handleSaveCustomer(ActionEvent actionEvent) throws Exception
+    {
+        if (ValidateFormInput())
+        {
+            SaveCustomer();
+            this.mainController.UpdateCustomerTable();
+            handleCancelCustomer(actionEvent);
+            return;
+        }
+
+        String headerAndTitle = localizationService.GetLocalizedMessage("invalidinput", this.locale);
+        String message = localizationService.GetLocalizedMessage("allfields", this.locale);
+        this.alertService.ShowAlert(Alert.AlertType.WARNING, headerAndTitle, headerAndTitle, message);
+
     }
 
     public void handleCancelCustomer(ActionEvent actionEvent)
