@@ -59,7 +59,7 @@
                 <!-- VBox that will hold labels, buttons, and tables for customers -->
                 <VBox>
 
-                    <!-- HBox for label and search bar -->
+                    <!-- HBox for label -->
                     <HBox alignment="CENTER" spacing="10">
                         <padding><Insets bottom="15" top="15"/></padding>
 
@@ -114,7 +114,7 @@
                 <!-- VBox that will hold labels, buttons, and tables for appointments -->
                 <VBox>
 
-                    <!-- HBox for label and search bar -->
+                    <!-- HBox for label and radio buttons -->
                     <HBox alignment="CENTER" spacing="10">
                         <padding><Insets bottom="15" top="15"/></padding>
 

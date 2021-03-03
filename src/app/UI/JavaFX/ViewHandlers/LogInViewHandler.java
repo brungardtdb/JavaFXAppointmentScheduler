@@ -1,7 +1,7 @@
 package app.UI.JavaFX.ViewHandlers;
 
-import DataAccess.DataAccessFactory;
-import DataAccess.Enums.DataType;
+import app.DataAccess.DataAccessFactory;
+import app.DataAccess.Enums.DataType;
 import app.DataLocalization.LocalizationService;
 import app.UI.JavaFX.AlertService;
 import app.Util.PropertiesService;
@@ -12,21 +12,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import net.bytebuddy.asm.Advice;
 
 import java.time.ZoneId;
 import java.util.Locale;
-import java.util.Properties;
 
 
 /**
  * Class for creating the login form.
  */
-public class LogInHandler extends Application
+public class LogInViewHandler extends Application
 {
     PropertiesService propertiesService = new PropertiesService();
     LocalizationService localizationService =  LocalizationService.getInstance();
-    DataAccessFactory dataAccessFactory =  new DataAccess.DataAccessFactory(DataAccess.Enums.DataType.MYSQL, propertiesService.GetProperties("app.properties"));
+    DataAccessFactory dataAccessFactory =  new DataAccessFactory(DataType.MYSQL, propertiesService.GetProperties("app.properties"));
 //    Locale locale = new Locale("fr"); //used for testing
 //    ZoneId zoneId = ZoneId.of("America/Montreal"); // used for testing
     Locale locale = Locale.getDefault();
@@ -41,7 +39,7 @@ public class LogInHandler extends Application
      *
      * @throws Exception Java.io.FileNotFoundException.
      */
-    public LogInHandler() throws Exception { }
+    public LogInViewHandler() throws Exception { }
 
     /**
      * Method for starting application.
@@ -67,7 +65,6 @@ public class LogInHandler extends Application
         }
         catch (Exception ex)
         {
-            this.dataAccessFactory.DisconnectFromDB();
             throw ex;
         }
     }

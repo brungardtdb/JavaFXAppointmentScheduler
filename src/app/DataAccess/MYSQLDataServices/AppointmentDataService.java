@@ -1,9 +1,9 @@
-package DataAccess.MYSQLDataServices;
+package app.DataAccess.MYSQLDataServices;
 
-import DataAccess.Interfaces.IAppointmentData;
-import UserData.Enums.AppointmentType;
-import UserData.Models.AppointmentModel;
-import UserData.Models.CustomerModel;
+import app.DataAccess.Interfaces.IAppointmentData;
+import app.UserData.Enums.AppointmentType;
+import app.UserData.Models.AppointmentModel;
+import app.UserData.Models.CustomerModel;
 import javafx.scene.chart.XYChart;
 import org.apiguardian.api.API;
 import org.mockito.internal.verification.Times;

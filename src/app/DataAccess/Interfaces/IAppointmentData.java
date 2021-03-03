@@ -1,6 +1,6 @@
-package DataAccess.Interfaces;
+package app.DataAccess.Interfaces;
 
-import UserData.Models.AppointmentModel;
+import app.UserData.Models.AppointmentModel;
 
 import java.util.List;
 

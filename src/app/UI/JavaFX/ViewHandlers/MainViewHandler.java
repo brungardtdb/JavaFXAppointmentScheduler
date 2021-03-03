@@ -1,40 +1,48 @@
 package app.UI.JavaFX.ViewHandlers;
 
-import UserData.Models.AppointmentModel;
+import app.DataAccess.DataAccessFactory;
 import app.DataLocalization.LocalizationService;
 import app.UI.JavaFX.AlertService;
 import app.UI.JavaFX.Controllers.MainController;
 import app.Util.PropertiesService;
 import app.Util.ValidationService;
-import com.sun.javafx.scene.control.Properties;
-import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import net.bytebuddy.asm.Advice;
 
-import java.awt.*;
-import java.io.IOException;
 import java.time.ZoneId;
 import java.util.Locale;
 
-public class MainHandler
+/**
+ * Class that handles the creation of main view.
+ */
+public class MainViewHandler
 {
     private PropertiesService propertiesService;
     private LocalizationService localizationService;
-    private DataAccess.DataAccessFactory dataAccessFactory;
+    private DataAccessFactory dataAccessFactory;
     private Locale locale;
     ZoneId zoneId;
     AlertService alertService;
     ValidationService validationService;
 
-    public MainHandler(PropertiesService propertiesService, LocalizationService localizationService,
-                       DataAccess.DataAccessFactory dataAccessFactory, Locale locale, ZoneId zoneId,
-                       AlertService alertService, ValidationService validationService)
+    /**
+     * Class constructor, takes dependencies and passes them to constructor of main view.
+     *
+     * @param propertiesService PropertiesService dependency.
+     * @param localizationService LocalizationService dependency.
+     * @param dataAccessFactory DataAccessFactory dependency.
+     * @param locale User's locale.
+     * @param zoneId User's ZoneId.
+     * @param alertService AlertService dependency.
+     * @param validationService ValidationService dependency.
+     */
+    public MainViewHandler(PropertiesService propertiesService, LocalizationService localizationService,
+                           DataAccessFactory dataAccessFactory, Locale locale, ZoneId zoneId,
+                           AlertService alertService, ValidationService validationService)
     {
         this.propertiesService = propertiesService;
         this.localizationService = localizationService;
@@ -45,6 +53,9 @@ public class MainHandler
         this.validationService = validationService;
     }
 
+    /**
+     * Creates main application view.
+     */
     public void GetMainView()
     {
         try

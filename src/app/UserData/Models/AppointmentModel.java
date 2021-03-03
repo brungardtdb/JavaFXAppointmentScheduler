@@ -1,6 +1,6 @@
-package UserData.Models;
+package app.UserData.Models;
 
-import UserData.Enums.AppointmentType;
+import app.UserData.Enums.AppointmentType;
 
 import java.time.ZonedDateTime;
 import java.util.Date;

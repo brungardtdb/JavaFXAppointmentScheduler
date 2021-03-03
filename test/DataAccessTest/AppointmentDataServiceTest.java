@@ -1,7 +1,11 @@
 package DataAccessTest;
 
-import UserData.Enums.AppointmentType;
-import UserData.Models.AppointmentModel;
+import app.UserData.Enums.AppointmentType;
+import app.UserData.Models.AppointmentModel;
+import app.DataAccess.DataAccessFactory;
+import app.DataAccess.Enums.DataType;
+
+
 import app.Util.PropertiesService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -11,7 +15,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Properties;
 
-import DataAccess.Interfaces.IAppointmentData;
+import app.DataAccess.Interfaces.IAppointmentData;
 
 public class AppointmentDataServiceTest
 {
@@ -20,7 +24,7 @@ public class AppointmentDataServiceTest
     {
         PropertiesService propertiesService = new PropertiesService();
         Properties projectProperties = propertiesService.GetProperties("app.properties");
-        DataAccess.DataAccessFactory dataAccessFactory = new DataAccess.DataAccessFactory(DataAccess.Enums.DataType.MYSQL, projectProperties);
+        DataAccessFactory dataAccessFactory = new DataAccessFactory(DataType.MYSQL, projectProperties);
         IAppointmentData appointmentDataService;
         AppointmentModel testAppointmentModel;
 
@@ -59,7 +63,7 @@ public class AppointmentDataServiceTest
     {
         PropertiesService propertiesService = new PropertiesService();
         Properties projectProperties = propertiesService.GetProperties("app.properties");
-        DataAccess.DataAccessFactory dataAccessFactory = new DataAccess.DataAccessFactory(DataAccess.Enums.DataType.MYSQL, projectProperties);
+        DataAccessFactory dataAccessFactory = new DataAccessFactory(DataType.MYSQL, projectProperties);
         IAppointmentData appointmentDataService;
         ZonedDateTime startDate = ZonedDateTime.of(2020, 05, 28,13,0,0,0, ZoneId.of("UTC"));
         ZonedDateTime endDate = ZonedDateTime.of(2020, 07, 24,12,0,0,0, ZoneId.of("UTC"));
@@ -105,7 +109,7 @@ public class AppointmentDataServiceTest
     {
         PropertiesService propertiesService = new PropertiesService();
         Properties projectProperties = propertiesService.GetProperties("app.properties");
-        DataAccess.DataAccessFactory dataAccessFactory = new DataAccess.DataAccessFactory(DataAccess.Enums.DataType.MYSQL, projectProperties);
+        DataAccessFactory dataAccessFactory = new DataAccessFactory(DataType.MYSQL, projectProperties);
         IAppointmentData appointmentDataService;
         AppointmentModel testAppointmentModel;
         AppointmentModel secondTestAppointmentModel;
@@ -140,7 +144,7 @@ public class AppointmentDataServiceTest
     {
         PropertiesService propertiesService = new PropertiesService();
         Properties projectProperties = propertiesService.GetProperties("app.properties");
-        DataAccess.DataAccessFactory dataAccessFactory = new DataAccess.DataAccessFactory(DataAccess.Enums.DataType.MYSQL, projectProperties);
+        DataAccessFactory dataAccessFactory = new DataAccessFactory(DataType.MYSQL, projectProperties);
         IAppointmentData appointmentDataService;
         AppointmentModel testAppointmentModel;
         List<AppointmentModel> customerAppointments;
@@ -176,7 +180,7 @@ public class AppointmentDataServiceTest
     {
         PropertiesService propertiesService = new PropertiesService();
         Properties projectProperties = propertiesService.GetProperties("app.properties");
-        DataAccess.DataAccessFactory dataAccessFactory = new DataAccess.DataAccessFactory(DataAccess.Enums.DataType.MYSQL, projectProperties);
+        DataAccessFactory dataAccessFactory = new DataAccessFactory(DataType.MYSQL, projectProperties);
         IAppointmentData appointmentDataService;
         AppointmentModel testAppointmentModel;
         List<AppointmentModel> contactAppointments;
@@ -215,7 +219,7 @@ public class AppointmentDataServiceTest
     {
         PropertiesService propertiesService = new PropertiesService();
         Properties projectProperties = propertiesService.GetProperties("app.properties");
-        DataAccess.DataAccessFactory dataAccessFactory = new DataAccess.DataAccessFactory(DataAccess.Enums.DataType.MYSQL, projectProperties);
+        DataAccessFactory dataAccessFactory = new DataAccessFactory(DataType.MYSQL, projectProperties);
         IAppointmentData appointmentDataService;
         List<AppointmentModel> allAppointments;
 

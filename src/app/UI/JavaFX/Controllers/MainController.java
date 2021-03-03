@@ -1,9 +1,14 @@
 package app.UI.JavaFX.Controllers;
 
-import UserData.Models.AppointmentModel;
-import UserData.Models.CustomerModel;
+import app.UI.JavaFX.ViewHandlers.AppointmentViewHandler;
+import app.UserData.Models.AppointmentModel;
+import app.UserData.Models.CustomerModel;
+import app.DataAccess.DataAccessFactory;
+import app.DataAccess.Interfaces.IAppointmentData;
+import app.DataAccess.Interfaces.ICustomerData;
 import app.DataLocalization.LocalizationService;
 import app.UI.JavaFX.AlertService;
+import app.UI.JavaFX.ViewHandlers.CustomerViewHandler;
 import app.Util.PropertiesService;
 import app.Util.ValidationService;
 import javafx.collections.FXCollections;
@@ -15,12 +20,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-import java.lang.reflect.Array;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
@@ -31,7 +33,7 @@ public class MainController
 {
     private PropertiesService propertiesService;
     private LocalizationService localizationService;
-    private DataAccess.DataAccessFactory dataAccessFactory;
+    private DataAccessFactory dataAccessFactory;
     private Locale locale;
     ZoneId zoneId;
     AlertService alertService;
@@ -89,7 +91,7 @@ public class MainController
      * @throws Exception
      */
     public void Initialize(PropertiesService propertiesService, LocalizationService localizationService,
-                           DataAccess.DataAccessFactory dataAccessFactory, Locale locale, ZoneId zoneId,
+                           DataAccessFactory dataAccessFactory, Locale locale, ZoneId zoneId,
                            AlertService alertService, ValidationService validationService) throws Exception
     {
         this.propertiesService = propertiesService;
@@ -138,34 +140,159 @@ public class MainController
         UpdateTables();
     }
 
+    /**
+     * Method for adding a customer, opens the customer form.
+     *
+     * @param actionEvent The "Add" button click event for customer.
+     */
     public void handleAddCustomer(ActionEvent actionEvent)
     {
-
+        CustomerViewHandler customerViewHandler = new CustomerViewHandler(this.propertiesService, this.localizationService,
+                this.dataAccessFactory, this.locale, this.zoneId, this.alertService, this.validationService,
+                this, false);
+        customerViewHandler.GetCustomerView();
     }
 
-    public void handleModifyCustomer(ActionEvent actionEvent)
+    /**
+     * Method for modifying a customer, opens the customer form.
+     *
+     * @param actionEvent The "Modify" button click event for customer.
+     * @throws Exception Java.io.FileNotFoundException.
+     */
+    public void handleModifyCustomer(ActionEvent actionEvent) throws Exception
     {
+        CustomerModel customer = GetCustomerToModify();
+        if (customer != null)
+        {
+            CustomerViewHandler customerViewHandler = new CustomerViewHandler(this.propertiesService, this.localizationService,
+                    this.dataAccessFactory, this.locale, this.zoneId, this.alertService, this.validationService,
+                    this, true);
+            customerViewHandler.GetCustomer(customer);
+            customerViewHandler.GetCustomerView();
+            return;
+        }
 
+        // Display warning if no customer was selected
+        String titleAndHeader = localizationService.GetLocalizedMessage("invalidselection", this.locale);
+        String body = localizationService.GetLocalizedMessage("pleaseselectcustomer", this.locale);
+        this.alertService.ShowAlert(Alert.AlertType.WARNING,titleAndHeader, titleAndHeader, body);
     }
 
-    public void handleDeleteCustomer(ActionEvent actionEvent)
+    /**
+     * Method for deleting a customer.
+     *
+     * @param actionEvent The "Delete" button click event for customer.
+     * @throws Exception Java.io.FileNotFoundException.
+     */
+    public void handleDeleteCustomer(ActionEvent actionEvent) throws Exception
     {
+        String titleAndHeader = this.localizationService.GetLocalizedMessage("deletecustomer", this.locale);
+        String body = this.localizationService.GetLocalizedMessage("confirmdeletecustomer", this.locale);
+        ICustomerData customerDataService = this.dataAccessFactory.GetCustomerDataService();
 
+        if (alertService.ShowConfirmation(titleAndHeader, titleAndHeader, body))
+        {
+            CustomerModel customerToDelete = GetCustomerToModify();
+            if (customerToDelete == null)
+            {
+                // Display warning if no customer was selected
+                titleAndHeader = localizationService.GetLocalizedMessage("invalidselection", this.locale);
+                body = localizationService.GetLocalizedMessage("pleaseselectcustomer", this.locale);
+                this.alertService.ShowAlert(Alert.AlertType.WARNING,titleAndHeader, titleAndHeader, body);
+                return;
+            }
+
+            if (customerDataService.DeleteCustomerByID(customerToDelete.getCustomerID()))
+            {
+                String deleteMessage = this.localizationService.GetLocalizedMessage("customerdeleteconfirmation", this.locale)
+                        + "\n" + customerToDelete.getCustomerName();
+                alertService.ShowAlert(Alert.AlertType.INFORMATION, titleAndHeader, titleAndHeader, deleteMessage);
+                UpdateCustomerTable();
+                return;
+            }
+        }
+    }
+
+    /**
+     * Method for retrieving selected customer from table.
+     *
+     * @return Customer if one is selected, otherwise null.
+     */
+    private CustomerModel GetCustomerToModify()
+    {
+        if (customerTable.getSelectionModel().getSelectedItem() != null)
+        {
+            return ((CustomerModel) customerTable.getSelectionModel().getSelectedItem());
+        }
+        return null;
     }
 
     public void handleAddAppointment(ActionEvent actionEvent)
     {
-
+        AppointmentViewHandler appointmentViewHandler = new AppointmentViewHandler(this.propertiesService, this.localizationService,
+                this.dataAccessFactory, this.locale, this.zoneId, this.alertService, this.validationService, this,  false);
+        appointmentViewHandler.GetAppointmentView();
     }
 
-    public void handleModifyAppointment(ActionEvent actionEvent)
+    public void handleModifyAppointment(ActionEvent actionEvent) throws Exception
     {
+        AppointmentModel appointment = GetAppointmentToModify();
+        if (appointment != null)
+        {
+            AppointmentViewHandler appointmentViewHandler = new AppointmentViewHandler(this.propertiesService, this.localizationService,
+                    this.dataAccessFactory, this.locale, this.zoneId, this.alertService, this.validationService, this,  true);
+            appointmentViewHandler.GetAppointment(appointment);
+            appointmentViewHandler.GetAppointmentView();
+            return;
+        }
 
+        // Display warning if no appointment was selected
+        String titleAndHeader = localizationService.GetLocalizedMessage("invalidselection", this.locale);
+        String body = localizationService.GetLocalizedMessage("pleaseselectappointment", this.locale);
+        this.alertService.ShowAlert(Alert.AlertType.WARNING,titleAndHeader, titleAndHeader, body);
     }
 
-    public void handleDeleteAppointment(ActionEvent actionEvent)
+    public void handleDeleteAppointment(ActionEvent actionEvent) throws Exception
     {
+        String titleAndHeader = this.localizationService.GetLocalizedMessage("deleteappointment", this.locale);
+        String body = this.localizationService.GetLocalizedMessage("confirmdeleteappointment", this.locale);
+        IAppointmentData appointmentDataService = this.dataAccessFactory.GetAppointmentDataService();
 
+        if (alertService.ShowConfirmation(titleAndHeader, titleAndHeader, body))
+        {
+            AppointmentModel appointmentToDelete = GetAppointmentToModify();
+            if (appointmentToDelete == null)
+            {
+                // Display warning if no appointment was selected.
+                titleAndHeader = localizationService.GetLocalizedMessage("invalidselection", this.locale);
+                body = localizationService.GetLocalizedMessage("pleaseselectappointment", this.locale);
+                this.alertService.ShowAlert(Alert.AlertType.WARNING, titleAndHeader, titleAndHeader, body);
+                return;
+            }
+
+            if (appointmentDataService.DeleteAppointmentByID(appointmentToDelete.getAppointmentID()))
+            {
+                String deleteMessage = this.localizationService.GetLocalizedMessage("appointmentdeleteconfirmation", this.locale)
+                        + "\n" + appointmentToDelete.getAppointmentID() + " " + appointmentToDelete.getAppointmentType();
+                alertService.ShowAlert(Alert.AlertType.INFORMATION, titleAndHeader, titleAndHeader, deleteMessage);
+                UpdateAppointmentTable();
+                return;
+            }
+        }
+    }
+
+    /**
+     * Method for retrieving selected appointment from table.
+     *
+     * @return Appointment if one is selected, otherwise null.
+     */
+    private AppointmentModel GetAppointmentToModify()
+    {
+        if (appointmentTable.getSelectionModel().getSelectedItem() != null)
+        {
+            return ((AppointmentModel) appointmentTable.getSelectionModel().getSelectedItem());
+        }
+        return null;
     }
 
     /**
@@ -184,7 +311,7 @@ public class MainController
     {
         try
         {
-            DataAccess.Interfaces.ICustomerData customerData = dataAccessFactory.GetCustomerDataService();
+            ICustomerData customerData = dataAccessFactory.GetCustomerDataService();
             ArrayList<CustomerModel> customerModelArrayList = (ArrayList<CustomerModel>) customerData.GetAllCustomers();
             ObservableList<CustomerModel> customers = FXCollections.observableArrayList(customerModelArrayList);
 
@@ -212,7 +339,7 @@ public class MainController
     {        
         try 
         {
-            DataAccess.Interfaces.IAppointmentData appointmentData = dataAccessFactory.GetAppointmentDataService();
+            IAppointmentData appointmentData = dataAccessFactory.GetAppointmentDataService();
             ArrayList<AppointmentModel> appointmentModelArrayList = (ArrayList<AppointmentModel>) appointmentData.GetAllAppointments();
             ArrayList<AppointmentModel> updatedAppointments = new ArrayList<AppointmentModel>();
 

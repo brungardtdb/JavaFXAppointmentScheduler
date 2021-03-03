@@ -1,11 +1,11 @@
 package DataAccessTest;
 
-import DataAccess.DataAccessFactory;
-import DataAccess.Enums.DataType;
-import DataAccess.Interfaces.IAppointmentData;
-import DataAccess.Interfaces.ICustomerData;
-import UserData.Models.AppointmentModel;
-import UserData.Models.CustomerModel;
+import app.DataAccess.DataAccessFactory;
+import app.DataAccess.Enums.DataType;
+import app.DataAccess.Interfaces.IAppointmentData;
+import app.DataAccess.Interfaces.ICustomerData;
+import app.UserData.Models.AppointmentModel;
+import app.UserData.Models.CustomerModel;
 import app.Util.PropertiesService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

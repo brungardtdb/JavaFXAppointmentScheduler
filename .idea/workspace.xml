@@ -20,29 +20,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="efe0c708-2113-4624-bce0-8eddac3d9022" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/ViewHandlers/AppointmentViewHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/AppointmentScheduleApp/DataAccess/MYSQLDataServices/AppointmentDataService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/AppointmentScheduleApp/DataAccess/MYSQLDataServices/AppointmentDataService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/AppointmentScheduleApp/DataAccess/MYSQLDataServices/CustomerDataService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/AppointmentScheduleApp/DataAccess/MYSQLDataServices/CustomerDataService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/AppointmentScheduleApp/UserData/Models/AppointmentModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/AppointmentScheduleApp/UserData/Models/AppointmentModel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/AppointmentScheduleApp/UserData/Models/CustomerModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/AppointmentScheduleApp/UserData/Models/CustomerModel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/AppointmentScheduleApp/DataAccessTest/AppointmentDataServiceTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/AppointmentScheduleApp/DataAccessTest/AppointmentDataServiceTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/AppointmentScheduleApp/DataAccessTest/CustomerDataServiceTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/AppointmentScheduleApp/DataAccessTest/CustomerDataServiceTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/AppointmentScheduleApp/UserData/Models/AppointmentModelTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/AppointmentScheduleApp/UserData/Models/AppointmentModelTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/AppointmentScheduleApp/UserData/Models/CustomerModelTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/AppointmentScheduleApp/UserData/Models/CustomerModelTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/DataAccess/MYSQLDataServices/AppointmentDataService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/DataAccess/MYSQLDataServices/AppointmentDataService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/DataAccess/MYSQLDataServices/CustomerDataService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/DataAccess/MYSQLDataServices/CustomerDataService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/AppointmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/AppointmentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/CustomerController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/ViewHandlers/LogInHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/ViewHandlers/LogInHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/Views/MainView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/Views/MainView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/UserData/Models/AppointmentModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UserData/Models/AppointmentModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/UserData/Models/CustomerModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UserData/Models/CustomerModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/Util/ValidationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Util/ValidationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/DataAccessTest/AppointmentDataServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/DataAccessTest/AppointmentDataServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/DataAccessTest/CustomerDataServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/DataAccessTest/CustomerDataServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/UserData/Models/AppointmentModelTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/UserData/Models/AppointmentModelTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/UserData/Models/CustomerModelTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/UserData/Models/CustomerModelTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/Validation/ValidationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/Validation/ValidationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/ViewHandlers/CustomerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/ViewHandlers/CustomerViewHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/ViewHandlers/LogInHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/ViewHandlers/LogInViewHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/ViewHandlers/MainHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/ViewHandlers/MainViewHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/Views/AppointmentView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/Views/AppointmentView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/UI/UIFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/UIFactory.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,9 +41,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Enum" />
         <option value="FxmlFile" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -109,7 +98,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="AppointmentDataServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CountryDataTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="AppointmentScheduleApp" />
       <extension name="coverage">
         <pattern>
@@ -118,7 +107,22 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="DataAccessTest" />
-      <option name="MAIN_CLASS_NAME" value="DataAccessTest.AppointmentDataServiceTest" />
+      <option name="MAIN_CLASS_NAME" value="DataAccessTest.CountryDataTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DivisionDataTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="AppointmentScheduleApp" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="DataAccessTest.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="DataAccessTest" />
+      <option name="MAIN_CLASS_NAME" value="DataAccessTest.DivisionDataTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -139,34 +143,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ValidationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="AppointmentScheduleApp" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Validation.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="Validation" />
-      <option name="MAIN_CLASS_NAME" value="Validation.ValidationTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <list>
       <item itemvalue="Application.Main" />
       <item itemvalue="JUnit.All in AppointmentScheduleApp (2)" />
-      <item itemvalue="JUnit.AppointmentDataServiceTest" />
       <item itemvalue="JUnit.LocalizationServiceTest" />
-      <item itemvalue="JUnit.ValidationTest" />
+      <item itemvalue="JUnit.CountryDataTest" />
+      <item itemvalue="JUnit.DivisionDataTest" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
-        <item itemvalue="JUnit.ValidationTest" />
+        <item itemvalue="JUnit.DivisionDataTest" />
+        <item itemvalue="JUnit.CountryDataTest" />
         <item itemvalue="JUnit.All in AppointmentScheduleApp (2)" />
-        <item itemvalue="JUnit.AppointmentDataServiceTest" />
         <item itemvalue="JUnit.LocalizationServiceTest" />
       </list>
     </recent_temporary>
@@ -203,50 +192,54 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="274" y="54" width="976" height="702" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1613851450876" />
-    <state x="574" y="119" key="#com.intellij.ide.util.MemberChooser" timestamp="1614298101366">
+    <state x="574" y="119" key="#com.intellij.ide.util.MemberChooser" timestamp="1614554027832">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="574" y="119" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1614298101366" />
+    <state x="574" y="119" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1614554027832" />
     <state x="590" y="337" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1613930394218">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="590" y="337" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/0.0.1536.824@0.0.1536.824" timestamp="1613930394218" />
+    <state x="234" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1614736265494">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="234" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.824@0.0.1536.824" timestamp="1614736265494" />
     <state x="473" y="154" key="FileChooserDialogImpl" timestamp="1613850970242">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="473" y="154" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1613850970242" />
-    <state width="1493" height="200" key="GridCell.Tab.0.bottom" timestamp="1614469881400">
+    <state width="1493" height="200" key="GridCell.Tab.0.bottom" timestamp="1614738440737">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="200" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1614469881400" />
-    <state width="1493" height="200" key="GridCell.Tab.0.center" timestamp="1614469881400">
+    <state width="1493" height="200" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1614738440737" />
+    <state width="1493" height="200" key="GridCell.Tab.0.center" timestamp="1614738440737">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="200" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1614469881400" />
-    <state width="1493" height="200" key="GridCell.Tab.0.left" timestamp="1614469881400">
+    <state width="1493" height="200" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1614738440737" />
+    <state width="1493" height="200" key="GridCell.Tab.0.left" timestamp="1614738440737">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="200" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1614469881400" />
-    <state width="1493" height="200" key="GridCell.Tab.0.right" timestamp="1614469881400">
+    <state width="1493" height="200" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1614738440737" />
+    <state width="1493" height="200" key="GridCell.Tab.0.right" timestamp="1614738440737">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="200" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1614469881400" />
-    <state width="1493" height="290" key="GridCell.Tab.1.bottom" timestamp="1614306543504">
+    <state width="1493" height="200" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1614738440737" />
+    <state width="1493" height="290" key="GridCell.Tab.1.bottom" timestamp="1614554990913">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="290" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1614306543504" />
-    <state width="1493" height="290" key="GridCell.Tab.1.center" timestamp="1614306543504">
+    <state width="1493" height="290" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1614554990913" />
+    <state width="1493" height="290" key="GridCell.Tab.1.center" timestamp="1614554990913">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="290" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1614306543504" />
-    <state width="1493" height="290" key="GridCell.Tab.1.left" timestamp="1614306543504">
+    <state width="1493" height="290" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1614554990913" />
+    <state width="1493" height="290" key="GridCell.Tab.1.left" timestamp="1614554990913">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="290" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1614306543504" />
-    <state width="1493" height="290" key="GridCell.Tab.1.right" timestamp="1614306543504">
+    <state width="1493" height="290" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1614554990913" />
+    <state width="1493" height="290" key="GridCell.Tab.1.right" timestamp="1614554990913">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="290" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1614306543504" />
+    <state width="1493" height="290" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1614554990913" />
     <state x="249" y="0" key="SettingsEditor" timestamp="1613850983639">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -259,10 +252,14 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="311" y="141" width="912" height="628" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1536.824@0.0.1536.824" timestamp="1614202253020" />
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1614304348391">
+    <state x="0" y="0" width="1507" height="808" key="dock-window-1" timestamp="1614737690048">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1614304348391" />
+    <state x="0" y="0" width="1507" height="808" key="dock-window-1/0.0.1536.824@0.0.1536.824" timestamp="1614737690048" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1614547802974">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1614547802974" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -288,8 +285,8 @@
           <option name="timeStamp" value="26" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/app/UI/JavaFX/ViewHandlers/MainHandler.java</url>
-          <line>48</line>
+          <url>file://$PROJECT_DIR$/src/app/UI/JavaFX/ViewHandlers/MainViewHandler.java</url>
+          <line>49</line>
           <option name="timeStamp" value="29" />
         </line-breakpoint>
         <breakpoint enabled="true" type="java-exception">

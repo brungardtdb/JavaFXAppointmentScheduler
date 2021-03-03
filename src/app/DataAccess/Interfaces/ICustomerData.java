@@ -1,6 +1,6 @@
-package DataAccess.Interfaces;
+package app.DataAccess.Interfaces;
 
-import UserData.Models.CustomerModel;
+import app.UserData.Models.CustomerModel;
 
 import java.util.List;
 
