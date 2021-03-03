@@ -1,5 +1,6 @@
 package app.UI.JavaFX.Controllers;
 
+import app.UI.JavaFX.ViewHandlers.AppointmentViewHandler;
 import app.UserData.Models.AppointmentModel;
 import app.UserData.Models.CustomerModel;
 import app.DataAccess.DataAccessFactory;
@@ -7,7 +8,7 @@ import app.DataAccess.Interfaces.IAppointmentData;
 import app.DataAccess.Interfaces.ICustomerData;
 import app.DataLocalization.LocalizationService;
 import app.UI.JavaFX.AlertService;
-import app.UI.JavaFX.ViewHandlers.CustomerHandler;
+import app.UI.JavaFX.ViewHandlers.CustomerViewHandler;
 import app.Util.PropertiesService;
 import app.Util.ValidationService;
 import javafx.collections.FXCollections;
@@ -19,12 +20,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-import java.lang.reflect.Array;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
@@ -149,10 +147,10 @@ public class MainController
      */
     public void handleAddCustomer(ActionEvent actionEvent)
     {
-        CustomerHandler customerHandler = new CustomerHandler(this.propertiesService, this.localizationService,
+        CustomerViewHandler customerViewHandler = new CustomerViewHandler(this.propertiesService, this.localizationService,
                 this.dataAccessFactory, this.locale, this.zoneId, this.alertService, this.validationService,
                 this, false);
-        customerHandler.GetCustomerView();
+        customerViewHandler.GetCustomerView();
     }
 
     /**
@@ -166,11 +164,11 @@ public class MainController
         CustomerModel customer = GetCustomerToModify();
         if (customer != null)
         {
-            CustomerHandler customerHandler = new CustomerHandler(this.propertiesService, this.localizationService,
+            CustomerViewHandler customerViewHandler = new CustomerViewHandler(this.propertiesService, this.localizationService,
                     this.dataAccessFactory, this.locale, this.zoneId, this.alertService, this.validationService,
                     this, true);
-            customerHandler.GetCustomer(customer);
-            customerHandler.GetCustomerView();
+            customerViewHandler.GetCustomer(customer);
+            customerViewHandler.GetCustomerView();
             return;
         }
 
@@ -231,17 +229,56 @@ public class MainController
 
     public void handleAddAppointment(ActionEvent actionEvent)
     {
-
+        AppointmentViewHandler appointmentViewHandler = new AppointmentViewHandler(this.propertiesService, this.localizationService,
+                this.dataAccessFactory, this.locale, this.zoneId, this.alertService, this.validationService, this,  false);
+        appointmentViewHandler.GetAppointmentView();
     }
 
-    public void handleModifyAppointment(ActionEvent actionEvent)
+    public void handleModifyAppointment(ActionEvent actionEvent) throws Exception
     {
+        AppointmentModel appointment = GetAppointmentToModify();
+        if (appointment != null)
+        {
+            AppointmentViewHandler appointmentViewHandler = new AppointmentViewHandler(this.propertiesService, this.localizationService,
+                    this.dataAccessFactory, this.locale, this.zoneId, this.alertService, this.validationService, this,  true);
+            appointmentViewHandler.GetAppointment(appointment);
+            appointmentViewHandler.GetAppointmentView();
+            return;
+        }
 
+        // Display warning if no appointment was selected
+        String titleAndHeader = localizationService.GetLocalizedMessage("invalidselection", this.locale);
+        String body = localizationService.GetLocalizedMessage("pleaseselectappointment", this.locale);
+        this.alertService.ShowAlert(Alert.AlertType.WARNING,titleAndHeader, titleAndHeader, body);
     }
 
-    public void handleDeleteAppointment(ActionEvent actionEvent)
+    public void handleDeleteAppointment(ActionEvent actionEvent) throws Exception
     {
+        String titleAndHeader = this.localizationService.GetLocalizedMessage("deleteappointment", this.locale);
+        String body = this.localizationService.GetLocalizedMessage("confirmdeleteappointment", this.locale);
+        IAppointmentData appointmentDataService = this.dataAccessFactory.GetAppointmentDataService();
 
+        if (alertService.ShowConfirmation(titleAndHeader, titleAndHeader, body))
+        {
+            AppointmentModel appointmentToDelete = GetAppointmentToModify();
+            if (appointmentToDelete == null)
+            {
+                // Display warning if no appointment was selected.
+                titleAndHeader = localizationService.GetLocalizedMessage("invalidselection", this.locale);
+                body = localizationService.GetLocalizedMessage("pleaseselectappointment", this.locale);
+                this.alertService.ShowAlert(Alert.AlertType.WARNING, titleAndHeader, titleAndHeader, body);
+                return;
+            }
+
+            if (appointmentDataService.DeleteAppointmentByID(appointmentToDelete.getAppointmentID()))
+            {
+                String deleteMessage = this.localizationService.GetLocalizedMessage("appointmentdeleteconfirmation", this.locale)
+                        + "\n" + appointmentToDelete.getAppointmentID() + " " + appointmentToDelete.getAppointmentType();
+                alertService.ShowAlert(Alert.AlertType.INFORMATION, titleAndHeader, titleAndHeader, deleteMessage);
+                UpdateAppointmentTable();
+                return;
+            }
+        }
     }
 
     /**

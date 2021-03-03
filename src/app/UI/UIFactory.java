@@ -1,7 +1,7 @@
 package app.UI;
 
 import app.UI.Enums.UserInterfaceType;
-import app.UI.JavaFX.ViewHandlers.LogInHandler;
+import app.UI.JavaFX.ViewHandlers.LogInViewHandler;
 import javafx.application.Application;
 
 /**
@@ -35,7 +35,7 @@ public class UIFactory
             case JAVAFX:
                 try
                 {
-                    Application.launch(LogInHandler.class, args);
+                    Application.launch(LogInViewHandler.class, args);
                 }
                 catch (Exception ex)
                 {

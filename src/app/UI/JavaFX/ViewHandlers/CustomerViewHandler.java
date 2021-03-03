@@ -18,7 +18,10 @@ import javafx.stage.StageStyle;
 import java.time.ZoneId;
 import java.util.Locale;
 
-public class CustomerHandler
+/**
+ * Class that handles the creation of the customer view.
+ */
+public class CustomerViewHandler
 {
     private PropertiesService propertiesService;
     private LocalizationService localizationService;
@@ -31,10 +34,23 @@ public class CustomerHandler
     private boolean modifyingCustomer;
     private CustomerModel customer;
 
-    public CustomerHandler(PropertiesService propertiesService, LocalizationService localizationService,
-                           DataAccessFactory dataAccessFactory, Locale locale, ZoneId zoneId,
-                           AlertService alertService, ValidationService validationService, MainController mainController,
-                           boolean modifyingCustomer)
+    /**
+     * Class constructor, takes dependencies and passes them to constructor of customer view.
+     *
+     * @param propertiesService PropertiesService dependency.
+     * @param localizationService LocalizationService dependency.
+     * @param dataAccessFactory DataAccessFactory dependency.
+     * @param locale User's locale.
+     * @param zoneId User's ZoneId.
+     * @param alertService AlertService dependency.
+     * @param validationService ValidationService dependency.
+     * @param mainController Controller for main application view.
+     * @param modifyingCustomer Indicates if we are modifying an existing customer.
+     */
+    public CustomerViewHandler(PropertiesService propertiesService, LocalizationService localizationService,
+                               DataAccessFactory dataAccessFactory, Locale locale, ZoneId zoneId,
+                               AlertService alertService, ValidationService validationService, MainController mainController,
+                               boolean modifyingCustomer)
     {
         this.propertiesService = propertiesService;
         this.localizationService = localizationService;
@@ -47,11 +63,19 @@ public class CustomerHandler
         this.modifyingCustomer = modifyingCustomer;
     }
 
+    /**
+     * Method for passing in existing customer when we are modifying a customer.
+     *
+     * @param customerModel The customer to be modified.
+     */
     public void GetCustomer(CustomerModel customerModel)
     {
         this.customer = customerModel;
     }
 
+    /**
+     * Creates customer view.
+     */
     public void GetCustomerView()
     {
         try

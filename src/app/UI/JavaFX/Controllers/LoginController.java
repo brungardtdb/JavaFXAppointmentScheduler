@@ -2,11 +2,10 @@ package app.UI.JavaFX.Controllers;
 
 import app.UserData.Models.AppointmentModel;
 import app.DataAccess.Interfaces.IAppointmentData;
-import app.DataAccess.Interfaces.ICustomerData;
 import app.DataAccess.DataAccessFactory;
 import app.DataLocalization.LocalizationService;
 import app.UI.JavaFX.AlertService;
-import app.UI.JavaFX.ViewHandlers.MainHandler;
+import app.UI.JavaFX.ViewHandlers.MainViewHandler;
 import app.Util.PropertiesService;
 
 import app.Util.ValidationService;
@@ -18,13 +17,11 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Locale;
-import java.util.Properties;
 import java.util.function.*;
 
 /**
@@ -132,9 +129,9 @@ public class LoginController
         this.alertService.ShowAlert(Alert.AlertType.INFORMATION, titleAndHeader, titleAndHeader, content);
 
         // open main form and pass in dependencies
-        MainHandler mainHandler = new MainHandler(this.propertiesService, this.localizationService, this.dataAccessFactory,
+        MainViewHandler mainViewHandler = new MainViewHandler(this.propertiesService, this.localizationService, this.dataAccessFactory,
                 this.locale, this.zoneID, this.alertService, this.validationService);
-        mainHandler.GetMainView();
+        mainViewHandler.GetMainView();
 
         // close login form
         Stage stage = (Stage) cancelButton.getScene().getWindow();

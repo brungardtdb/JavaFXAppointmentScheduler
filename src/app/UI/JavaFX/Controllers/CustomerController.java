@@ -28,6 +28,9 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Controller class for the customer form.
+ */
 public class CustomerController
 {
     private PropertiesService propertiesService;
@@ -68,8 +71,25 @@ public class CustomerController
     @FXML TextField customerVillageField;
     @FXML TextField customerCityField;
 
+    /**
+     * Empty constructor for customer controller.
+     */
     public CustomerController() { }
 
+    /**
+     * Method for initializing form.
+     *
+     * @param propertiesService PropertiesService dependency.
+     * @param localizationService LocalizationService dependency.
+     * @param dataAccessFactory DataAccessFactory dependency.
+     * @param locale User's locale.
+     * @param zoneId User's ZoneId.
+     * @param alertService AlertService dependency.
+     * @param validationService ValidationService dependency.
+     * @param mainController Controller for the main form.
+     * @param modifyingCustomer Boolean to indicate whether we are modifying a customer or adding a new customer.
+     * @throws Exception
+     */
     public void Initialize(PropertiesService propertiesService, LocalizationService localizationService,
                            DataAccessFactory dataAccessFactory, Locale locale, ZoneId zoneId,
                            AlertService alertService, ValidationService validationService, MainController mainController,
@@ -130,6 +150,17 @@ public class CustomerController
         });
     }
 
+    /**
+     * Method for getting the customer to modify when we are modifying instead of adding a customer.
+     * This method also populates the form with current customer data for modification.
+     *
+     * I used a few lambda expressions in this method to get the country and division that correspond with
+     * our customer in order to populate the combo-boxes with the appropriate country and division from the list
+     * of all countries and divisions. Alternatively I could have created some additional queries to get this
+     * information, but since we wouldn't be using them much, I think streams and lambdas are less trouble in this instance.
+     *
+     * @param customerModel Customer we are modifying.
+     */
     public void GetCustomer(CustomerModel customerModel)
     {
         this.customer = customerModel;
@@ -156,6 +187,13 @@ public class CustomerController
         customerDivision.getSelectionModel().select(currentCustomerDivision.getDivision());
     }
 
+    /**
+     * Populates the form with the customer address using the comma as a delimiter.
+     * The requirements for this application specify the format for addresses including
+     * street, village (UK only), and city. I happened to notice that some of the users that
+     * were already in the database did not follow this format, so I created a switch statement to
+     * account for that when populating the form with existing user data.
+     */
     private void GetCustomerAddress()
     {
         String customerAddress = this.customer.getCustomerAddress();
@@ -180,6 +218,16 @@ public class CustomerController
         }
     }
 
+    /**
+     * This method filters the available divisions in the division combo-box based on the country that was selected.
+     *
+     * Once again I have made use of lambdas and streams to filter the list of divisions based on the country ID
+     * instead of creating additional queries to return the divisions using the ID as a parameter. This seemed
+     * reasonable, since we are only using this to display available divisions to the user. This data is readonly
+     * so I didn't see much of a reason to implement queries beyond returning the list of all divisions.
+     *
+     * @param country The country selected for the customer.
+     */
     public void SetDivisonValues(String country)
     {
         customerDivision.getItems().clear();
@@ -225,6 +273,11 @@ public class CustomerController
         }
     }
 
+    /**
+     * Method for validating that all input has been entered on the form.
+     *
+     * @return True if every field on the form contains valid data, otherwise false.
+     */
     private boolean ValidateFormInput()
     {
         if (modifyingCustomer && customerIDField.getText().isEmpty())
@@ -260,6 +313,11 @@ public class CustomerController
         return true;
     }
 
+    /**
+     * Method used to save customer information (new or modified) to the database.
+     *
+     * @throws Exception
+     */
     public void SaveCustomer() throws Exception {
         CustomerModel customerData = new CustomerModel();
 
@@ -295,6 +353,12 @@ public class CustomerController
         customerDataService.CreateCustomer(customerData);
     }
 
+    /**
+     * Event handler for "Save" button.
+     *
+     * @param actionEvent Button click event for "Save" button.
+     * @throws Exception
+     */
     public void handleSaveCustomer(ActionEvent actionEvent) throws Exception
     {
         if (ValidateFormInput())
@@ -311,6 +375,11 @@ public class CustomerController
 
     }
 
+    /**
+     * Event handler for "Cancel" button.
+     *
+     * @param actionEvent Button click event for "Cancel" button.
+     */
     public void handleCancelCustomer(ActionEvent actionEvent)
     {
         Stage stage = (Stage) cancelCustomer.getScene().getWindow();

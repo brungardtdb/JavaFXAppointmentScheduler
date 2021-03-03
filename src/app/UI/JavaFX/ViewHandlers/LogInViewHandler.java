@@ -12,17 +12,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import net.bytebuddy.asm.Advice;
 
 import java.time.ZoneId;
 import java.util.Locale;
-import java.util.Properties;
 
 
 /**
  * Class for creating the login form.
  */
-public class LogInHandler extends Application
+public class LogInViewHandler extends Application
 {
     PropertiesService propertiesService = new PropertiesService();
     LocalizationService localizationService =  LocalizationService.getInstance();
@@ -41,7 +39,7 @@ public class LogInHandler extends Application
      *
      * @throws Exception Java.io.FileNotFoundException.
      */
-    public LogInHandler() throws Exception { }
+    public LogInViewHandler() throws Exception { }
 
     /**
      * Method for starting application.
