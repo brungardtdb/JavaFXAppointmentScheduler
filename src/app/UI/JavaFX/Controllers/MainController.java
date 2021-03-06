@@ -9,6 +9,7 @@ import app.DataAccess.Interfaces.ICustomerData;
 import app.DataLocalization.LocalizationService;
 import app.UI.JavaFX.AlertService;
 import app.UI.JavaFX.ViewHandlers.CustomerViewHandler;
+import app.Util.LoggingService;
 import app.Util.PropertiesService;
 import app.Util.ValidationService;
 import javafx.collections.FXCollections;
@@ -35,9 +36,10 @@ public class MainController
     private LocalizationService localizationService;
     private DataAccessFactory dataAccessFactory;
     private Locale locale;
-    ZoneId zoneId;
-    AlertService alertService;
-    ValidationService validationService;
+    private ZoneId zoneId;
+    private AlertService alertService;
+    private ValidationService validationService;
+    private LoggingService loggingService;
     boolean allAppointments = true;
     boolean weeklyAppointments = false;
     boolean monthlyAppointments = false;
@@ -92,7 +94,7 @@ public class MainController
      */
     public void Initialize(PropertiesService propertiesService, LocalizationService localizationService,
                            DataAccessFactory dataAccessFactory, Locale locale, ZoneId zoneId,
-                           AlertService alertService, ValidationService validationService) throws Exception
+                           AlertService alertService, ValidationService validationService, LoggingService loggingService) throws Exception
     {
         this.propertiesService = propertiesService;
         this.localizationService = localizationService;
@@ -101,6 +103,7 @@ public class MainController
         this.zoneId = zoneId;
         this.alertService = alertService;
         this.validationService = validationService;
+        this.loggingService = loggingService;
 
         // Set up form
         formLabel.setText(this.localizationService.GetLocalizedMessage("appointmentmanagertitle", this.locale));
@@ -149,7 +152,7 @@ public class MainController
     {
         CustomerViewHandler customerViewHandler = new CustomerViewHandler(this.propertiesService, this.localizationService,
                 this.dataAccessFactory, this.locale, this.zoneId, this.alertService, this.validationService,
-                this, false);
+                this, false, this.loggingService);
         customerViewHandler.GetCustomerView();
     }
 
@@ -166,7 +169,7 @@ public class MainController
         {
             CustomerViewHandler customerViewHandler = new CustomerViewHandler(this.propertiesService, this.localizationService,
                     this.dataAccessFactory, this.locale, this.zoneId, this.alertService, this.validationService,
-                    this, true);
+                    this, true, this.loggingService);
             customerViewHandler.GetCustomer(customer);
             customerViewHandler.GetCustomerView();
             return;
@@ -202,13 +205,24 @@ public class MainController
                 return;
             }
 
-            if (customerDataService.DeleteCustomerByID(customerToDelete.getCustomerID()))
+            try
             {
-                String deleteMessage = this.localizationService.GetLocalizedMessage("customerdeleteconfirmation", this.locale)
-                        + "\n" + customerToDelete.getCustomerName();
-                alertService.ShowAlert(Alert.AlertType.INFORMATION, titleAndHeader, titleAndHeader, deleteMessage);
-                UpdateCustomerTable();
-                return;
+                if (customerDataService.DeleteCustomerByID(customerToDelete.getCustomerID()))
+                {
+                    String deleteMessage = this.localizationService.GetLocalizedMessage("customerdeleteconfirmation", this.locale)
+                            + "\n" + customerToDelete.getCustomerName();
+                    alertService.ShowAlert(Alert.AlertType.INFORMATION, titleAndHeader, titleAndHeader, deleteMessage);
+                    UpdateCustomerTable();
+                    UpdateAppointmentTable();
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                loggingService.LogException("MainController", "handleDeleteCustomer", ex);
+                titleAndHeader = this.localizationService.GetLocalizedMessage("exceptonwarning", this.locale);
+                String message = this.localizationService.GetLocalizedMessage("exceptionwarningmessage", this.locale);
+                AlertService.ShowAlert(Alert.AlertType.WARNING, titleAndHeader, titleAndHeader, message);
             }
         }
     }
@@ -227,20 +241,31 @@ public class MainController
         return null;
     }
 
+    /**
+     *  Method for adding an appointment, opens the appointment form.
+     *
+     * @param actionEvent The "Add" button click event for appointments.
+     */
     public void handleAddAppointment(ActionEvent actionEvent)
     {
         AppointmentViewHandler appointmentViewHandler = new AppointmentViewHandler(this.propertiesService, this.localizationService,
-                this.dataAccessFactory, this.locale, this.zoneId, this.alertService, this.validationService, this,  false);
+                this.dataAccessFactory, this.locale, this.zoneId, this.alertService, this.validationService, this,  false, this.loggingService);
         appointmentViewHandler.GetAppointmentView();
     }
 
+    /**
+     * Method for modifying an appointment, opens the appointment form.
+     *
+     * @param actionEvent The "Modify" button click event for appointmets.
+     * @throws Exception Java.io.FileNotFoundException.
+     */
     public void handleModifyAppointment(ActionEvent actionEvent) throws Exception
     {
         AppointmentModel appointment = GetAppointmentToModify();
         if (appointment != null)
         {
             AppointmentViewHandler appointmentViewHandler = new AppointmentViewHandler(this.propertiesService, this.localizationService,
-                    this.dataAccessFactory, this.locale, this.zoneId, this.alertService, this.validationService, this,  true);
+                    this.dataAccessFactory, this.locale, this.zoneId, this.alertService, this.validationService, this,  true, this.loggingService);
             appointmentViewHandler.GetAppointment(appointment);
             appointmentViewHandler.GetAppointmentView();
             return;
@@ -252,6 +277,12 @@ public class MainController
         this.alertService.ShowAlert(Alert.AlertType.WARNING,titleAndHeader, titleAndHeader, body);
     }
 
+    /**
+     * Method for deleting an appointment.
+     *
+     * @param actionEvent The "Delete" button click event for appointments.
+     * @throws Exception Java.io.FileNotFoundException.
+     */
     public void handleDeleteAppointment(ActionEvent actionEvent) throws Exception
     {
         String titleAndHeader = this.localizationService.GetLocalizedMessage("deleteappointment", this.locale);
@@ -270,13 +301,23 @@ public class MainController
                 return;
             }
 
-            if (appointmentDataService.DeleteAppointmentByID(appointmentToDelete.getAppointmentID()))
+            try
             {
-                String deleteMessage = this.localizationService.GetLocalizedMessage("appointmentdeleteconfirmation", this.locale)
-                        + "\n" + appointmentToDelete.getAppointmentID() + " " + appointmentToDelete.getAppointmentType();
-                alertService.ShowAlert(Alert.AlertType.INFORMATION, titleAndHeader, titleAndHeader, deleteMessage);
-                UpdateAppointmentTable();
-                return;
+                if (appointmentDataService.DeleteAppointmentByID(appointmentToDelete.getAppointmentID()))
+                {
+                    String deleteMessage = this.localizationService.GetLocalizedMessage("appointmentdeleteconfirmation", this.locale)
+                            + "\n" + appointmentToDelete.getAppointmentID() + " " + appointmentToDelete.getAppointmentType();
+                    alertService.ShowAlert(Alert.AlertType.INFORMATION, titleAndHeader, titleAndHeader, deleteMessage);
+                    UpdateAppointmentTable();
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                loggingService.LogException("MainController", "handleDeleteAppointment", ex);
+                titleAndHeader = this.localizationService.GetLocalizedMessage("exceptonwarning", this.locale);
+                String message = this.localizationService.GetLocalizedMessage("exceptionwarningmessage", this.locale);
+                AlertService.ShowAlert(Alert.AlertType.WARNING, titleAndHeader, titleAndHeader, message);
             }
         }
     }
@@ -325,6 +366,7 @@ public class MainController
             customerTable.setItems(customers);
             customerTable.getSelectionModel().clearSelection();
             customerTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+            customerTable.refresh();
         } 
         catch (Exception e)
         {
@@ -365,6 +407,7 @@ public class MainController
             appointmentTable.setItems(appointments);
             appointmentTable.getSelectionModel().clearSelection();
             appointmentTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+            appointmentTable.refresh();
         } 
         catch (Exception e) 
         {

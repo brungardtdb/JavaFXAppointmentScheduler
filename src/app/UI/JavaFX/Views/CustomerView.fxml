@@ -16,10 +16,12 @@
     <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
 
     <top>
-        <!-- Label for customer form -->
-        <Label fx:id="customerLabel" alignment="TOP_CENTER">
-            <padding><Insets bottom="15" /></padding>
-        </Label>
+        <VBox alignment="TOP_CENTER">
+            <!-- Label for customer form -->
+            <Label fx:id="customerLabel" alignment="TOP_CENTER">
+                <padding><Insets bottom="15" /></padding>
+            </Label>
+        </VBox>
     </top>
 
     <center>
@@ -109,10 +111,5 @@
             </Button>
 
         </HBox>
-
-
-
     </bottom>
-
-
 </BorderPane>

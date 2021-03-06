@@ -6,6 +6,7 @@ import app.DataAccess.DataAccessFactory;
 import app.DataLocalization.LocalizationService;
 import app.UI.JavaFX.AlertService;
 import app.UI.JavaFX.ViewHandlers.MainViewHandler;
+import app.Util.LoggingService;
 import app.Util.PropertiesService;
 
 import app.Util.ValidationService;
@@ -36,6 +37,7 @@ public class LoginController
     private Locale locale;
     private ZoneId zoneID;
     private AlertService alertService;
+    private LoggingService loggingService;
 
     @FXML private  Label logInLabel;
     @FXML private Label zoneIDLabel;
@@ -63,11 +65,12 @@ public class LoginController
      * @param zoneId The user's ZoneID
      * @param alertService The service for providing custom alerts to the user.
      * @param validationService The service for performing business logic validations.
+     * @param loggingService Application logging utility.
      * @throws Exception Java.io.FileNotFoundException.
      */
     public void Initialize(PropertiesService propertiesService, LocalizationService localizationService,
                            DataAccessFactory dataAccessFactory, Locale locale, ZoneId zoneId,
-                           AlertService alertService, ValidationService validationService) throws Exception
+                           AlertService alertService, ValidationService validationService, LoggingService loggingService) throws Exception
     {
         this.propertiesService = propertiesService;
         this.localizationService = localizationService;
@@ -76,6 +79,7 @@ public class LoginController
         this.zoneID = zoneId;
         this.alertService = alertService;
         this.validationService = validationService;
+        this.loggingService = loggingService;
 
         // Set up user interface
         String localizedZoneID = localizationService.GetLocalizedMessage("zoneid", this.locale);
@@ -130,7 +134,7 @@ public class LoginController
 
         // open main form and pass in dependencies
         MainViewHandler mainViewHandler = new MainViewHandler(this.propertiesService, this.localizationService, this.dataAccessFactory,
-                this.locale, this.zoneID, this.alertService, this.validationService);
+                this.locale, this.zoneID, this.alertService, this.validationService, this.loggingService);
         mainViewHandler.GetMainView();
 
         // close login form
@@ -142,21 +146,15 @@ public class LoginController
      * Button event for closing the form.
      *
      * @param actionEvent A button click event.
-     * @throws Exception
      */
-    public void handleCancelLogin(ActionEvent actionEvent) throws Exception
+    public void handleCancelLogin(ActionEvent actionEvent)
     {
-        this.dataAccessFactory.DisconnectFromDB();
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
     }
 
     /**
      * The method for logging each login attempt.
-     *
-     * I used a lambda expression here to help me log to the file without creating any extra classes.
-     * This may violate the Single Responsibility principle of SOLID, but I couldn't see breaking it out into it's
-     * own class unless we are going to do some more sophisticated logging.
      *
      * @param username The user entry for username.
      * @param password The user entry for password.
@@ -168,27 +166,7 @@ public class LoginController
         if (!attemptIsSuccessful)
             ShowLogInError();
 
-        String message = "--login attempt at " + ZonedDateTime.ofInstant(Instant.now(), ZoneId.of("UTC")) + "--\n" +
-                "Username: " + username + " Password: " + password + " Successful Login: " + attemptIsSuccessful  + "\n";
-
-        File file = new File("./login_activity.txt");
-        FileWriter fileWriter;
-
-        Predicate<FileWriter> writeToFile = x -> {
-            try {
-                x.write(message);
-                x.close();
-                return true;
-            } catch (IOException e) {
-                e.printStackTrace();
-                return false;
-            }
-        };
-
-        fileWriter = file.exists() ? new FileWriter(file, true) : new FileWriter(file);
-
-        if (!writeToFile.test(fileWriter))
-            throw new Exception(localizationService.GetLocalizedMessage("logerror", this.locale));
+        this.loggingService.LogLoginAttempt(username, password, attemptIsSuccessful, this.localizationService, this.locale);
     }
 
     /**
@@ -234,11 +212,6 @@ public class LoginController
             if (this.validationService.ValidateUpcomingZonedDateTime(appointment.getStartDate()))
                 return true; // Return early if we find a match
         }
-
-        // for UI testing
-//        ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(Instant.now(), ZoneId.systemDefault()).plusMinutes(6);
-//        if (this.validationService.ValidateUpcomingAppointment(zonedDateTime))
-//            return true;
 
         return false; // Return false if no match is found
     }

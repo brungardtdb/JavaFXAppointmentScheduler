@@ -1,13 +1,11 @@
 package app.DataAccess;
 
 import app.DataAccess.Enums.DataType;
-import app.DataAccess.Interfaces.IAppointmentData;
-import app.DataAccess.Interfaces.ICountryData;
-import app.DataAccess.Interfaces.ICustomerData;
-import app.DataAccess.Interfaces.IDivisionData;
+import app.DataAccess.Interfaces.*;
 import app.DataAccess.MYSQLDataServices.AppointmentDataService;
-import DataAccess.MYSQLDataServices.CustomerDataService;
-import DataAccess.MYSQLDataServices.DataConnectionService;
+import app.DataAccess.MYSQLDataServices.CustomerDataService;
+import app.DataAccess.MYSQLDataServices.DataConnectionService;
+import app.DataAccess.MYSQLDataServices.ContactDataService;
 import app.DataAccess.MYSQLDataServices.CountryDataService;
 import app.DataAccess.MYSQLDataServices.DivisionDataService;
 
@@ -162,4 +160,19 @@ public class DataAccessFactory
         }
     }
 
+    /**
+     * Gets service for contact data based on corresponding database type.
+     *
+     * @return The contact data service.
+     * @throws Exception Throws UnsupportedOperationException if unsupported database type is used.
+     */
+    public IContactData GetContactDataService() throws Exception
+    {
+        switch (this.dataType)
+        {
+            case MYSQL: return new ContactDataService(this.connection, this.dataConnectionService.GetDBName());
+            case MONGODB: throw new UnsupportedOperationException(mongoError);
+            default: throw new UnsupportedOperationException();
+        }
+    }
 }

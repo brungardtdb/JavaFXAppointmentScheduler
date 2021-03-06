@@ -1,4 +1,4 @@
-package DataAccess.MYSQLDataServices;
+package app.DataAccess.MYSQLDataServices;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

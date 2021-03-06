@@ -1,16 +1,16 @@
 package app.UserData.Models;
 
 /**
- * Model for Country data.
+ * Model for country data.
  */
 public class CountryModel
 {
     private int countryID;
 
     /**
-     * Setter for Country ID.
+     * Setter for country ID.
      *
-     * @param ID The Country ID.
+     * @param ID The country ID.
      */
     public void setCountryID(int ID)
     {
@@ -18,9 +18,9 @@ public class CountryModel
     }
 
     /**
-     * Getter for Country ID.
+     * Getter for country ID.
      *
-     * @return The Country ID.
+     * @return The country ID.
      */
     public int getCountryID()
     {
@@ -30,7 +30,7 @@ public class CountryModel
     private String countryName;
 
     /**
-     * Setter for Country Name.
+     * Setter for country Name.
      *
      * @param countryName The name of the country.
      */
@@ -40,7 +40,7 @@ public class CountryModel
     }
 
     /**
-     * Getter for the Country Name.
+     * Getter for the country Name.
      *
      * @return The name of the country.
      */

@@ -6,6 +6,7 @@ import app.UI.JavaFX.AlertService;
 import app.UI.JavaFX.Controllers.AppointmentController;
 import app.UI.JavaFX.Controllers.MainController;
 import app.UserData.Models.AppointmentModel;
+import app.Util.LoggingService;
 import app.Util.PropertiesService;
 import app.Util.ValidationService;
 import javafx.fxml.FXMLLoader;
@@ -27,9 +28,10 @@ public class AppointmentViewHandler
     private LocalizationService localizationService;
     private DataAccessFactory dataAccessFactory;
     private Locale locale;
-    ZoneId zoneId;
-    AlertService alertService;
-    ValidationService validationService;
+    private ZoneId zoneId;
+    private AlertService alertService;
+    private ValidationService validationService;
+    private LoggingService loggingService;
     private MainController mainController;
     private boolean modifyingAppointment;
     private AppointmentModel appointment;
@@ -46,10 +48,12 @@ public class AppointmentViewHandler
      * @param validationService ValidationService dependency.
      * @param mainController Controller for main application view.
      * @param modifyingAppointment Indicates if we are modifying an existing appointment.
+     * @param loggingService Application logging utility.
      */
     public AppointmentViewHandler(PropertiesService propertiesService, LocalizationService localizationService,
                                   DataAccessFactory dataAccessFactory, Locale locale, ZoneId zoneId, AlertService alertService,
-                                  ValidationService validationService, MainController mainController, boolean modifyingAppointment)
+                                  ValidationService validationService, MainController mainController, boolean modifyingAppointment,
+                                  LoggingService loggingService)
     {
         this.propertiesService = propertiesService;
         this.localizationService = localizationService;
@@ -60,6 +64,7 @@ public class AppointmentViewHandler
         this.validationService = validationService;
         this.mainController = mainController;
         this.modifyingAppointment = modifyingAppointment;
+        this.loggingService = loggingService;
     }
 
     /**
@@ -85,7 +90,7 @@ public class AppointmentViewHandler
             AppointmentController appointmentController = fxmlLoader.getController();
             appointmentController.Initialize(this.propertiesService, this.localizationService, this.dataAccessFactory,
                     this.locale, this.zoneId, this.alertService, this.validationService, this.mainController,
-                    this.modifyingAppointment);
+                    this.modifyingAppointment, this.loggingService);
 
             if (modifyingAppointment)
                 appointmentController.GetAppointment(this.appointment);

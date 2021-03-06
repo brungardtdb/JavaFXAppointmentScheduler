@@ -5,7 +5,7 @@ import app.UserData.Models.CountryModel;
 import java.util.List;
 
 /**
- * Interface for reading Country data (readonly)
+ * Interface for reading country data (readonly)
  */
 public interface ICountryData
 {

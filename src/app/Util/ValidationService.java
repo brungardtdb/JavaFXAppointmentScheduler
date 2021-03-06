@@ -1,5 +1,6 @@
 package app.Util;
 
+import app.DataAccess.Interfaces.IContactData;
 import app.DataLocalization.LocalizationService;
 
 import java.time.*;
@@ -122,7 +123,8 @@ public class ValidationService
     {
         ZoneId zoneId = ZoneId.of("US/Eastern");
         ZonedDateTime userZoneDateTime = ZonedDateTime.ofInstant(zonedDateTime.toInstant(), zoneId);
-        return IsWeekDay(userZoneDateTime) && InBusinessHours(userZoneDateTime.getHour());
+        boolean output = (IsWeekDay(userZoneDateTime) && InBusinessHours(userZoneDateTime.getHour()));
+        return output;
     }
 
     /**
