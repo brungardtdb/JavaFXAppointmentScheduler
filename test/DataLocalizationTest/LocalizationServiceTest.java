@@ -49,8 +49,8 @@ public class LocalizationServiceTest
         String usAddress = "123 ABC Street, White Plains";
         String caAddress = "123 ABC Street, Newmarket";
         String ukAddress = "123 ABC Street, Greenwich, London";
-        String usOutput = localizationService.FormatAddress("123 ABC Street", "White Plains", "United States", ZoneId.of("America/Denver"));
-        String caOutput = localizationService.FormatAddress("123 ABC Street", "Newmarket", "Canada", ZoneId.of("Canada/Saskatchewan"));
+        String usOutput = localizationService.FormatAddress("123 ABC Street", "N/A", "White Plains", ZoneId.of("America/Denver"));
+        String caOutput = localizationService.FormatAddress("123 ABC Street", "N/A", "Newmarket", ZoneId.of("Canada/Saskatchewan"));
         String ukOutput = localizationService.FormatAddress("123 ABC Street", "Greenwich", "London", ZoneId.of("Europe/London"));
         Assertions.assertEquals(usOutput, usAddress);
         Assertions.assertEquals(caOutput, caAddress);

@@ -4,6 +4,7 @@ import app.DataAccess.DataAccessFactory;
 import app.DataLocalization.LocalizationService;
 import app.UI.JavaFX.AlertService;
 import app.UI.JavaFX.Controllers.MainController;
+import app.Util.LoggingService;
 import app.Util.PropertiesService;
 import app.Util.ValidationService;
 import javafx.fxml.FXMLLoader;
@@ -25,9 +26,10 @@ public class MainViewHandler
     private LocalizationService localizationService;
     private DataAccessFactory dataAccessFactory;
     private Locale locale;
-    ZoneId zoneId;
-    AlertService alertService;
-    ValidationService validationService;
+    private ZoneId zoneId;
+    private AlertService alertService;
+    private ValidationService validationService;
+    private LoggingService loggingService;
 
     /**
      * Class constructor, takes dependencies and passes them to constructor of main view.
@@ -39,10 +41,11 @@ public class MainViewHandler
      * @param zoneId User's ZoneId.
      * @param alertService AlertService dependency.
      * @param validationService ValidationService dependency.
+     * @param loggingService Application logging utility.
      */
     public MainViewHandler(PropertiesService propertiesService, LocalizationService localizationService,
                            DataAccessFactory dataAccessFactory, Locale locale, ZoneId zoneId,
-                           AlertService alertService, ValidationService validationService)
+                           AlertService alertService, ValidationService validationService, LoggingService loggingService)
     {
         this.propertiesService = propertiesService;
         this.localizationService = localizationService;
@@ -51,6 +54,7 @@ public class MainViewHandler
         this.zoneId = zoneId;
         this.alertService = alertService;
         this.validationService = validationService;
+        this.loggingService = loggingService;
     }
 
     /**
@@ -68,7 +72,7 @@ public class MainViewHandler
             // Get controller and configure controller settings
             MainController mainController = fxmlLoader.getController();
             mainController.Initialize(this.propertiesService, this.localizationService, this.dataAccessFactory,
-                    this.locale, this.zoneId, this.alertService, this.validationService);
+                    this.locale, this.zoneId, this.alertService, this.validationService, this.loggingService);
 
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);

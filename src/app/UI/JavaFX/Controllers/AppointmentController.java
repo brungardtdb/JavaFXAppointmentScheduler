@@ -9,17 +9,13 @@ import app.UI.JavaFX.AlertService;
 import app.UserData.Enums.AppointmentType;
 import app.UserData.Models.AppointmentModel;
 import app.UserData.Models.ContactModel;
-import app.UserData.Models.CountryModel;
 import app.UserData.Models.CustomerModel;
+import app.Util.LoggingService;
 import app.Util.PropertiesService;
 import app.Util.ValidationService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -27,7 +23,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 
-import java.lang.reflect.Array;
 import java.time.*;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -35,20 +30,25 @@ import java.util.stream.Collectors;
 import java.time.ZoneId;
 import java.util.Locale;
 
+/**
+ * Controller class for the appointment form.
+ */
 public class AppointmentController
 {
     private PropertiesService propertiesService;
     private LocalizationService localizationService;
     private DataAccessFactory dataAccessFactory;
     private Locale locale;
-    ZoneId zoneId;
-    AlertService alertService;
-    ValidationService validationService;
+    private ZoneId zoneId;
+    private AlertService alertService;
+    private ValidationService validationService;
+    private LoggingService loggingService;
     private MainController mainController;
     private boolean modifyingAppointment;
     private AppointmentModel appointment;
     private ArrayList<ContactModel> contacts;
     private ArrayList<CustomerModel> customers;
+
 
     private final Map<String, Integer> AvailableHours = new HashMap<String, Integer>(){{
         put("00:00", 0);
@@ -103,11 +103,29 @@ public class AppointmentController
     @FXML Button saveAppointment;
     @FXML Button cancelAppointment;
 
+    /**
+     * Empty constructor for appointment controller.
+     */
     public AppointmentController() { }
 
+    /**
+     * Method for initializing form.
+     *
+     * @param propertiesService PropertiesService dependency.
+     * @param localizationService LocalizationService dependency.
+     * @param dataAccessFactory DataAccessFactory dependency.
+     * @param locale User's locale.
+     * @param zoneId User's ZoneId.
+     * @param alertService AlertService dependency.
+     * @param validationService ValidationService dependency.
+     * @param mainController Controller for the main form.
+     * @param modifyingAppointment Boolean to indicate whether we are modifying an appointment or adding a new appointment.
+     * @param loggingService Application logging utility.
+     * @throws Exception
+     */
     public void Initialize(PropertiesService propertiesService, LocalizationService localizationService,
                            DataAccessFactory dataAccessFactory, Locale locale, ZoneId zoneId, AlertService alertService,
-                           ValidationService validationService, MainController mainController, boolean modifyingAppointment) throws Exception
+                           ValidationService validationService, MainController mainController, boolean modifyingAppointment, LoggingService loggingService) throws Exception
     {
         this.propertiesService = propertiesService;
         this.localizationService = localizationService;
@@ -118,6 +136,7 @@ public class AppointmentController
         this.validationService = validationService;
         this.mainController = mainController;
         this.modifyingAppointment = modifyingAppointment;
+        this.loggingService = loggingService;
 
         String message = modifyingAppointment ? "modifyappointment" : "addappointment";
         appointmentLabel.setText(this.localizationService.GetLocalizedMessage(message, this.locale));
@@ -134,23 +153,27 @@ public class AppointmentController
         appointmentCustomerLabel.setText(this.localizationService.GetLocalizedMessage("customer", this.locale));
         appointmentIDField.setDisable(true);
 
+        // Get contacts
         IContactData contactDataService = this.dataAccessFactory.GetContactDataService();
         this.contacts = (ArrayList<ContactModel>) contactDataService.GetAllContacts();
         appointmentContact.getItems().addAll(contacts.stream()
         .map(ContactModel::getContactName)
         .collect(Collectors.toList()));
 
+        // Get appointment types
         appointmentType.getItems().addAll(
                 AppointmentType.PLANNING.toString(),
                 AppointmentType.DEBRIEFING.toString()
         );
 
+        // Get available appointment times
         appointmentStartTime.getItems().addAll(Arrays.stream(AvailableHours.keySet().toArray()).sorted()
         .collect(Collectors.toList()));
 
         appointmentEndTime.getItems().addAll(Arrays.stream(AvailableHours.keySet().toArray()).sorted()
         .collect(Collectors.toList()));
 
+        // Get customers
         ICustomerData customerDataService = this.dataAccessFactory.GetCustomerDataService();
         this.customers = (ArrayList<CustomerModel>) customerDataService.GetAllCustomers();
         appointmentCustomer.getItems().addAll(customers.stream()
@@ -162,6 +185,13 @@ public class AppointmentController
     }
 
 
+    /**
+     * Method to get appointment for modification when we are modifying an existing appointment.
+     *
+     * More lamba expressions combined with streams to load the form with existing values from the selected appointment.
+     *
+     * @param appointment Appointment that is being modified.
+     */
     public void GetAppointment(AppointmentModel appointment)
     {
         this.appointment = appointment;
@@ -200,7 +230,12 @@ public class AppointmentController
         appointmentCustomer.getSelectionModel().select(matchingCustomer.getCustomerName());
     }
 
-    public boolean ValidateFormInput()
+    /**
+     * Validates that the form is filled out for submission.
+     *
+     * @return True if the form is filled out, otherwise false.
+     */
+    private boolean ValidateFormInput()
     {
         if (modifyingAppointment && appointmentIDField.getText().isEmpty())
             return false;
@@ -238,7 +273,14 @@ public class AppointmentController
         return true;
     }
 
-    public void SaveAppointment(ZonedDateTime startDate, ZonedDateTime endDate) throws Exception
+    /**
+     * Method for saving new appointments or modified existing appointments.
+     *
+     * @param startDate Start date for the appointment.
+     * @param endDate End date for the appointment.
+     * @throws Exception
+     */
+    private void SaveAppointment(ZonedDateTime startDate, ZonedDateTime endDate) throws Exception
     {
         AppointmentModel appointmentData = new AppointmentModel();
 
@@ -272,7 +314,7 @@ public class AppointmentController
         appointmentData.setCustomerID(matchingCustomer.get().getCustomerID());
         IAppointmentData appointmentDataService = this.dataAccessFactory.GetAppointmentDataService();
 
-        // Default user ID to admin, the user ID was not required on the form, but this is a foreign key constraint.
+        // Default user ID to admin, the user ID was not required on the form or in the application, but this is a foreign key constraint.
         appointmentData.setUserID(2);
 
         if (modifyingAppointment)
@@ -282,6 +324,12 @@ public class AppointmentController
             appointmentDataService.CreateAppointment(appointmentData);
     }
 
+    /**
+     * Event handler for "Save" button.
+     *
+     * @param actionEvent Button click event for "Save" button.
+     * @throws Exception Java.io.FileNotFoundException.
+     */
     public void handleSaveAppointment(ActionEvent actionEvent) throws Exception
     {
         String titleAndHeader;
@@ -304,7 +352,7 @@ public class AppointmentController
         endDate = AppointmentZonedDateTime(appointmentEndDate.getValue(),
                 AvailableHours.get(appointmentEndTime.getSelectionModel().getSelectedItem().toString()));
 
-        // Validate appointment time
+        // Validate appointment time is within business hours
         if (!(this.validationService.ValidateZoneDateTimeInBusinessHours(startDate) &&
                 this.validationService.ValidateZoneDateTimeInBusinessHours(endDate)))
         {
@@ -314,17 +362,39 @@ public class AppointmentController
             return;
         }
 
-        SaveAppointment(startDate,endDate);
-        this.mainController.UpdateAppointmentTable();
-        handleCancelAppointment(actionEvent);
+        try
+        {
+            SaveAppointment(startDate,endDate);
+            this.mainController.UpdateAppointmentTable();
+            handleCancelAppointment(actionEvent);
+        }
+        catch (Exception ex)
+        {
+            loggingService.LogException("AppointmentController", "handleSaveAppointment", ex);
+            titleAndHeader = this.localizationService.GetLocalizedMessage("exceptonwarning", this.locale);
+            message = this.localizationService.GetLocalizedMessage("exceptionwarningmessage", this.locale);
+            AlertService.ShowAlert(Alert.AlertType.WARNING, titleAndHeader, titleAndHeader, message);
+        }
     }
 
-    public ZonedDateTime AppointmentZonedDateTime(LocalDate localDate, int hour)
+    /**
+     * Converts selected date and time to ZonedDateTime for appointment.
+     *
+     * @param localDate The date of the appointment.
+     * @param hour The hour of the appointment.
+     * @return The ZonedDateTime of the appointment.
+     */
+    private ZonedDateTime AppointmentZonedDateTime(LocalDate localDate, int hour)
     {
         return ZonedDateTime.of(localDate.getYear(), localDate.getMonthValue(), localDate.getDayOfMonth(),
                 hour, 0, 0, 0, this.zoneId);
     }
 
+    /**
+     * Event handler for "Cancel" button.
+     *
+     * @param actionEvent Button click event for "Cancel" button.
+     */
     public void handleCancelAppointment(ActionEvent actionEvent)
     {
         Stage stage = (Stage) cancelAppointment.getScene().getWindow();

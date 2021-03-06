@@ -4,12 +4,12 @@ import app.DataAccess.DataAccessFactory;
 import app.DataAccess.Interfaces.ICountryData;
 import app.DataAccess.Interfaces.ICustomerData;
 import app.DataAccess.Interfaces.IDivisionData;
-import app.UI.JavaFX.ViewHandlers.MainViewHandler;
 import app.UserData.Models.CountryModel;
 import app.UserData.Models.CustomerModel;
 import app.DataLocalization.LocalizationService;
 import app.UI.JavaFX.AlertService;
 import app.UserData.Models.DivisionModel;
+import app.Util.LoggingService;
 import app.Util.PropertiesService;
 import app.Util.ValidationService;
 import javafx.beans.value.ChangeListener;
@@ -40,9 +40,10 @@ public class CustomerController
     private ICountryData countryDataService;
     private IDivisionData divisionDataService;
     private Locale locale;
-    ZoneId zoneId;
-    AlertService alertService;
-    ValidationService validationService;
+    private ZoneId zoneId;
+    private AlertService alertService;
+    private ValidationService validationService;
+    private LoggingService loggingService;
     private MainController mainController;
     private boolean modifyingCustomer;
     private CustomerModel customer;
@@ -89,12 +90,13 @@ public class CustomerController
      * @param validationService ValidationService dependency.
      * @param mainController Controller for the main form.
      * @param modifyingCustomer Boolean to indicate whether we are modifying a customer or adding a new customer.
+     * @param loggingService Application logging utility.
      * @throws Exception
      */
     public void Initialize(PropertiesService propertiesService, LocalizationService localizationService,
                            DataAccessFactory dataAccessFactory, Locale locale, ZoneId zoneId,
                            AlertService alertService, ValidationService validationService, MainController mainController,
-                           boolean modifyingCustomer) throws Exception
+                           boolean modifyingCustomer, LoggingService loggingService) throws Exception
     {
         this.propertiesService = propertiesService;
         this.localizationService = localizationService;
@@ -107,6 +109,7 @@ public class CustomerController
         this.modifyingCustomer = modifyingCustomer;
         this.countryDataService = this.dataAccessFactory.GetCountryDataService();
         this.divisionDataService = this.dataAccessFactory.GetDivisionDataService();
+        this.loggingService = loggingService;
 
         // Set up form
         String message = modifyingCustomer ? "modifycustomer" : "addcustomer";
@@ -228,7 +231,7 @@ public class CustomerController
      *
      * @param country The country selected for the customer.
      */
-    public void SetDivisonValues(String country)
+    private void SetDivisonValues(String country)
     {
         customerDivision.getItems().clear();
         List<DivisionModel> filteredDivisions;
@@ -318,7 +321,8 @@ public class CustomerController
      *
      * @throws Exception
      */
-    public void SaveCustomer() throws Exception {
+    private void SaveCustomer() throws Exception
+    {
         CustomerModel customerData = new CustomerModel();
 
         customerData.setCustomerName(customerNameField.getText());
@@ -357,22 +361,31 @@ public class CustomerController
      * Event handler for "Save" button.
      *
      * @param actionEvent Button click event for "Save" button.
-     * @throws Exception
+     * @throws Exception Java.io.FileNotFoundException.
      */
     public void handleSaveCustomer(ActionEvent actionEvent) throws Exception
     {
-        if (ValidateFormInput())
+        try
         {
-            SaveCustomer();
-            mainController.UpdateCustomerTable();
-            handleCancelCustomer(actionEvent);
-            return;
+            if (ValidateFormInput())
+            {
+                SaveCustomer();
+                mainController.UpdateCustomerTable();
+                handleCancelCustomer(actionEvent);
+                return;
+            }
+
+            String headerAndTitle = localizationService.GetLocalizedMessage("invalidinput", this.locale);
+            String message = localizationService.GetLocalizedMessage("allfields", this.locale);
+            this.alertService.ShowAlert(Alert.AlertType.WARNING, headerAndTitle, headerAndTitle, message);
         }
-
-        String headerAndTitle = localizationService.GetLocalizedMessage("invalidinput", this.locale);
-        String message = localizationService.GetLocalizedMessage("allfields", this.locale);
-        this.alertService.ShowAlert(Alert.AlertType.WARNING, headerAndTitle, headerAndTitle, message);
-
+        catch (Exception ex)
+        {
+            loggingService.LogException("CustomerController", "handleSaveCustomer", ex);
+            String titleAndHeader = this.localizationService.GetLocalizedMessage("exceptonwarning", this.locale);
+            String message = this.localizationService.GetLocalizedMessage("exceptionwarningmessage", this.locale);
+            AlertService.ShowAlert(Alert.AlertType.WARNING, titleAndHeader, titleAndHeader, message);
+        }
     }
 
     /**

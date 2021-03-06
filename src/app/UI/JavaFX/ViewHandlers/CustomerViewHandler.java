@@ -6,6 +6,7 @@ import app.DataLocalization.LocalizationService;
 import app.UI.JavaFX.AlertService;
 import app.UI.JavaFX.Controllers.CustomerController;
 import app.UI.JavaFX.Controllers.MainController;
+import app.Util.LoggingService;
 import app.Util.PropertiesService;
 import app.Util.ValidationService;
 import javafx.fxml.FXMLLoader;
@@ -27,9 +28,10 @@ public class CustomerViewHandler
     private LocalizationService localizationService;
     private DataAccessFactory dataAccessFactory;
     private Locale locale;
-    ZoneId zoneId;
-    AlertService alertService;
-    ValidationService validationService;
+    private ZoneId zoneId;
+    private AlertService alertService;
+    private ValidationService validationService;
+    private LoggingService loggingService;
     private MainController mainController;
     private boolean modifyingCustomer;
     private CustomerModel customer;
@@ -46,11 +48,12 @@ public class CustomerViewHandler
      * @param validationService ValidationService dependency.
      * @param mainController Controller for main application view.
      * @param modifyingCustomer Indicates if we are modifying an existing customer.
+     * @param loggingService Application logging utility.
      */
     public CustomerViewHandler(PropertiesService propertiesService, LocalizationService localizationService,
                                DataAccessFactory dataAccessFactory, Locale locale, ZoneId zoneId,
                                AlertService alertService, ValidationService validationService, MainController mainController,
-                               boolean modifyingCustomer)
+                               boolean modifyingCustomer, LoggingService loggingService)
     {
         this.propertiesService = propertiesService;
         this.localizationService = localizationService;
@@ -61,6 +64,7 @@ public class CustomerViewHandler
         this.validationService = validationService;
         this.mainController = mainController;
         this.modifyingCustomer = modifyingCustomer;
+        this.loggingService = loggingService;
     }
 
     /**
@@ -89,7 +93,7 @@ public class CustomerViewHandler
             CustomerController customerController = fxmlLoader.getController();
             customerController.Initialize(this.propertiesService, this.localizationService, this.dataAccessFactory,
                     this.locale, this.zoneId, this.alertService, this.validationService, this.mainController,
-                    this.modifyingCustomer);
+                    this.modifyingCustomer, this.loggingService);
 
             if (modifyingCustomer)
                 customerController.GetCustomer(this.customer);

@@ -4,6 +4,7 @@ import app.DataAccess.DataAccessFactory;
 import app.DataAccess.Enums.DataType;
 import app.DataLocalization.LocalizationService;
 import app.UI.JavaFX.AlertService;
+import app.Util.LoggingService;
 import app.Util.PropertiesService;
 import app.UI.JavaFX.Controllers.LoginController;
 import app.Util.ValidationService;
@@ -31,6 +32,7 @@ public class LogInViewHandler extends Application
     ZoneId zoneId = ZoneId.systemDefault();
     AlertService alertService =  new AlertService();
     ValidationService validationService = ValidationService.getInstance();
+    LoggingService loggingService = LoggingService.getInstance();
     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/app/UI/JavaFX/Views/LoginView.fxml"));
     Parent root = null;
 
@@ -58,7 +60,7 @@ public class LogInViewHandler extends Application
             root = (Parent) fxmlLoader.load();
             LoginController controller =  fxmlLoader.getController();
             controller.Initialize(propertiesService, localizationService, dataAccessFactory, locale,
-                    zoneId, alertService, validationService);
+                    zoneId, alertService, validationService, loggingService);
             stage.setTitle(loginString);
             stage.setScene(new Scene(root, 400, 250));
             stage.show();
