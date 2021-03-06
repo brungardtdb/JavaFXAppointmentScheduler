@@ -4,6 +4,7 @@ import app.DataAccess.DataAccessFactory;
 import app.DataAccess.Interfaces.ICountryData;
 import app.DataAccess.Interfaces.ICustomerData;
 import app.DataAccess.Interfaces.IDivisionData;
+import app.UI.JavaFX.ViewHandlers.MainViewHandler;
 import app.UserData.Models.CountryModel;
 import app.UserData.Models.CustomerModel;
 import app.DataLocalization.LocalizationService;
@@ -175,7 +176,6 @@ public class CustomerController
                 .filter(x -> x.getDivisionID() == divID).findFirst();
 
         DivisionModel currentCustomerDivision = division.get();
-
 
         Optional<CountryModel> country = this.countries.stream()
                 .filter(x -> x.getCountryID() == currentCustomerDivision.getCountryID()).findFirst();
@@ -364,7 +364,7 @@ public class CustomerController
         if (ValidateFormInput())
         {
             SaveCustomer();
-            this.mainController.UpdateCustomerTable();
+            mainController.UpdateCustomerTable();
             handleCancelCustomer(actionEvent);
             return;
         }

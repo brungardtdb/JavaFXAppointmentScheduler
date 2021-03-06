@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class that manages Country data in database (readonly)
+ * Class that manages country data in database (readonly)
  */
 public class CountryDataService implements ICountryData
 {
@@ -18,7 +18,7 @@ public class CountryDataService implements ICountryData
     private final String dbName;
 
     /**
-     * Constructor for SQL Country data service, takes SQL connection and DB name as arguments.
+     * Constructor for SQL country data service, takes SQL connection and DB name as arguments.
      *
      * @param connection The database connection.
      * @param dbName The database name.

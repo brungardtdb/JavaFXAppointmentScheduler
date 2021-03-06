@@ -72,7 +72,7 @@
                     <HBox alignment="CENTER">
                         <padding><Insets left="20" /></padding>
                         <TableView style="-fx-background-color: #808080;" fx:id="customerTable">
-
+                            <columnResizePolicy><TableView fx:constant="UNCONSTRAINED_RESIZE_POLICY"/></columnResizePolicy>
                             <columns >
                                 <TableColumn fx:id="customerIDColumn" style="-fx-background-color: #545454;"/>
                                 <TableColumn fx:id="customerNameColumn" style="-fx-background-color: #545454;"/>
@@ -149,7 +149,7 @@
                     <HBox alignment="CENTER">
                         <padding><Insets left="20" /></padding>
                         <TableView style="-fx-background-color: #808080;" fx:id="appointmentTable">
-
+                            <columnResizePolicy><TableView fx:constant="UNCONSTRAINED_RESIZE_POLICY"/></columnResizePolicy>
                             <columns >
                                 <TableColumn fx:id="appointmentIDColumn" style="-fx-background-color: #545454;"/>
                                 <TableColumn fx:id="appointmentTitleColumn" style="-fx-background-color: #545454;"/>

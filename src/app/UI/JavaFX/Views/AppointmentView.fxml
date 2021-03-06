@@ -6,10 +6,127 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.geometry.Insets?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="app.UI.JavaFX.Controllers.AppointmentController"
-            prefHeight="450.0" prefWidth="400.0"
+            prefHeight="500.0" prefWidth="400.0"
             stylesheets="./app/UI/style.css">
+
+    <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+
+    <top>
+        <VBox alignment="TOP_CENTER">
+            <!-- Label for appointment form -->
+            <Label fx:id="appointmentLabel" alignment="TOP_CENTER">
+                <padding><Insets bottom="15" /></padding>
+            </Label>
+        </VBox>
+    </top>
+
+    <center>
+
+        <VBox alignment="TOP_CENTER">
+            <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+
+            <!-- GridPane to host options for adding/modifying appointments -->
+            <GridPane alignment="TOP_CENTER">
+
+                <!-- Appointment ID -->
+                <Label fx:id="appointmentIDLabel" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <padding><Insets top="15" right="15"/></padding>
+                </Label>
+
+                <TextField fx:id="appointmentIDField" GridPane.columnIndex="2" GridPane.rowIndex="1"></TextField>
+
+                <!-- Appointment Title -->
+                <Label fx:id="appointmentTitleLabel" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                    <padding><Insets top="15" right="15"/></padding>
+                </Label>
+
+                <TextField fx:id="appointmentTitleField" GridPane.columnIndex="2" GridPane.rowIndex="2"></TextField>
+
+                <!-- Appointment Description -->
+                <Label fx:id="appointmentDescriptionLabel" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                    <padding><Insets top="15" right="15"/></padding>
+                </Label>
+
+                <TextField fx:id="appointmentDescriptionField" GridPane.columnIndex="2" GridPane.rowIndex="3"></TextField>
+
+                <!-- Appointment Location -->
+                <Label fx:id="appointmentLocationLabel" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                    <padding><Insets top="15" right="15"/></padding>
+                </Label>
+
+                <TextField fx:id="appointmentLocationField" GridPane.columnIndex="2" GridPane.rowIndex="4"></TextField>
+
+                <!-- Appointment Contact -->
+                <Label fx:id="appointmentContactLabel" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                    <padding><Insets top="15" right="15"/></padding>
+                </Label>
+
+                <ComboBox fx:id="appointmentContact" GridPane.columnIndex="2" GridPane.rowIndex="5"></ComboBox>
+
+                <!-- Appointment Type -->
+                <Label fx:id="appointmentTypeLabel" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                    <padding><Insets top="15" right="15"/></padding>
+                </Label>
+
+                <ComboBox fx:id="appointmentType" GridPane.columnIndex="2" GridPane.rowIndex="6"></ComboBox>
+
+                <!-- Start Date and Time -->
+
+                <Label fx:id="appointmentStartDateLabel" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                    <padding><Insets top="15" right="15"/></padding>
+                </Label>
+
+                <DatePicker fx:id="appointmentStartDate" GridPane.columnIndex="2" GridPane.rowIndex="7"></DatePicker>
+
+                <Label fx:id="appointmentStartTimeLabel" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                    <padding><Insets top="15" right="15"/></padding>
+                </Label>
+
+                <ComboBox fx:id="appointmentStartTime" GridPane.columnIndex="2" GridPane.rowIndex="8"></ComboBox>
+
+                <!-- End Date and Time -->
+
+                <Label fx:id="appointmentEndDateLabel" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                    <padding><Insets top="15" right="15"/></padding>
+                </Label>
+
+                <DatePicker fx:id="appointmentEndDate" GridPane.columnIndex="2" GridPane.rowIndex="9"></DatePicker>
+
+                <Label fx:id="appointmentEndTimeLabel" GridPane.columnIndex="1" GridPane.rowIndex="10">
+                    <padding><Insets top="15" right="15"/></padding>
+                </Label>
+
+                <ComboBox fx:id="appointmentEndTime" GridPane.columnIndex="2" GridPane.rowIndex="10"></ComboBox>
+
+                <!-- Customer -->
+                <Label fx:id="appointmentCustomerLabel" GridPane.columnIndex="1" GridPane.rowIndex="11">
+                    <padding><Insets top="15" right="15"/></padding>
+                </Label>
+
+                <ComboBox fx:id="appointmentCustomer" GridPane.columnIndex="2" GridPane.rowIndex="11"></ComboBox>
+
+            </GridPane>
+        </VBox>
+    </center>
+
+    <bottom>
+        <HBox spacing="10" alignment="TOP_CENTER">
+
+            <Button fx:id="saveAppointment" onAction="#handleSaveAppointment">
+                <padding><Insets top="5" left="5" bottom="5" right="5"/></padding>
+            </Button>
+
+            <!--Cancel Button-->
+            <Button fx:id="cancelAppointment" onAction="#handleCancelAppointment">
+                <padding><Insets top="5" left="5" bottom="5" right="5"/></padding>
+            </Button>
+
+        </HBox>
+    </bottom>
+
 
 </BorderPane>

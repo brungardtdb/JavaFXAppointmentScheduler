@@ -208,6 +208,7 @@ public class MainController
                         + "\n" + customerToDelete.getCustomerName();
                 alertService.ShowAlert(Alert.AlertType.INFORMATION, titleAndHeader, titleAndHeader, deleteMessage);
                 UpdateCustomerTable();
+                UpdateAppointmentTable();
                 return;
             }
         }
@@ -325,6 +326,7 @@ public class MainController
             customerTable.setItems(customers);
             customerTable.getSelectionModel().clearSelection();
             customerTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+            customerTable.refresh();
         } 
         catch (Exception e)
         {
@@ -365,6 +367,7 @@ public class MainController
             appointmentTable.setItems(appointments);
             appointmentTable.getSelectionModel().clearSelection();
             appointmentTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+            appointmentTable.refresh();
         } 
         catch (Exception e) 
         {

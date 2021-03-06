@@ -20,18 +20,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="efe0c708-2113-4624-bce0-8eddac3d9022" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/ViewHandlers/AppointmentViewHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/DataAccess/Interfaces/IContactData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/DataAccess/MYSQLDataServices/ContactDataService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/UserData/Models/ContactModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/DataAccessTest/ContactDataServiceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/DataAccess/DataAccessFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/DataAccess/DataAccessFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/DataAccess/Interfaces/ICountryData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/DataAccess/Interfaces/ICountryData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/DataAccess/MYSQLDataServices/CountryDataService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/DataAccess/MYSQLDataServices/CountryDataService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/AppointmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/AppointmentController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/CustomerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/ViewHandlers/CustomerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/ViewHandlers/CustomerViewHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/ViewHandlers/LogInHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/ViewHandlers/LogInViewHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/ViewHandlers/MainHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/ViewHandlers/MainViewHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/Views/AppointmentView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/Views/AppointmentView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/UI/UIFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/UIFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/Views/CustomerView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/Views/CustomerView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/Views/MainView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/Views/MainView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/UserData/Models/CountryModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UserData/Models/CountryModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Util/ValidationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Util/ValidationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/res/en.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/res/en.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/res/fr.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/res/fr.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,6 +104,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ContactDataServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="AppointmentScheduleApp" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="DataAccessTest.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="DataAccessTest" />
+      <option name="MAIN_CLASS_NAME" value="DataAccessTest.ContactDataServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="CountryDataTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="AppointmentScheduleApp" />
       <extension name="coverage">
@@ -128,35 +149,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="LocalizationServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="AppointmentScheduleApp" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="DataLocalizationTest.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="DataLocalizationTest" />
-      <option name="MAIN_CLASS_NAME" value="DataLocalizationTest.LocalizationServiceTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <list>
       <item itemvalue="Application.Main" />
       <item itemvalue="JUnit.All in AppointmentScheduleApp (2)" />
-      <item itemvalue="JUnit.LocalizationServiceTest" />
       <item itemvalue="JUnit.CountryDataTest" />
       <item itemvalue="JUnit.DivisionDataTest" />
+      <item itemvalue="JUnit.ContactDataServiceTest" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.ContactDataServiceTest" />
         <item itemvalue="JUnit.DivisionDataTest" />
         <item itemvalue="JUnit.CountryDataTest" />
         <item itemvalue="JUnit.All in AppointmentScheduleApp (2)" />
-        <item itemvalue="JUnit.LocalizationServiceTest" />
       </list>
     </recent_temporary>
   </component>
@@ -182,84 +188,6 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="361" y="71" key="#Intentions" timestamp="1613941653854">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="361" y="71" key="#Intentions/0.0.1536.824@0.0.1536.824" timestamp="1613941653854" />
-    <state x="274" y="54" width="976" height="702" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1613851450876">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="274" y="54" width="976" height="702" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1613851450876" />
-    <state x="574" y="119" key="#com.intellij.ide.util.MemberChooser" timestamp="1614554027832">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="574" y="119" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1614554027832" />
-    <state x="590" y="337" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1613930394218">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="590" y="337" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/0.0.1536.824@0.0.1536.824" timestamp="1613930394218" />
-    <state x="234" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1614736265494">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="234" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.824@0.0.1536.824" timestamp="1614736265494" />
-    <state x="473" y="154" key="FileChooserDialogImpl" timestamp="1613850970242">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="473" y="154" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1613850970242" />
-    <state width="1493" height="200" key="GridCell.Tab.0.bottom" timestamp="1614738440737">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1493" height="200" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1614738440737" />
-    <state width="1493" height="200" key="GridCell.Tab.0.center" timestamp="1614738440737">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1493" height="200" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1614738440737" />
-    <state width="1493" height="200" key="GridCell.Tab.0.left" timestamp="1614738440737">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1493" height="200" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1614738440737" />
-    <state width="1493" height="200" key="GridCell.Tab.0.right" timestamp="1614738440737">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1493" height="200" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1614738440737" />
-    <state width="1493" height="290" key="GridCell.Tab.1.bottom" timestamp="1614554990913">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1493" height="290" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1614554990913" />
-    <state width="1493" height="290" key="GridCell.Tab.1.center" timestamp="1614554990913">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1493" height="290" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1614554990913" />
-    <state width="1493" height="290" key="GridCell.Tab.1.left" timestamp="1614554990913">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1493" height="290" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1614554990913" />
-    <state width="1493" height="290" key="GridCell.Tab.1.right" timestamp="1614554990913">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1493" height="290" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1614554990913" />
-    <state x="249" y="0" key="SettingsEditor" timestamp="1613850983639">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="249" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1613850983639" />
-    <state x="498" y="304" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1612911418066">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="498" y="304" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD/0.0.1536.824@0.0.1536.824" timestamp="1612911418066" />
-    <state x="311" y="141" width="912" height="628" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1614202253020">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="311" y="141" width="912" height="628" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1536.824@0.0.1536.824" timestamp="1614202253020" />
-    <state x="0" y="0" width="1507" height="808" key="dock-window-1" timestamp="1614737690048">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="0" y="0" width="1507" height="808" key="dock-window-1/0.0.1536.824@0.0.1536.824" timestamp="1614737690048" />
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1614547802974">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1614547802974" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
