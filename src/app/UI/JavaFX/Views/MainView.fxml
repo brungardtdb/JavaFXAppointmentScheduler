@@ -189,6 +189,18 @@
     </center>
 
     <bottom>
+        <VBox BorderPane.alignment="BOTTOM_LEFT">
+
+            <Label fx:id="reportsLabel"></Label>
+
+            <HBox BorderPane.alignment="BOTTOM_LEFT">
+                <Button fx:id="appointmentByTypeDate" onAction="#displayAppTypeByDate"></Button>
+                <Button fx:id="contactSchedule" onAction="#displayContactSchedule"></Button>
+                <Button fx:id="customersByCountry" onAction="#displayCustomersByCountry"></Button>
+            </HBox>
+        </VBox>
+
+
         <!-- Exit button for form -->
         <Button fx:id="exitForm" onAction="#handleExitForm" BorderPane.alignment="BOTTOM_RIGHT">
             <padding><Insets top="5" left="5" bottom="5" right="5"/></padding>

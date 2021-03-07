@@ -400,8 +400,8 @@ public class MainController
             appointmentLocationColumn.setCellValueFactory(new PropertyValueFactory<AppointmentModel, String>("location"));
             appointmentContactColumn.setCellValueFactory(new PropertyValueFactory<AppointmentModel, String>("contactID"));
             appointmentTypeColumn.setCellValueFactory(new PropertyValueFactory<AppointmentModel, String>("appointmentType"));
-            appointmentStartColumn.setCellValueFactory(new PropertyValueFactory<AppointmentModel, String>("startDate"));
-            appointmentEndColumn.setCellValueFactory(new PropertyValueFactory<AppointmentModel, String>("endDate"));
+            appointmentStartColumn.setCellValueFactory(new PropertyValueFactory<AppointmentModel, String>("localStartDate"));
+            appointmentEndColumn.setCellValueFactory(new PropertyValueFactory<AppointmentModel, String>("localEndDate"));
             appointmentCustomerIDColumn.setCellValueFactory(new PropertyValueFactory<AppointmentModel, String>("customerID"));
 
             appointmentTable.setItems(appointments);
@@ -528,5 +528,20 @@ public class MainController
     {
         Stage stage = (Stage) exitForm.getScene().getWindow();
         stage.close();
+    }
+
+    public void displayAppTypeByDate(ActionEvent actionEvent)
+    {
+
+    }
+
+    public void displayContactSchedule(ActionEvent actionEvent)
+    {
+
+    }
+
+    public void displayCustomersByCountry(ActionEvent actionEvent)
+    {
+
     }
 }

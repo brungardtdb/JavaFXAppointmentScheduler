@@ -156,4 +156,18 @@ public class ValidationService
     {
         return 8 <= hours && hours <= 22;
     }
+
+    /**
+     * Method to check if one ZonedDateTime exists within two others.
+     *
+     * @param timeToCompare ZonedDateTime to check.
+     * @param startTime ZonedDateTime that marks beginning of window for comparison.
+     * @param endTime ZonedDateTime that marks end of window for comparison.
+     * @return True if time to compare is between start and finish times.
+     */
+    public boolean TimeOverlaps(ZonedDateTime timeToCompare, ZonedDateTime startTime, ZonedDateTime endTime)
+    {
+        return ((timeToCompare.toInstant().toEpochMilli() > startTime.toInstant().toEpochMilli() &&
+                timeToCompare.toInstant().toEpochMilli() < endTime.toInstant().toEpochMilli()));
+    }
 }

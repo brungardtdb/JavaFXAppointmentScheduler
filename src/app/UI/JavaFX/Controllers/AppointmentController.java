@@ -49,7 +49,6 @@ public class AppointmentController
     private ArrayList<ContactModel> contacts;
     private ArrayList<CustomerModel> customers;
 
-
     private final Map<String, Integer> AvailableHours = new HashMap<String, Integer>(){{
         put("00:00", 0);
         put("01:00", 1);
@@ -360,6 +359,47 @@ public class AppointmentController
             message = this.localizationService.GetLocalizedMessage("appointmentbusinesshours", this.locale);
             this.alertService.ShowAlert(Alert.AlertType.WARNING, titleAndHeader, titleAndHeader, message);
             return;
+        }
+
+        // Validate appointment does not overlap with existing appointments
+        IAppointmentData appointmentDataService = this.dataAccessFactory.GetAppointmentDataService();
+        List<AppointmentModel> appointments = appointmentDataService.GetAllAppointments();
+        Optional<AppointmentModel> overlappingAppointment = appointments.stream().filter(x ->
+            this.validationService.TimeOverlaps(startDate, x.getStartDate(), x.getEndDate()) ||
+                this.validationService.TimeOverlaps(endDate, x.getStartDate(), x.getEndDate())).findFirst();
+
+        // Check for matching start and end date with existing appointments
+        Optional<AppointmentModel> sameStartAndFinish = appointments.stream().filter(x ->
+                startDate.toInstant().toEpochMilli() == x.getStartDate().toInstant().toEpochMilli() ||
+                endDate.toInstant().toEpochMilli() == x.getEndDate().toInstant().toEpochMilli()).findFirst();
+
+        boolean sameAppointment = false;
+
+        // Check for any overlapping appointments and display warning
+        if ((overlappingAppointment.isPresent() || sameStartAndFinish.isPresent()))
+        {
+            AppointmentModel invalidAppointment = new AppointmentModel();
+
+            // Make sure if we are modifying that this is not the same appointment.
+            if (overlappingAppointment.isPresent())
+                invalidAppointment = overlappingAppointment.get();
+
+            if (sameStartAndFinish.isPresent())
+                invalidAppointment = sameStartAndFinish.get();
+
+            if (modifyingAppointment)
+            {
+                if (invalidAppointment.getAppointmentID() == this.appointment.getAppointmentID())
+                    sameAppointment = true;
+            }
+
+            if (!sameAppointment)
+            {
+                titleAndHeader = this.localizationService.GetLocalizedMessage("invalidinput", this.locale);
+                message = this.localizationService.GetLocalizedMessage("appointmenthoursoverlap", this.locale);
+                this.alertService.ShowAlert(Alert.AlertType.WARNING, titleAndHeader, titleAndHeader, message);
+                return;
+            }
         }
 
         try

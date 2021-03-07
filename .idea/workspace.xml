@@ -20,27 +20,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="efe0c708-2113-4624-bce0-8eddac3d9022" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/app/Util/LoggingService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/Util/ReportService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/AppointmentScheduleApp/DataAccess/MYSQLDataServices/CustomerDataService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/AppointmentScheduleApp/DataAccess/MYSQLDataServices/DataConnectionService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/DataAccess/DataAccessFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/DataAccess/DataAccessFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/DataAccess/Enums/DataType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/DataAccess/Enums/DataType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/DataAccess/MYSQLDataServices/CustomerDataService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/DataAccess/MYSQLDataServices/CustomerDataService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/DataAccess/MYSQLDataServices/DataConnectionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/DataAccess/MYSQLDataServices/DataConnectionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/UI/Enums/UserInterfaceType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/Enums/UserInterfaceType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/AppointmentScheduleApp/app/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/AppointmentScheduleApp/app/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/AppointmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/AppointmentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/CustomerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/ViewHandlers/AppointmentViewHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/ViewHandlers/AppointmentViewHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/ViewHandlers/CustomerViewHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/ViewHandlers/CustomerViewHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/ViewHandlers/LogInViewHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/ViewHandlers/LogInViewHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/ViewHandlers/MainViewHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/ViewHandlers/MainViewHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/Views/MainView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/Views/MainView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/UserData/Models/AppointmentModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UserData/Models/AppointmentModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Util/ValidationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Util/ValidationService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/res/en.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/res/en.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/res/fr.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/res/fr.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/DataLocalizationTest/LocalizationServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/DataLocalizationTest/LocalizationServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Validation/ValidationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/Validation/ValidationTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,13 +63,14 @@
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../JavaFX/openjfx-11.0.2_windows-x64_bin-sdk/javafx-sdk-11.0.2/JavaFx" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.14550781" />
     <property name="project.structure.side.proportion" value="0.29548565" />
   </component>
-  <component name="RunManager" selected="JUnit.All in AppointmentScheduleApp (2)">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="app.Main" />
       <module name="AppointmentScheduleApp" />
@@ -122,21 +114,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="DivisionDataTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="AppointmentScheduleApp" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="DataAccessTest.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="DataAccessTest" />
-      <option name="MAIN_CLASS_NAME" value="DataAccessTest.DivisionDataTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="LocalizationServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="AppointmentScheduleApp" />
       <extension name="coverage">
@@ -152,20 +129,35 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ValidationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="AppointmentScheduleApp" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Validation.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Validation" />
+      <option name="MAIN_CLASS_NAME" value="Validation.ValidationTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Application.Main" />
       <item itemvalue="JUnit.All in AppointmentScheduleApp (2)" />
-      <item itemvalue="JUnit.DivisionDataTest" />
       <item itemvalue="JUnit.ContactDataServiceTest" />
       <item itemvalue="JUnit.LocalizationServiceTest" />
+      <item itemvalue="JUnit.ValidationTest" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.ValidationTest" />
         <item itemvalue="JUnit.All in AppointmentScheduleApp (2)" />
         <item itemvalue="JUnit.LocalizationServiceTest" />
-        <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.ContactDataServiceTest" />
-        <item itemvalue="JUnit.DivisionDataTest" />
       </list>
     </recent_temporary>
   </component>
@@ -219,6 +211,11 @@
           <url>file://$PROJECT_DIR$/test/DataLocalizationTest/LocalizationServiceTest.java</url>
           <line>51</line>
           <option name="timeStamp" value="31" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/app/Main.java</url>
+          <line>68</line>
+          <option name="timeStamp" value="34" />
         </line-breakpoint>
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.lang.RuntimeException" package="java.lang" />
