@@ -2,12 +2,7 @@ package app.DataAccess;
 
 import app.DataAccess.Enums.DataType;
 import app.DataAccess.Interfaces.*;
-import app.DataAccess.MYSQLDataServices.AppointmentDataService;
-import app.DataAccess.MYSQLDataServices.CustomerDataService;
-import app.DataAccess.MYSQLDataServices.DataConnectionService;
-import app.DataAccess.MYSQLDataServices.ContactDataService;
-import app.DataAccess.MYSQLDataServices.CountryDataService;
-import app.DataAccess.MYSQLDataServices.DivisionDataService;
+import app.DataAccess.MYSQLDataServices.*;
 
 import java.sql.Connection;
 import java.util.Properties;
@@ -171,6 +166,22 @@ public class DataAccessFactory
         switch (this.dataType)
         {
             case MYSQL: return new ContactDataService(this.connection, this.dataConnectionService.GetDBName());
+            case MONGODB: throw new UnsupportedOperationException(mongoError);
+            default: throw new UnsupportedOperationException();
+        }
+    }
+
+    /**
+     * Gets service for user data based on corresponding database type.
+     *
+     * @return The user data service.
+     * @throws Exception Throws UnsupportedOperationException if unsupported database type is used.
+     */
+    public IUserData GetUserDataService() throws Exception
+    {
+        switch (this.dataType)
+        {
+            case MYSQL: return new UserDataService(this.connection, this.dataConnectionService.GetDBName());
             case MONGODB: throw new UnsupportedOperationException(mongoError);
             default: throw new UnsupportedOperationException();
         }

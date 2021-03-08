@@ -1,7 +1,9 @@
 package app.UI.JavaFX.Controllers;
 
+import app.DataAccess.Interfaces.IContactData;
 import app.UI.JavaFX.ViewHandlers.AppointmentViewHandler;
 import app.UserData.Models.AppointmentModel;
+import app.UserData.Models.ContactModel;
 import app.UserData.Models.CustomerModel;
 import app.DataAccess.DataAccessFactory;
 import app.DataAccess.Interfaces.IAppointmentData;
@@ -12,6 +14,8 @@ import app.UI.JavaFX.ViewHandlers.CustomerViewHandler;
 import app.Util.LoggingService;
 import app.Util.PropertiesService;
 import app.Util.ValidationService;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,11 +24,13 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -382,6 +388,9 @@ public class MainController
         try 
         {
             IAppointmentData appointmentData = dataAccessFactory.GetAppointmentDataService();
+            IContactData contactData = dataAccessFactory.GetContactDataService();
+
+            ArrayList<ContactModel> contactModelArrayList = (ArrayList<ContactModel>) contactData.GetAllContacts();
             ArrayList<AppointmentModel> appointmentModelArrayList = (ArrayList<AppointmentModel>) appointmentData.GetAllAppointments();
             ArrayList<AppointmentModel> updatedAppointments = new ArrayList<AppointmentModel>();
 
@@ -398,11 +407,38 @@ public class MainController
             appointmentTitleColumn.setCellValueFactory(new PropertyValueFactory<AppointmentModel, String>("title"));
             appointmentDescriptionColumn.setCellValueFactory(new PropertyValueFactory<AppointmentModel, String>("description"));
             appointmentLocationColumn.setCellValueFactory(new PropertyValueFactory<AppointmentModel, String>("location"));
-            appointmentContactColumn.setCellValueFactory(new PropertyValueFactory<AppointmentModel, String>("contactID"));
+
+            appointmentContactColumn.setCellValueFactory(
+                    new Callback<TableColumn.CellDataFeatures<AppointmentModel, String>, ObservableValue<String>>() {
+                        // We only have Contact ID on appointment and we need to display contact name in the table.
+                        @Override
+                        public ObservableValue<String> call(TableColumn.CellDataFeatures<AppointmentModel, String> a) {
+
+                            Optional<ContactModel> contactTest = contactModelArrayList.stream().filter(x ->
+                                    x.getContactID() == a.getValue().getContactID())
+                                    .findFirst();
+
+                            SimpleStringProperty simpleStringProperty = new SimpleStringProperty(contactTest.get().getContactName());
+
+                            return simpleStringProperty;
+                }
+            });
+
             appointmentTypeColumn.setCellValueFactory(new PropertyValueFactory<AppointmentModel, String>("appointmentType"));
             appointmentStartColumn.setCellValueFactory(new PropertyValueFactory<AppointmentModel, String>("localStartDate"));
             appointmentEndColumn.setCellValueFactory(new PropertyValueFactory<AppointmentModel, String>("localEndDate"));
             appointmentCustomerIDColumn.setCellValueFactory(new PropertyValueFactory<AppointmentModel, String>("customerID"));
+
+            /*
+            *  TableColumn<Person,String> firstNameCol = new TableColumn<Person,String>("First Name");
+                firstNameCol.setCellValueFactory(new Callback<CellDataFeatures<Person, String>, ObservableValue<String>>() {
+                public ObservableValue<String> call(CellDataFeatures<Person, String> p) {
+                        // p.getValue() returns the Person instance for a particular TableView row
+                        return p.getValue().firstNameProperty();
+     }
+  });
+ }
+            * */
 
             appointmentTable.setItems(appointments);
             appointmentTable.getSelectionModel().clearSelection();

@@ -1,16 +1,16 @@
 package app.UserData.Models;
 
 /**
- * Model class for Division data.
+ * Model class for division data.
  */
 public class DivisionModel
 {
     private int divisionID;
 
     /**
-     * Setter for the Division ID.
+     * Setter for the division ID.
      *
-     * @param ID The Division ID.
+     * @param ID The division ID.
      */
     public void setDivisionID(int ID)
     {
@@ -18,9 +18,9 @@ public class DivisionModel
     }
 
     /**
-     * Getter for the Division ID.
+     * Getter for the division ID.
      *
-     * @return The Division ID.
+     * @return The division ID.
      */
     public int getDivisionID()
     {
@@ -30,9 +30,9 @@ public class DivisionModel
     private String division;
 
     /**
-     * Setter for the Division (name).
+     * Setter for the division (name).
      *
-     * @param division The Division.
+     * @param division The division.
      */
     public void setDivision(String division)
     {
@@ -40,9 +40,9 @@ public class DivisionModel
     }
 
     /**
-     * Getter for the Division (name).
+     * Getter for the division (name).
      *
-     * @return The Division.
+     * @return The division.
      */
     public String getDivision()
     {
@@ -52,9 +52,9 @@ public class DivisionModel
     int countryID;
 
     /**
-     * Setter for the Country ID.
+     * Setter for the country ID.
      *
-     * @param ID The Country ID.
+     * @param ID The country ID.
      */
     public void setCountryID(int ID)
     {
@@ -62,9 +62,9 @@ public class DivisionModel
     }
 
     /**
-     * Getter for the Country ID.
+     * Getter for the country ID.
      *
-     * @return The Country ID.
+     * @return The country ID.
      */
     public int getCountryID()
     {

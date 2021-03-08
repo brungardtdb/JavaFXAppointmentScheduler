@@ -109,6 +109,14 @@
 
                 <ComboBox fx:id="appointmentCustomer" GridPane.columnIndex="2" GridPane.rowIndex="11"></ComboBox>
 
+
+                <!-- User -->
+                <Label fx:id="appointmentUserLabel" GridPane.columnIndex="1" GridPane.rowIndex="12">
+                    <padding><Insets top="15" right="15"/></padding>
+                </Label>
+
+                <ComboBox fx:id="appointmentUser" GridPane.columnIndex="2" GridPane.rowIndex="12"></ComboBox>
+
             </GridPane>
         </VBox>
     </center>
