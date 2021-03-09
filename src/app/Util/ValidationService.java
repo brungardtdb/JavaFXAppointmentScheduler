@@ -1,12 +1,8 @@
 package app.Util;
 
-import app.DataAccess.Interfaces.IContactData;
-import app.DataLocalization.LocalizationService;
-
 import java.time.*;
 import java.time.temporal.WeekFields;
 import java.util.Locale;
-import java.util.Properties;
 import java.util.function.Predicate;
 
 /**
@@ -32,40 +28,12 @@ public class ValidationService
     }
 
     /**
-     * Method for validating username and password in login.
-     *
-     * I decided to use a few lambdas here to avoid writing separate helper functions, these one-liners are also
-     * pretty slick and save me a few lines of code, in addition to making the return statement of the function easy
-     * to read and follow.
-     *
-     * @param username The username to validate.
-     * @param password The password to validate.
-     * @param propertiesService The properties service we are using to get properties from properties file.
-     * @return True if the username and password are valid, false if invalid or exception is thrown from properties service.
-     */
-    public boolean ValidateUsernamePassword(String username, String password, PropertiesService propertiesService)
-    {
-        if (username.isEmpty() || username.isBlank() || password.isEmpty() || password.isBlank())
-            return false;
-
-        try
-        {
-            Properties adminProperties = propertiesService.GetProperties("app.properties");
-            Predicate<String> validUserName = s -> s.toLowerCase().equals(adminProperties.getProperty("adminusername").toLowerCase());
-            Predicate<String> validPassword = s -> s.equals(adminProperties.getProperty("adminpassword"));
-            return validUserName.test(username) && validPassword.test(password);
-        }
-        catch (Exception ex)
-        {
-            return false;
-        }
-    }
-
-    /**
      * Method for validating if an appointment is in the next fifteen minutes
      *
      * Used a lambda function here to avoid creating a separate helper function and also for readability,
      * I feel like reading the return statement of this function makes it easy to figure out what's going on.
+     * The function returns compares the ZonedDateTime in milliseconds to detect if it is within fifteen minutes
+     * of the current time.
      *
      * @param zonedDateTime The appointment time.
      * @return True if appointment is in fifteen or less, otherwise false.
@@ -155,5 +123,19 @@ public class ValidationService
     private boolean InBusinessHours(int hours)
     {
         return 8 <= hours && hours <= 22;
+    }
+
+    /**
+     * Method to check if one ZonedDateTime exists within two others.
+     *
+     * @param timeToCompare ZonedDateTime to check.
+     * @param startTime ZonedDateTime that marks beginning of window for comparison.
+     * @param endTime ZonedDateTime that marks end of window for comparison.
+     * @return True if time to compare is between start and finish times.
+     */
+    public boolean TimeOverlaps(ZonedDateTime timeToCompare, ZonedDateTime startTime, ZonedDateTime endTime)
+    {
+        return ((timeToCompare.toInstant().toEpochMilli() > startTime.toInstant().toEpochMilli() &&
+                timeToCompare.toInstant().toEpochMilli() < endTime.toInstant().toEpochMilli()));
     }
 }

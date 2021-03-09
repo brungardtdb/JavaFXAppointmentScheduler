@@ -68,5 +68,19 @@ public class ValidationTest
         Assertions.assertTrue(businessHoursResult);
     }
 
+    @Test
+    void TimeIsBetween()
+    {
+        ZonedDateTime startTime = ZonedDateTime.of(2021, 02, 27,21,0,0,0, ZoneId.of("America/Denver"));
+        ZonedDateTime endTime = ZonedDateTime.of(2021, 02, 27,22,0,0,0, ZoneId.of("America/Denver"));
 
+        ZonedDateTime firstComparison = ZonedDateTime.of(2021, 02, 27,21,5,0,0, ZoneId.of("America/Denver"));
+        ZonedDateTime secondComparison = ZonedDateTime.of(2021, 02, 27,20,0,0,0, ZoneId.of("America/Denver"));
+
+        boolean firstIsBetween = validationService.TimeOverlaps(firstComparison, startTime, endTime);
+        boolean secondIsBetween = validationService.TimeOverlaps(secondComparison, startTime, endTime);
+
+        Assertions.assertTrue(firstIsBetween);
+        Assertions.assertFalse(secondIsBetween);
+    }
 }

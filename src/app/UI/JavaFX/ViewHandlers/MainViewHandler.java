@@ -6,6 +6,7 @@ import app.UI.JavaFX.AlertService;
 import app.UI.JavaFX.Controllers.MainController;
 import app.Util.LoggingService;
 import app.Util.PropertiesService;
+import app.Util.ReportService;
 import app.Util.ValidationService;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -30,6 +31,7 @@ public class MainViewHandler
     private AlertService alertService;
     private ValidationService validationService;
     private LoggingService loggingService;
+    private ReportService reportService;
 
     /**
      * Class constructor, takes dependencies and passes them to constructor of main view.
@@ -45,7 +47,8 @@ public class MainViewHandler
      */
     public MainViewHandler(PropertiesService propertiesService, LocalizationService localizationService,
                            DataAccessFactory dataAccessFactory, Locale locale, ZoneId zoneId,
-                           AlertService alertService, ValidationService validationService, LoggingService loggingService)
+                           AlertService alertService, ValidationService validationService, LoggingService loggingService,
+                           ReportService reportService)
     {
         this.propertiesService = propertiesService;
         this.localizationService = localizationService;
@@ -55,6 +58,7 @@ public class MainViewHandler
         this.alertService = alertService;
         this.validationService = validationService;
         this.loggingService = loggingService;
+        this.reportService = reportService;
     }
 
     /**
@@ -72,7 +76,7 @@ public class MainViewHandler
             // Get controller and configure controller settings
             MainController mainController = fxmlLoader.getController();
             mainController.Initialize(this.propertiesService, this.localizationService, this.dataAccessFactory,
-                    this.locale, this.zoneId, this.alertService, this.validationService, this.loggingService);
+                    this.locale, this.zoneId, this.alertService, this.validationService, this.loggingService, this.reportService);
 
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);

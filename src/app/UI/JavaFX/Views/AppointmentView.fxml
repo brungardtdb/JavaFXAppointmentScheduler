@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -75,7 +72,6 @@
                 <ComboBox fx:id="appointmentType" GridPane.columnIndex="2" GridPane.rowIndex="6"></ComboBox>
 
                 <!-- Start Date and Time -->
-
                 <Label fx:id="appointmentStartDateLabel" GridPane.columnIndex="1" GridPane.rowIndex="7">
                     <padding><Insets top="15" right="15"/></padding>
                 </Label>
@@ -89,7 +85,6 @@
                 <ComboBox fx:id="appointmentStartTime" GridPane.columnIndex="2" GridPane.rowIndex="8"></ComboBox>
 
                 <!-- End Date and Time -->
-
                 <Label fx:id="appointmentEndDateLabel" GridPane.columnIndex="1" GridPane.rowIndex="9">
                     <padding><Insets top="15" right="15"/></padding>
                 </Label>
@@ -109,6 +104,13 @@
 
                 <ComboBox fx:id="appointmentCustomer" GridPane.columnIndex="2" GridPane.rowIndex="11"></ComboBox>
 
+                <!-- User -->
+                <Label fx:id="appointmentUserLabel" GridPane.columnIndex="1" GridPane.rowIndex="12">
+                    <padding><Insets top="15" right="15"/></padding>
+                </Label>
+
+                <ComboBox fx:id="appointmentUser" GridPane.columnIndex="2" GridPane.rowIndex="12"></ComboBox>
+
             </GridPane>
         </VBox>
     </center>
@@ -127,6 +129,4 @@
 
         </HBox>
     </bottom>
-
-
 </BorderPane>

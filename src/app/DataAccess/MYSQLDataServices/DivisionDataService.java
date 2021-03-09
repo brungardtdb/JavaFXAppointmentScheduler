@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class that manages Division data in database (readonly)
+ * Class that manages division data in database (readonly)
  */
 public class DivisionDataService implements IDivisionData
 {
@@ -17,7 +17,7 @@ public class DivisionDataService implements IDivisionData
     private final String dbName;
 
     /**
-     * Constructor for SQL Division data service, takes SQL connection and DB name as arguments.
+     * Constructor for SQL division data service, takes SQL connection and DB name as arguments.
      *
      * @param connection The database connection.
      * @param dbName The database name.
@@ -29,7 +29,7 @@ public class DivisionDataService implements IDivisionData
     }
 
     /**
-     * Method for getting Divisions from database.
+     * Method for getting divisions from database.
      *
      * @return A list of all available divisions.
      * @throws Exception A SQL Exception.

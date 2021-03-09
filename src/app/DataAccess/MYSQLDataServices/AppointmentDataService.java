@@ -3,25 +3,14 @@ package app.DataAccess.MYSQLDataServices;
 import app.DataAccess.Interfaces.IAppointmentData;
 import app.UserData.Enums.AppointmentType;
 import app.UserData.Models.AppointmentModel;
-import app.UserData.Models.CustomerModel;
-import javafx.scene.chart.XYChart;
-import org.apiguardian.api.API;
-import org.mockito.internal.verification.Times;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.TimeZone;
 
 /**
  * Class that manages appointment data in SQL database.

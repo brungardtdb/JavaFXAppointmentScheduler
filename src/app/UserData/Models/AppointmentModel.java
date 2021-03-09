@@ -1,7 +1,9 @@
 package app.UserData.Models;
 
 import app.UserData.Enums.AppointmentType;
+import net.bytebuddy.asm.Advice;
 
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Date;
 
@@ -154,6 +156,16 @@ public class AppointmentModel
      */
     public ZonedDateTime getStartDate() { return this.startDate; }
 
+    /**
+     * Method for getting start date in local date time.
+     *
+     * @return Local date time of start date.
+     */
+    public LocalDateTime getLocalStartDate()
+    {
+        return this.startDate.toLocalDateTime();
+    }
+
     private ZonedDateTime endDate;
 
 
@@ -171,4 +183,14 @@ public class AppointmentModel
      * @return The end date for appointment.
      */
     public ZonedDateTime getEndDate() { return this.endDate; }
+
+    /**
+     * Method for getting end date in local date time.
+     *
+     * @return End date in local date time.
+     */
+    public LocalDateTime getLocalEndDate()
+    {
+        return this.endDate.toLocalDateTime();
+    }
 }

@@ -4,12 +4,14 @@ import app.DataAccess.DataAccessFactory;
 import app.DataAccess.Interfaces.IAppointmentData;
 import app.DataAccess.Interfaces.IContactData;
 import app.DataAccess.Interfaces.ICustomerData;
+import app.DataAccess.Interfaces.IUserData;
 import app.DataLocalization.LocalizationService;
 import app.UI.JavaFX.AlertService;
 import app.UserData.Enums.AppointmentType;
 import app.UserData.Models.AppointmentModel;
 import app.UserData.Models.ContactModel;
 import app.UserData.Models.CustomerModel;
+import app.UserData.Models.UserModel;
 import app.Util.LoggingService;
 import app.Util.PropertiesService;
 import app.Util.ValidationService;
@@ -48,7 +50,7 @@ public class AppointmentController
     private AppointmentModel appointment;
     private ArrayList<ContactModel> contacts;
     private ArrayList<CustomerModel> customers;
-
+    private ArrayList<UserModel> users;
 
     private final Map<String, Integer> AvailableHours = new HashMap<String, Integer>(){{
         put("00:00", 0);
@@ -89,6 +91,7 @@ public class AppointmentController
     @FXML Label appointmentEndDateLabel;
     @FXML Label appointmentEndTimeLabel;
     @FXML Label appointmentCustomerLabel;
+    @FXML Label appointmentUserLabel;
     @FXML TextField appointmentIDField;
     @FXML TextField appointmentTitleField;
     @FXML TextField appointmentDescriptionField;
@@ -102,6 +105,7 @@ public class AppointmentController
     @FXML ComboBox appointmentCustomer;
     @FXML Button saveAppointment;
     @FXML Button cancelAppointment;
+    @FXML ComboBox appointmentUser;
 
     /**
      * Empty constructor for appointment controller.
@@ -151,6 +155,7 @@ public class AppointmentController
         appointmentEndDateLabel.setText(this.localizationService.GetLocalizedMessage("enddate", this.locale));
         appointmentEndTimeLabel.setText(this.localizationService.GetLocalizedMessage("endtime", this.locale));
         appointmentCustomerLabel.setText(this.localizationService.GetLocalizedMessage("customer", this.locale));
+        appointmentUserLabel.setText(this.localizationService.GetLocalizedMessage("user", this.locale));
         appointmentIDField.setDisable(true);
 
         // Get contacts
@@ -180,6 +185,13 @@ public class AppointmentController
         .map(CustomerModel::getCustomerName)
         .collect(Collectors.toList()));
 
+        // Get users
+        IUserData userDataService = this.dataAccessFactory.GetUserDataService();
+        this.users = (ArrayList<UserModel>) userDataService.GetAllUsers();
+        appointmentUser.getItems().addAll(users.stream()
+        .map(UserModel::getUserName)
+        .collect(Collectors.toList()));
+
         saveAppointment.setText(this.localizationService.GetLocalizedMessage("save", this.locale));
         cancelAppointment.setText(this.localizationService.GetLocalizedMessage("cancel", this.locale));
     }
@@ -187,8 +199,6 @@ public class AppointmentController
 
     /**
      * Method to get appointment for modification when we are modifying an existing appointment.
-     *
-     * More lamba expressions combined with streams to load the form with existing values from the selected appointment.
      *
      * @param appointment Appointment that is being modified.
      */
@@ -228,6 +238,13 @@ public class AppointmentController
         CustomerModel matchingCustomer = customer.get();
 
         appointmentCustomer.getSelectionModel().select(matchingCustomer.getCustomerName());
+
+        Optional<UserModel> user = this.users.stream()
+                .filter(x -> x.getUserID() == this.appointment.getUserID()).findFirst();
+
+        UserModel matchingUser = user.get();
+
+        appointmentUser.getSelectionModel().select(matchingUser.getUserName());
     }
 
     /**
@@ -270,6 +287,9 @@ public class AppointmentController
         if (appointmentCustomer.getSelectionModel().isEmpty())
             return false;
 
+        if (appointmentUser.getSelectionModel().isEmpty())
+            return false;
+
         return true;
     }
 
@@ -290,32 +310,14 @@ public class AppointmentController
         appointmentData.setTitle(appointmentTitleField.getText());
         appointmentData.setDescription(appointmentDescriptionField.getText());
         appointmentData.setLocation(appointmentLocationField.getText());
-
-        // Get contact
-        Optional<ContactModel> matchingContact = this.contacts.stream().filter(x ->
-                x.getContactName().equals(appointmentContact.getSelectionModel().getSelectedItem().toString())).findFirst();
-        appointmentData.setContactID(matchingContact.get().getContactID());
-
-        // Get appointment type
-        if (appointmentType.getSelectionModel().getSelectedItem().toString().equals(AppointmentType.PLANNING.toString()))
-            appointmentData.setAppointmentType(AppointmentType.PLANNING);
-
-        if (appointmentType.getSelectionModel().getSelectedItem().toString().equals(AppointmentType.DEBRIEFING.toString()))
-            appointmentData.setAppointmentType(AppointmentType.DEBRIEFING);
-
-        // Get dates
+        appointmentData.setContactID(GetContactID());
+        appointmentData.setAppointmentType(GetAppointmentType());
         appointmentData.setStartDate(startDate);
         appointmentData.setEndDate(endDate);
+        appointmentData.setCustomerID(GetCustomerID());
+        appointmentData.setUserID(GetUserID());
 
-        // Get customer
-        Optional<CustomerModel> matchingCustomer = this.customers.stream().filter(x ->
-                x.getCustomerName().equals(appointmentCustomer.getSelectionModel().getSelectedItem().toString())).findFirst();
-
-        appointmentData.setCustomerID(matchingCustomer.get().getCustomerID());
         IAppointmentData appointmentDataService = this.dataAccessFactory.GetAppointmentDataService();
-
-        // Default user ID to admin, the user ID was not required on the form or in the application, but this is a foreign key constraint.
-        appointmentData.setUserID(2);
 
         if (modifyingAppointment)
             appointmentDataService.UpdateAppointment(appointmentData);
@@ -323,6 +325,64 @@ public class AppointmentController
         if (!modifyingAppointment)
             appointmentDataService.CreateAppointment(appointmentData);
     }
+
+    /**
+     * Retrieves the corresponding contact ID for the selected contact.
+     *
+     * I made use of a lambda and stream combination in this method to find the contact in our list
+     * of contacts that matched the name of the contact selected by the user in the contact combo-box.
+     *
+     * @return The contact ID.
+     */
+    private int GetContactID()
+    {
+        Optional<ContactModel> matchingContact = this.contacts.stream().filter(x ->
+                x.getContactName().equals(appointmentContact.getSelectionModel().getSelectedItem().toString())).findFirst();
+
+        return matchingContact.get().getContactID();
+    }
+
+    /**
+     * Retrieves the corresponding customer ID for the selected customer.
+     *
+     * @return The customer ID.
+     */
+    private int GetCustomerID()
+    {
+        Optional<CustomerModel> matchingCustomer = this.customers.stream().filter(x ->
+                x.getCustomerName().equals(appointmentCustomer.getSelectionModel().getSelectedItem().toString())).findFirst();
+
+        return matchingCustomer.get().getCustomerID();
+    }
+
+    /**
+     * Retrieves the corresponding user ID for the selected user.
+     *
+     * @return The user ID.
+     */
+    private int GetUserID()
+    {
+        Optional<UserModel> matchingUser = this.users.stream().filter(x ->
+                x.getUserName().equals(appointmentUser.getSelectionModel().getSelectedItem().toString())).findFirst();
+        return matchingUser.get().getUserID();
+    }
+
+    /**
+     * Retrieves the type of appointment selected on the form.
+     *
+     * @return The appointment type.
+     */
+    private AppointmentType GetAppointmentType()
+    {
+        if (appointmentType.getSelectionModel().getSelectedItem().toString().equals(AppointmentType.PLANNING.toString()))
+            return AppointmentType.PLANNING;
+
+        if (appointmentType.getSelectionModel().getSelectedItem().toString().equals(AppointmentType.DEBRIEFING.toString()))
+            return AppointmentType.DEBRIEFING;
+
+        return null;
+    }
+
 
     /**
      * Event handler for "Save" button.
@@ -362,6 +422,14 @@ public class AppointmentController
             return;
         }
 
+        if (!AppointmentIsValid(startDate, endDate))
+        {
+            titleAndHeader = this.localizationService.GetLocalizedMessage("invalidinput", this.locale);
+            message = this.localizationService.GetLocalizedMessage("appointmenthoursoverlap", this.locale);
+            this.alertService.ShowAlert(Alert.AlertType.WARNING, titleAndHeader, titleAndHeader, message);
+            return;
+        }
+
         try
         {
             SaveAppointment(startDate,endDate);
@@ -376,6 +444,56 @@ public class AppointmentController
             AlertService.ShowAlert(Alert.AlertType.WARNING, titleAndHeader, titleAndHeader, message);
         }
     }
+
+    /**
+     * Ensures the appointment does not conflict with other customer appointments.
+     *
+     * I used lambdas and streams in this method to iterate through existing appointments to search for
+     * both overlapping appointment dates and matching appointment dates with the same customer ID to
+     * ensure a customer has not double-booked any appointments.
+     *
+     * @param startDate Appointment start date and time.
+     * @param endDate Appointment end date and time.
+     * @return True if the appointment is valid, false if there is a conflict.
+     * @throws Exception
+     */
+    private boolean AppointmentIsValid(ZonedDateTime startDate, ZonedDateTime endDate) throws Exception
+    {
+        // If we are adding an appointment, create an empty appointment object for class and initialize ID to zero
+        // This is so we can eliminate the appointment we are modifying from our search of overlapping appointments.
+        if (!modifyingAppointment)
+        {
+            this.appointment = new AppointmentModel();
+            this.appointment.setAppointmentID(0);
+        }
+
+        // Validate appointment does not overlap with existing appointments
+        // with a different appointment ID and the same customer ID
+        IAppointmentData appointmentDataService = this.dataAccessFactory.GetAppointmentDataService();
+        List<AppointmentModel> appointments = appointmentDataService.GetAllAppointments();
+        Optional<AppointmentModel> overlappingAppointment = appointments.stream().filter(x ->
+                (this.validationService.TimeOverlaps(startDate, x.getStartDate(), x.getEndDate()) ||
+                        this.validationService.TimeOverlaps(endDate, x.getStartDate(), x.getEndDate())) &&
+                        x.getAppointmentID() != this.appointment.getAppointmentID() &&
+                        x.getCustomerID() == GetCustomerID()).findFirst();
+
+        // Check for matching start and end date with existing appointments
+        // with a different appointment ID and the same customer ID
+        Optional<AppointmentModel> sameStartAndFinish = appointments.stream().filter(x ->
+                (startDate.toInstant().toEpochMilli() == x.getStartDate().toInstant().toEpochMilli() ||
+                        endDate.toInstant().toEpochMilli() == x.getEndDate().toInstant().toEpochMilli()) &&
+                        x.getAppointmentID() != this.appointment.getAppointmentID() &&
+                        x.getCustomerID() == GetCustomerID()).findFirst();
+
+        boolean appointmentIsValid = true;
+
+        // Check for any overlapping appointments
+        if ((overlappingAppointment.isPresent() || sameStartAndFinish.isPresent()))
+            appointmentIsValid = false;
+
+        return appointmentIsValid;
+    }
+
 
     /**
      * Converts selected date and time to ZonedDateTime for appointment.

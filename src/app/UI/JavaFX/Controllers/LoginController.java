@@ -1,29 +1,29 @@
 package app.UI.JavaFX.Controllers;
 
+import app.DataAccess.Interfaces.IUserData;
 import app.UserData.Models.AppointmentModel;
 import app.DataAccess.Interfaces.IAppointmentData;
 import app.DataAccess.DataAccessFactory;
 import app.DataLocalization.LocalizationService;
 import app.UI.JavaFX.AlertService;
 import app.UI.JavaFX.ViewHandlers.MainViewHandler;
+import app.UserData.Models.UserModel;
 import app.Util.LoggingService;
 import app.Util.PropertiesService;
 
+import app.Util.ReportService;
 import app.Util.ValidationService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Locale;
-import java.util.function.*;
+import java.util.Optional;
+
 
 /**
  * Controller for login form.
@@ -38,6 +38,10 @@ public class LoginController
     private ZoneId zoneID;
     private AlertService alertService;
     private LoggingService loggingService;
+    private ReportService reportService;
+    private List<UserModel> users;
+    private UserModel user;
+    private AppointmentModel upcomingUserAppointment;
 
     @FXML private  Label logInLabel;
     @FXML private Label zoneIDLabel;
@@ -70,7 +74,8 @@ public class LoginController
      */
     public void Initialize(PropertiesService propertiesService, LocalizationService localizationService,
                            DataAccessFactory dataAccessFactory, Locale locale, ZoneId zoneId,
-                           AlertService alertService, ValidationService validationService, LoggingService loggingService) throws Exception
+                           AlertService alertService, ValidationService validationService, LoggingService loggingService,
+                           ReportService reportService) throws Exception
     {
         this.propertiesService = propertiesService;
         this.localizationService = localizationService;
@@ -80,6 +85,7 @@ public class LoginController
         this.alertService = alertService;
         this.validationService = validationService;
         this.loggingService = loggingService;
+        this.reportService = reportService;
 
         // Set up user interface
         String localizedZoneID = localizationService.GetLocalizedMessage("zoneid", this.locale);
@@ -96,13 +102,36 @@ public class LoginController
     /**
      * Button event that handles login attempts.
      *
-     * @param actionEvent A button click event.
+     * I used a stream and lambda combination here to filter through the list of
+     * users looking for a matching username and password to validate the login.
+     *
+     * @param actionEvent The user clicks the submit button.
      * @throws Exception
      */
     public void handleSaveLogin(ActionEvent actionEvent) throws Exception
     {
-        boolean loginIsValid = validationService.ValidateUsernamePassword(userNameTextField.getText(),
-                passwordField.getText(), this.propertiesService);
+        IUserData userData = this.dataAccessFactory.GetUserDataService();
+        boolean loginIsValid;
+
+        try
+        {
+            this.users = userData.GetAllUsers();
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+
+        // Check if login credentials match a user
+        // If this were a production application we would really want to hash these passwords.
+        Optional<UserModel> testUser = this.users.stream().filter(x ->
+            x.getUserName().equals(userNameTextField.getText()) &&
+                    x.getPassword().equals(passwordField.getText())).findFirst();
+
+        loginIsValid = testUser.isPresent();
+
+        if (loginIsValid)
+            this.user = testUser.get();
 
         LogAttempt(userNameTextField.getText(), passwordField.getText(), loginIsValid);
 
@@ -122,6 +151,13 @@ public class LoginController
         {
             titleAndHeader = localizationService.GetLocalizedMessage("upcomingappointment", locale);
             content = localizationService.GetLocalizedMessage("upcomingappointmentmessage", locale);
+            String ID = localizationService.GetLocalizedMessage("ID", locale);
+            String startDate = localizationService.GetLocalizedMessage("startdate", locale);
+            String startTime = localizationService.GetLocalizedMessage("starttime", locale);
+            ZonedDateTime localZDateTime = this.localizationService.ZonedDateTimeToLocal(this.upcomingUserAppointment.getStartDate(), this.zoneID);
+            content += "\n" + ID + ": " + this.upcomingUserAppointment.getAppointmentID() +
+                    "\n" + startDate + ": " + localZDateTime.toLocalDate() +
+                    "\n" + startTime + ": " + localZDateTime.toLocalTime();
         }
 
         if (!upcomingAppointment)
@@ -134,7 +170,7 @@ public class LoginController
 
         // open main form and pass in dependencies
         MainViewHandler mainViewHandler = new MainViewHandler(this.propertiesService, this.localizationService, this.dataAccessFactory,
-                this.locale, this.zoneID, this.alertService, this.validationService, this.loggingService);
+                this.locale, this.zoneID, this.alertService, this.validationService, this.loggingService, this.reportService);
         mainViewHandler.GetMainView();
 
         // close login form
@@ -145,7 +181,7 @@ public class LoginController
     /**
      * Button event for closing the form.
      *
-     * @param actionEvent A button click event.
+     * @param actionEvent The user clicks the cancel button.
      */
     public void handleCancelLogin(ActionEvent actionEvent)
     {
@@ -194,6 +230,7 @@ public class LoginController
         Boolean output = false;
         IAppointmentData appointmentData = this.dataAccessFactory.GetAppointmentDataService();
         List<AppointmentModel>  appointments;
+
         try
         {
             appointments = appointmentData.GetAllAppointments();
@@ -209,8 +246,12 @@ public class LoginController
         {
             AppointmentModel appointment = appointments.get(i);
 
-            if (this.validationService.ValidateUpcomingZonedDateTime(appointment.getStartDate()))
+            if (this.validationService.ValidateUpcomingZonedDateTime(appointment.getStartDate()) &&
+                    appointment.getUserID() == this.user.getUserID())
+            {
+                this.upcomingUserAppointment = appointment;
                 return true; // Return early if we find a match
+            }
         }
 
         return false; // Return false if no match is found

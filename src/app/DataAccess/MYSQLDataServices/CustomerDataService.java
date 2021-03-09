@@ -2,7 +2,6 @@ package app.DataAccess.MYSQLDataServices;
 
 import app.DataAccess.Interfaces.ICustomerData;
 import app.DataAccess.Interfaces.IAppointmentData;
-import app.DataAccess.MYSQLDataServices.AppointmentDataService;
 import app.UserData.Models.CustomerModel;
 
 import java.sql.Connection;
