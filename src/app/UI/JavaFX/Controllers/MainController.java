@@ -24,8 +24,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -152,7 +154,7 @@ public class MainController
         appointmentTypeColumn.setText(this.localizationService.GetLocalizedMessage("type", this.locale));
         appointmentStartColumn.setText(this.localizationService.GetLocalizedMessage("start", this.locale));
         appointmentEndColumn.setText(this.localizationService.GetLocalizedMessage("end", this.locale));
-        appointmentCustomerIDColumn.setText(this.localizationService.GetLocalizedMessage("customerID", this.locale));
+        appointmentCustomerIDColumn.setText(this.localizationService.GetLocalizedMessage("customer", this.locale));
 
         // Update customer and appointment tables
         UpdateTables();
@@ -368,7 +370,9 @@ public class MainController
         try
         {
             ICustomerData customerData = dataAccessFactory.GetCustomerDataService();
+            IDivisionData divisionData = dataAccessFactory.GetDivisionDataService();
             ArrayList<CustomerModel> customerModelArrayList = (ArrayList<CustomerModel>) customerData.GetAllCustomers();
+            ArrayList<DivisionModel> divisionModelArrayList = (ArrayList<DivisionModel>) divisionData.GetAllDivisions();
             ObservableList<CustomerModel> customers = FXCollections.observableArrayList(customerModelArrayList);
 
             customerIDColumn.setCellValueFactory(new PropertyValueFactory<CustomerModel, String>("customerID"));
@@ -376,12 +380,28 @@ public class MainController
             customerAddressColumn.setCellValueFactory(new PropertyValueFactory<CustomerModel, String>("customerAddress"));
             customerZipCode.setCellValueFactory(new PropertyValueFactory<CustomerModel, String>("postalCode"));
             customerPhoneNumber.setCellValueFactory(new PropertyValueFactory<CustomerModel, String >("phoneNumber"));
-            customerDivision.setCellValueFactory(new PropertyValueFactory<CustomerModel, String>("divisionID"));
+
+            customerDivision.setCellValueFactory(
+                    new Callback<TableColumn.CellDataFeatures<CustomerModel, String>, ObservableValue<String>>() {
+                        // We only have Division ID on customer and we need to display the Division in the table.
+                        @Override
+                        public ObservableValue<String> call(TableColumn.CellDataFeatures<CustomerModel, String> c) {
+                            Optional<DivisionModel> divisionTest = divisionModelArrayList.stream().filter(x ->
+                                    x.getDivisionID() == c.getValue().getDivisionID())
+                                    .findFirst();
+
+                            SimpleStringProperty simpleStringProperty = new SimpleStringProperty(divisionTest.get().getDivision());
+
+                            return simpleStringProperty;
+                        }
+                    }
+            );
 
             customerTable.setItems(customers);
             customerTable.getSelectionModel().clearSelection();
             customerTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
             customerTable.refresh();
+
         } 
         catch (Exception e)
         {
@@ -398,10 +418,13 @@ public class MainController
         {
             IAppointmentData appointmentData = dataAccessFactory.GetAppointmentDataService();
             IContactData contactData = dataAccessFactory.GetContactDataService();
+            ICustomerData customerData = dataAccessFactory.GetCustomerDataService();
 
             ArrayList<ContactModel> contactModelArrayList = (ArrayList<ContactModel>) contactData.GetAllContacts();
+            ArrayList<CustomerModel> customerModelArrayList = (ArrayList<CustomerModel>) customerData.GetAllCustomers();
             ArrayList<AppointmentModel> appointmentModelArrayList = (ArrayList<AppointmentModel>) appointmentData.GetAllAppointments();
             ArrayList<AppointmentModel> updatedAppointments = new ArrayList<AppointmentModel>();
+
 
             if (allAppointments)
                 updatedAppointments = LocalizeAppointmentDates(appointmentModelArrayList);
@@ -434,9 +457,25 @@ public class MainController
             });
 
             appointmentTypeColumn.setCellValueFactory(new PropertyValueFactory<AppointmentModel, String>("appointmentType"));
-            appointmentStartColumn.setCellValueFactory(new PropertyValueFactory<AppointmentModel, String>("localStartDate"));
-            appointmentEndColumn.setCellValueFactory(new PropertyValueFactory<AppointmentModel, String>("localEndDate"));
-            appointmentCustomerIDColumn.setCellValueFactory(new PropertyValueFactory<AppointmentModel, String>("customerID"));
+            appointmentStartColumn.setCellValueFactory(new PropertyValueFactory<AppointmentModel, String>("formattedLocalStartDate"));
+            appointmentEndColumn.setCellValueFactory(new PropertyValueFactory<AppointmentModel, String>("formattedLocalEndDate"));
+
+            appointmentCustomerIDColumn.setCellValueFactory(
+                    new Callback<TableColumn.CellDataFeatures<AppointmentModel, String>, ObservableValue<String>>() {
+                        // We only have Customer ID on appointment and we need to display customer name in the table.
+                        @Override
+                        public ObservableValue<String> call(TableColumn.CellDataFeatures<AppointmentModel, String> a) {
+
+                           Optional<CustomerModel> customerTest = customerModelArrayList.stream().filter(x ->
+                                   x.getCustomerID() == a.getValue().getCustomerID())
+                                   .findFirst();
+
+                           SimpleStringProperty simpleStringProperty = new SimpleStringProperty(customerTest.get().getCustomerName());
+
+                            return simpleStringProperty;
+                        }
+                    }
+            );
 
             appointmentTable.setItems(appointments);
             appointmentTable.getSelectionModel().clearSelection();

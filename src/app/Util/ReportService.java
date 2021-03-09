@@ -4,6 +4,8 @@ import app.DataLocalization.LocalizationService;
 import app.UserData.Enums.AppointmentType;
 import app.UserData.Models.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -120,8 +122,8 @@ public class ReportService
         String endDateTime = localizationService.GetLocalizedMessage("enddate", locale);
         String customerID = localizationService.GetLocalizedMessage("customerID", locale);
 
-        String header =  "\n" + ID + "\t\t" + customerID + "\t" + title + "\t\t" + type + "\t\t"  + startDateTime + "\t\t\t\t" +
-                endDateTime + "\t\t\t\t" + description + "\n";
+        String header =  "\n" + ID + "\t\t" + customerID + "\t" + title + "\t\t\t" + type + "\t\t"  + startDateTime + "\t\t\t\t" +
+                endDateTime + "\t\t\t" + description + "\n";
 
         for (ContactModel contact : contacts)
         {
@@ -136,12 +138,13 @@ public class ReportService
             {
                 report += "\n" + appointment.getAppointmentID() + "\t\t" + appointment.getCustomerID() + "\t\t\t" + appointment.getTitle() + "\t\t" +
                         appointment.getAppointmentType().toString() + "\t" +
-                        appointment.getLocalStartDate() + "\t\t" + appointment.getLocalEndDate() + "\t\t" + appointment.getDescription() + "\n";
+                        appointment.getFormattedLocalStartDate() + "\t\t" + appointment.getFormattedLocalEndDate() + "\t\t" + appointment.getDescription() + "\n";
             }
         }
         report += startEndReport + startEndReport;
         return report;
     }
+
 
     /**
      * Generates a report of all customers in each country.

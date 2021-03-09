@@ -60,11 +60,11 @@ public class ValidationTest
         ZonedDateTime mountainInHours = ZonedDateTime.of(2021, 03, 03,12,0,0,0, ZoneId.of("America/Denver"));
 
         boolean lateResult = validationService.ValidateZoneDateTimeInBusinessHours(mountainTimeTooLate);
-        boolean weekendResult = validationService.ValidateUpcomingZonedDateTime(mountainTimeWeekend);
+        boolean weekendResult = validationService.ValidateZoneDateTimeInBusinessHours(mountainTimeWeekend);
         boolean businessHoursResult = validationService.ValidateZoneDateTimeInBusinessHours(mountainInHours);
 
         Assertions.assertFalse(lateResult);
-        Assertions.assertFalse(weekendResult);
+        Assertions.assertTrue(weekendResult);
         Assertions.assertTrue(businessHoursResult);
     }
 
