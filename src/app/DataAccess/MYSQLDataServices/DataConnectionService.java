@@ -21,7 +21,7 @@ public class DataConnectionService
     /**
      * Class constructor, takes in project properties to build connection string
      *
-     * @param properties
+     * @param properties The project properties.
      */
     public DataConnectionService(Properties properties)
     {

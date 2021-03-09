@@ -61,7 +61,8 @@ public class LoggingService
     /**
      * Logs login attempts to a file.
      *
-     * Used a lambda expression here as a succinct way of indicating if the log was successful without creating another method.
+     * Used a lambda expression here as a succinct way of indicating if the log was successful without creating another method
+     * the function returns a true if the file was successfully saved, otherwise it returns false.
      *
      * @param username The attempted username.
      * @param password The attempted password.

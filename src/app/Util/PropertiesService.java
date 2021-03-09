@@ -3,9 +3,6 @@ package app.Util;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.util.Properties;
 
 /**
  * Utility class for retrieving properties.
@@ -14,6 +11,8 @@ public class PropertiesService
 {
 
     /**
+     * Retrieves properties from specified property file.
+     *
      * @param fileName Properties file we wish to get properties for.
      * @return Properties for given properties file.
      * @throws Exception Java.io.FileNotFoundException.

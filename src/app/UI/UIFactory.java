@@ -25,6 +25,9 @@ public class UIFactory
     /**
      * Method that handles user interface creation.
      *
+     * Shout out to this post on StackOverflow for showing me how to launch the application from a
+     * factory method outside of main: https://stackoverflow.com/questions/34597594/javafx-starting-application-from-different-class
+     *
      * @param args Args passed in from main method, used to start specified application.
      * @throws Exception Throws exception if unsupported UI type is specified.
      */

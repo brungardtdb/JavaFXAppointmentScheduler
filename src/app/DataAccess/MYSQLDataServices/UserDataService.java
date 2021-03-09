@@ -29,7 +29,6 @@ public class UserDataService implements IUserData
     }
 
     /**
-     /**
      * Method for retrieving users from the database.
      *
      * @return All of the users in the database.

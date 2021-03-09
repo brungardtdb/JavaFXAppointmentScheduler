@@ -1,14 +1,8 @@
 package app.Util;
 
-import app.DataAccess.Interfaces.IContactData;
-import app.DataLocalization.LocalizationService;
-
 import java.time.*;
 import java.time.temporal.WeekFields;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Properties;
 import java.util.function.Predicate;
 
 /**
@@ -38,6 +32,8 @@ public class ValidationService
      *
      * Used a lambda function here to avoid creating a separate helper function and also for readability,
      * I feel like reading the return statement of this function makes it easy to figure out what's going on.
+     * The function returns compares the ZonedDateTime in milliseconds to detect if it is within fifteen minutes
+     * of the current time.
      *
      * @param zonedDateTime The appointment time.
      * @return True if appointment is in fifteen or less, otherwise false.

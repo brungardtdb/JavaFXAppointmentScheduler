@@ -200,8 +200,6 @@ public class AppointmentController
     /**
      * Method to get appointment for modification when we are modifying an existing appointment.
      *
-     * More lamba expressions combined with streams to load the form with existing values from the selected appointment.
-     *
      * @param appointment Appointment that is being modified.
      */
     public void GetAppointment(AppointmentModel appointment)
@@ -328,13 +326,27 @@ public class AppointmentController
             appointmentDataService.CreateAppointment(appointmentData);
     }
 
+    /**
+     * Retrieves the corresponding contact ID for the selected contact.
+     *
+     * I made use of a lambda and stream combination in this method to find the contact in our list
+     * of contacts that matched the name of the contact selected by the user in the contact combo-box.
+     *
+     * @return The contact ID.
+     */
     private int GetContactID()
     {
         Optional<ContactModel> matchingContact = this.contacts.stream().filter(x ->
                 x.getContactName().equals(appointmentContact.getSelectionModel().getSelectedItem().toString())).findFirst();
+
         return matchingContact.get().getContactID();
     }
 
+    /**
+     * Retrieves the corresponding customer ID for the selected customer.
+     *
+     * @return The customer ID.
+     */
     private int GetCustomerID()
     {
         Optional<CustomerModel> matchingCustomer = this.customers.stream().filter(x ->
@@ -343,6 +355,11 @@ public class AppointmentController
         return matchingCustomer.get().getCustomerID();
     }
 
+    /**
+     * Retrieves the corresponding user ID for the selected user.
+     *
+     * @return The user ID.
+     */
     private int GetUserID()
     {
         Optional<UserModel> matchingUser = this.users.stream().filter(x ->
@@ -350,7 +367,11 @@ public class AppointmentController
         return matchingUser.get().getUserID();
     }
 
-
+    /**
+     * Retrieves the type of appointment selected on the form.
+     *
+     * @return The appointment type.
+     */
     private AppointmentType GetAppointmentType()
     {
         if (appointmentType.getSelectionModel().getSelectedItem().toString().equals(AppointmentType.PLANNING.toString()))
@@ -424,6 +445,18 @@ public class AppointmentController
         }
     }
 
+    /**
+     * Ensures the appointment does not conflict with other customer appointments.
+     *
+     * I used lambdas and streams in this method to iterate through existing appointments to search for
+     * both overlapping appointment dates and matching appointment dates with the same customer ID to
+     * ensure a customer has not double-booked any appointments.
+     *
+     * @param startDate Appointment start date and time.
+     * @param endDate Appointment end date and time.
+     * @return True if the appointment is valid, false if there is a conflict.
+     * @throws Exception
+     */
     private boolean AppointmentIsValid(ZonedDateTime startDate, ZonedDateTime endDate) throws Exception
     {
         // If we are adding an appointment, create an empty appointment object for class and initialize ID to zero
@@ -441,7 +474,7 @@ public class AppointmentController
         Optional<AppointmentModel> overlappingAppointment = appointments.stream().filter(x ->
                 (this.validationService.TimeOverlaps(startDate, x.getStartDate(), x.getEndDate()) ||
                         this.validationService.TimeOverlaps(endDate, x.getStartDate(), x.getEndDate())) &&
-                x.getAppointmentID() != this.appointment.getAppointmentID() &&
+                        x.getAppointmentID() != this.appointment.getAppointmentID() &&
                         x.getCustomerID() == GetCustomerID()).findFirst();
 
         // Check for matching start and end date with existing appointments
@@ -449,7 +482,7 @@ public class AppointmentController
         Optional<AppointmentModel> sameStartAndFinish = appointments.stream().filter(x ->
                 (startDate.toInstant().toEpochMilli() == x.getStartDate().toInstant().toEpochMilli() ||
                         endDate.toInstant().toEpochMilli() == x.getEndDate().toInstant().toEpochMilli()) &&
-                x.getAppointmentID() != this.appointment.getAppointmentID() &&
+                        x.getAppointmentID() != this.appointment.getAppointmentID() &&
                         x.getCustomerID() == GetCustomerID()).findFirst();
 
         boolean appointmentIsValid = true;

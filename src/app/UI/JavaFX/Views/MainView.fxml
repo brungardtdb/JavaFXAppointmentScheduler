@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -24,6 +21,7 @@
             <padding><Insets bottom="15" /></padding>
 
         </Label>
+
     </top>
 
     <center>
@@ -123,7 +121,6 @@
                         </Label>
 
                     <!--Sort appointments by week-->
-
                         <RadioButton fx:id="sortByAll" onAction="#allChecked" selected="true">
                             <toggleGroup>
                                 <ToggleGroup fx:id="sortAppointmentsBy"/>
@@ -189,22 +186,29 @@
     </center>
 
     <bottom>
-        <VBox BorderPane.alignment="BOTTOM_LEFT">
 
-            <Label fx:id="reportsLabel"></Label>
+        <HBox spacing="10" alignment="BOTTOM_RIGHT">
 
-            <HBox BorderPane.alignment="BOTTOM_LEFT">
-                <Button fx:id="appointmentByTypeDate" onAction="#displayAppTypeByDate"></Button>
-                <Button fx:id="contactSchedule" onAction="#displayContactSchedule"></Button>
-                <Button fx:id="customersByCountry" onAction="#displayCustomersByCountry"></Button>
-            </HBox>
-        </VBox>
+            <padding><Insets top="5" left="15" bottom="5" right="15"/></padding>
 
+            <!-- Reports -->
+            <Button fx:id="appointmentByTypeDate" onAction="#displayAppTypeByDate" alignment="TOP_RIGHT">
+                <padding><Insets top="5" left="15" bottom="5" right="15"/></padding>
+            </Button>
 
-        <!-- Exit button for form -->
-        <Button fx:id="exitForm" onAction="#handleExitForm" BorderPane.alignment="BOTTOM_RIGHT">
-            <padding><Insets top="5" left="5" bottom="5" right="5"/></padding>
-        </Button>
+            <Button fx:id="contactSchedule" onAction="#displayContactSchedule" alignment="TOP_RIGHT">
+                <padding><Insets top="5" left="15" bottom="5" right="15"/></padding>
+            </Button>
+
+            <Button fx:id="customersByCountry" onAction="#displayCustomersByCountry" alignment="TOP_RIGHT">
+                <padding><Insets top="5" left="15" bottom="5" right="15"/></padding>
+            </Button>
+
+            <!-- Exit button for form -->
+            <Button fx:id="exitForm" onAction="#handleExitForm" BorderPane.alignment="BOTTOM_RIGHT">
+                <padding><Insets top="5" left="15" bottom="5" right="15"/></padding>
+            </Button>
+        </HBox>
+
     </bottom>
-
 </BorderPane>

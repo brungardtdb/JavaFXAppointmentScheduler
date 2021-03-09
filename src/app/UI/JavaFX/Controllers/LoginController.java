@@ -11,23 +11,19 @@ import app.UserData.Models.UserModel;
 import app.Util.LoggingService;
 import app.Util.PropertiesService;
 
+import app.Util.ReportService;
 import app.Util.ValidationService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.function.*;
+
 
 /**
  * Controller for login form.
@@ -42,6 +38,7 @@ public class LoginController
     private ZoneId zoneID;
     private AlertService alertService;
     private LoggingService loggingService;
+    private ReportService reportService;
     private List<UserModel> users;
     private UserModel user;
     private AppointmentModel upcomingUserAppointment;
@@ -77,7 +74,8 @@ public class LoginController
      */
     public void Initialize(PropertiesService propertiesService, LocalizationService localizationService,
                            DataAccessFactory dataAccessFactory, Locale locale, ZoneId zoneId,
-                           AlertService alertService, ValidationService validationService, LoggingService loggingService) throws Exception
+                           AlertService alertService, ValidationService validationService, LoggingService loggingService,
+                           ReportService reportService) throws Exception
     {
         this.propertiesService = propertiesService;
         this.localizationService = localizationService;
@@ -87,6 +85,7 @@ public class LoginController
         this.alertService = alertService;
         this.validationService = validationService;
         this.loggingService = loggingService;
+        this.reportService = reportService;
 
         // Set up user interface
         String localizedZoneID = localizationService.GetLocalizedMessage("zoneid", this.locale);
@@ -103,7 +102,10 @@ public class LoginController
     /**
      * Button event that handles login attempts.
      *
-     * @param actionEvent A button click event.
+     * I used a stream and lambda combination here to filter through the list of
+     * users looking for a matching username and password to validate the login.
+     *
+     * @param actionEvent The user clicks the submit button.
      * @throws Exception
      */
     public void handleSaveLogin(ActionEvent actionEvent) throws Exception
@@ -168,7 +170,7 @@ public class LoginController
 
         // open main form and pass in dependencies
         MainViewHandler mainViewHandler = new MainViewHandler(this.propertiesService, this.localizationService, this.dataAccessFactory,
-                this.locale, this.zoneID, this.alertService, this.validationService, this.loggingService);
+                this.locale, this.zoneID, this.alertService, this.validationService, this.loggingService, this.reportService);
         mainViewHandler.GetMainView();
 
         // close login form
@@ -179,7 +181,7 @@ public class LoginController
     /**
      * Button event for closing the form.
      *
-     * @param actionEvent A button click event.
+     * @param actionEvent The user clicks the cancel button.
      */
     public void handleCancelLogin(ActionEvent actionEvent)
     {

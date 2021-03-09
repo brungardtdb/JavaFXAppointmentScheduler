@@ -1,18 +1,16 @@
 package app.UI.JavaFX.Controllers;
 
-import app.DataAccess.Interfaces.IContactData;
+import app.DataAccess.Interfaces.*;
 import app.UI.JavaFX.ViewHandlers.AppointmentViewHandler;
-import app.UserData.Models.AppointmentModel;
-import app.UserData.Models.ContactModel;
-import app.UserData.Models.CustomerModel;
+import app.UI.JavaFX.ViewHandlers.ReportViewHandler;
+import app.UserData.Models.*;
 import app.DataAccess.DataAccessFactory;
-import app.DataAccess.Interfaces.IAppointmentData;
-import app.DataAccess.Interfaces.ICustomerData;
 import app.DataLocalization.LocalizationService;
 import app.UI.JavaFX.AlertService;
 import app.UI.JavaFX.ViewHandlers.CustomerViewHandler;
 import app.Util.LoggingService;
 import app.Util.PropertiesService;
+import app.Util.ReportService;
 import app.Util.ValidationService;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -29,6 +27,7 @@ import javafx.util.Callback;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -46,6 +45,7 @@ public class MainController
     private AlertService alertService;
     private ValidationService validationService;
     private LoggingService loggingService;
+    private ReportService reportService;
     boolean allAppointments = true;
     boolean weeklyAppointments = false;
     boolean monthlyAppointments = false;
@@ -59,6 +59,9 @@ public class MainController
     @FXML Button addAppointment;
     @FXML Button modifyAppointment;
     @FXML Button deleteAppointment;
+    @FXML Button appointmentByTypeDate;
+    @FXML Button contactSchedule;
+    @FXML Button customersByCountry;
     @FXML Button exitForm;
     @FXML RadioButton sortByAll;
     @FXML RadioButton sortByWeek;
@@ -100,7 +103,8 @@ public class MainController
      */
     public void Initialize(PropertiesService propertiesService, LocalizationService localizationService,
                            DataAccessFactory dataAccessFactory, Locale locale, ZoneId zoneId,
-                           AlertService alertService, ValidationService validationService, LoggingService loggingService) throws Exception
+                           AlertService alertService, ValidationService validationService, LoggingService loggingService,
+                           ReportService reportService) throws Exception
     {
         this.propertiesService = propertiesService;
         this.localizationService = localizationService;
@@ -110,6 +114,7 @@ public class MainController
         this.alertService = alertService;
         this.validationService = validationService;
         this.loggingService = loggingService;
+        this.reportService = reportService;
 
         // Set up form
         formLabel.setText(this.localizationService.GetLocalizedMessage("appointmentmanagertitle", this.locale));
@@ -125,6 +130,10 @@ public class MainController
         sortByAll.setText(this.localizationService.GetLocalizedMessage("all", this.locale));
         sortByWeek.setText(this.localizationService.GetLocalizedMessage("weekly", this.locale));
         sortByMonth.setText(this.localizationService.GetLocalizedMessage("monthly", this.locale));
+        appointmentByTypeDate.setText(this.localizationService.GetLocalizedMessage("appointmentTypeDate", this.locale));
+        contactSchedule.setText(this.localizationService.GetLocalizedMessage("contactSchedule", this.locale));
+        customersByCountry.setText(this.localizationService.GetLocalizedMessage("customerByCountry", this.locale));
+
 
         // Set up customer table
         customerIDColumn.setText(this.localizationService.GetLocalizedMessage("ID", this.locale));
@@ -429,17 +438,6 @@ public class MainController
             appointmentEndColumn.setCellValueFactory(new PropertyValueFactory<AppointmentModel, String>("localEndDate"));
             appointmentCustomerIDColumn.setCellValueFactory(new PropertyValueFactory<AppointmentModel, String>("customerID"));
 
-            /*
-            *  TableColumn<Person,String> firstNameCol = new TableColumn<Person,String>("First Name");
-                firstNameCol.setCellValueFactory(new Callback<CellDataFeatures<Person, String>, ObservableValue<String>>() {
-                public ObservableValue<String> call(CellDataFeatures<Person, String> p) {
-                        // p.getValue() returns the Person instance for a particular TableView row
-                        return p.getValue().firstNameProperty();
-     }
-  });
- }
-            * */
-
             appointmentTable.setItems(appointments);
             appointmentTable.getSelectionModel().clearSelection();
             appointmentTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -449,7 +447,6 @@ public class MainController
         {
             e.printStackTrace();
         }
-       
     }
 
     /**
@@ -474,7 +471,8 @@ public class MainController
      * Filters out appointments that aren't in the current week.
      *
      * I decided to use a stream and lambda expression here to make things
-     * a bit more concise, allowing me to return the filtered list in a single statement.
+     * a bit more concise, allowing me to return the appointments filtered by week
+     * in a single statement using a method from a validation class.
      *
      * @param appointments Appointments from database.
      * @return All appointments in the current week.
@@ -490,10 +488,11 @@ public class MainController
      * Filters out appointments that aren't in the current month.
      *
      * I decided to use a stream and lambda expression here to make things
-     * a bit more concise, allowing me to return the filtered list in a single statement.
+     * a bit more concise, allowing me to return the appointments filtered by month
+     * in a single statement using a method from a validation class.
      *
-     * @param appointments
-     * @return
+     * @param appointments Appointments from database.
+     * @return A the list of all appointments in the current month.
      */
     private ArrayList<AppointmentModel> FilterAppointmentsByMonth(ArrayList<AppointmentModel> appointments)
     {
@@ -556,6 +555,60 @@ public class MainController
     }
 
     /**
+     * Event handler for Appointment by Type and Date Report Button.
+     *
+     * @param actionEvent The user selects the button to display appointments by type and date.
+     * @throws Exception Java.io.FileNotFoundException.
+     */
+    public void displayAppTypeByDate(ActionEvent actionEvent) throws Exception
+    {
+        String title = this.localizationService.GetLocalizedMessage("appointmentTypeDate", this.locale);
+        IAppointmentData appointmentDataService = this.dataAccessFactory.GetAppointmentDataService();
+        List<AppointmentModel> allAppointments = appointmentDataService.GetAllAppointments();
+        String report = this.reportService.AppointmentsByTypeAndMonth(allAppointments);
+        ReportViewHandler reportViewHandler = new ReportViewHandler(title, report);
+        reportViewHandler.GetReportView();
+    }
+
+    /**
+     * Event handler for contact schedules.
+     *
+     * @param actionEvent The user selects the button to display the schedule for each contact.
+     * @throws Exception Java.io.FileNotFoundException.
+     */
+    public void displayContactSchedule(ActionEvent actionEvent) throws Exception
+    {
+        String title = this.localizationService.GetLocalizedMessage("contactSchedule", this.locale);
+        IAppointmentData appointmentDataService = this.dataAccessFactory.GetAppointmentDataService();
+        List<AppointmentModel> allAppointments = appointmentDataService.GetAllAppointments();
+        IContactData contactDataService = this.dataAccessFactory.GetContactDataService();
+        List<ContactModel> allContacts = contactDataService.GetAllContacts();
+        String report = this.reportService.GetContactSchedules(allAppointments, allContacts, this.localizationService, this.locale);
+        ReportViewHandler reportViewHandler = new ReportViewHandler(title, report);
+        reportViewHandler.GetReportView();
+    }
+
+    /**
+     * Event handler for report displaying customers by country.
+     *
+     * @param actionEvent The user selects the button to display customers by their country.
+     * @throws Exception Java.io.FileNotFoundException.
+     */
+    public void displayCustomersByCountry(ActionEvent actionEvent) throws Exception
+    {
+        String title = this.localizationService.GetLocalizedMessage("customerByCountry", this.locale);
+        ICustomerData customerDataService = this.dataAccessFactory.GetCustomerDataService();
+        List<CustomerModel> allCustomers = customerDataService.GetAllCustomers();
+        IDivisionData divisionDataService = dataAccessFactory.GetDivisionDataService();
+        List<DivisionModel> allDivisions = divisionDataService.GetAllDivisions();
+        ICountryData countryDataService = dataAccessFactory.GetCountryDataService();
+        List<CountryModel> allCountries = countryDataService.GetAllCountries();
+        String report = this.reportService.GetCustomerByCountry(allCustomers, allDivisions, allCountries);
+        ReportViewHandler reportViewHandler = new ReportViewHandler(title, report);
+        reportViewHandler.GetReportView();
+    }
+
+    /**
      * Closes the application.
      *
      * @param actionEvent The user selects the exit button.
@@ -564,20 +617,5 @@ public class MainController
     {
         Stage stage = (Stage) exitForm.getScene().getWindow();
         stage.close();
-    }
-
-    public void displayAppTypeByDate(ActionEvent actionEvent)
-    {
-
-    }
-
-    public void displayContactSchedule(ActionEvent actionEvent)
-    {
-
-    }
-
-    public void displayCustomersByCountry(ActionEvent actionEvent)
-    {
-
     }
 }
