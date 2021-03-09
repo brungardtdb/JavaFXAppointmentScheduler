@@ -20,33 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="efe0c708-2113-4624-bce0-8eddac3d9022" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/ReportController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/ViewHandlers/ReportViewHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/Views/ReportView.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/AppointmentScheduleApp/app/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/AppointmentScheduleApp/app/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/DataAccess/MYSQLDataServices/AppointmentDataService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/DataAccess/MYSQLDataServices/AppointmentDataService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/DataAccess/MYSQLDataServices/CountryDataService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/DataAccess/MYSQLDataServices/CountryDataService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/DataAccess/MYSQLDataServices/CustomerDataService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/DataAccess/MYSQLDataServices/CustomerDataService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/DataAccess/MYSQLDataServices/DataConnectionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/DataAccess/MYSQLDataServices/DataConnectionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/DataAccess/MYSQLDataServices/UserDataService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/DataAccess/MYSQLDataServices/UserDataService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/AppointmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/AppointmentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/ViewHandlers/LogInViewHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/ViewHandlers/LogInViewHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/ViewHandlers/MainViewHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/ViewHandlers/MainViewHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/Views/AppointmentView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/Views/AppointmentView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/Views/CustomerView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/Views/CustomerView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/Views/LoginView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/Views/LoginView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/Views/MainView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/Views/MainView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/UI/UIFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/UIFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/Util/LoggingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Util/LoggingService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/Util/PropertiesService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Util/PropertiesService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/Util/ReportService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Util/ReportService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/Util/ValidationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Util/ValidationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/res/en.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/res/en.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/res/fr.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/res/fr.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
