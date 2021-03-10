@@ -236,6 +236,7 @@ public class MainController
             }
             catch (Exception ex)
             {
+                this.dataAccessFactory.DisconnectFromDB();
                 loggingService.LogException("MainController", "handleDeleteCustomer", ex);
                 titleAndHeader = this.localizationService.GetLocalizedMessage("exceptonwarning", this.locale);
                 String message = this.localizationService.GetLocalizedMessage("exceptionwarningmessage", this.locale);
@@ -331,6 +332,7 @@ public class MainController
             }
             catch (Exception ex)
             {
+                this.dataAccessFactory.DisconnectFromDB();
                 loggingService.LogException("MainController", "handleDeleteAppointment", ex);
                 titleAndHeader = this.localizationService.GetLocalizedMessage("exceptonwarning", this.locale);
                 String message = this.localizationService.GetLocalizedMessage("exceptionwarningmessage", this.locale);
@@ -651,9 +653,11 @@ public class MainController
      * Closes the application.
      *
      * @param actionEvent The user selects the exit button.
+     * @throws Exception
      */
-    @FXML void handleExitForm(ActionEvent actionEvent)
+    @FXML void handleExitForm(ActionEvent actionEvent) throws Exception
     {
+        this.dataAccessFactory.DisconnectFromDB();
         Stage stage = (Stage) exitForm.getScene().getWindow();
         stage.close();
     }

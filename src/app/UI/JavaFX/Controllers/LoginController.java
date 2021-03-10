@@ -137,10 +137,8 @@ public class LoginController
 
         // show error message for invalid logins
         if (!loginIsValid)
-        {
-           ShowLogInError();
            return;
-        }
+
 
         // check for upcoming appointments
         String titleAndHeader = "";

@@ -438,6 +438,7 @@ public class AppointmentController
         }
         catch (Exception ex)
         {
+            this.dataAccessFactory.DisconnectFromDB();
             loggingService.LogException("AppointmentController", "handleSaveAppointment", ex);
             titleAndHeader = this.localizationService.GetLocalizedMessage("exceptonwarning", this.locale);
             message = this.localizationService.GetLocalizedMessage("exceptionwarningmessage", this.locale);

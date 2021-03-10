@@ -20,12 +20,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="efe0c708-2113-4624-bce0-8eddac3d9022" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/AppointmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/AppointmentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/CustomerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/UserData/Models/AppointmentModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UserData/Models/AppointmentModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/Util/ReportService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Util/ReportService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/Util/ValidationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Util/ValidationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/Validation/ValidationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/Validation/ValidationTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
