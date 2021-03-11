@@ -381,6 +381,7 @@ public class CustomerController
         }
         catch (Exception ex)
         {
+            this.dataAccessFactory.DisconnectFromDB();
             loggingService.LogException("CustomerController", "handleSaveCustomer", ex);
             String titleAndHeader = this.localizationService.GetLocalizedMessage("exceptonwarning", this.locale);
             String message = this.localizationService.GetLocalizedMessage("exceptionwarningmessage", this.locale);

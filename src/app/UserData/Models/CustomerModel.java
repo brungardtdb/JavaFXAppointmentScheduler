@@ -12,7 +12,7 @@ public class CustomerModel
     /**
      * Setter for customer ID.
      *
-     * @param id
+     * @param id The customer ID
      */
     public void setCustomerID(int id) { this.customerID = id; }
 
@@ -28,7 +28,7 @@ public class CustomerModel
     /**
      * Setter for customer name.
      *
-     * @param customerName
+     * @param customerName The customer name.
      */
     public void setCustomerName(String customerName) { this.customerName = customerName; }
 
@@ -44,7 +44,7 @@ public class CustomerModel
     /**
      * Setter for customer address.
      *
-     * @param customerAddress
+     * @param customerAddress The customer address.
      */
     public void setCustomerAddress(String customerAddress) { this.customerAddress = customerAddress; }
 
@@ -60,7 +60,7 @@ public class CustomerModel
     /**
      * Setter for customer postal code.
      *
-     * @param postalCode
+     * @param postalCode The customer postal code.
      */
     public void setPostalCode(String postalCode) { this.postalCode = postalCode; }
 
@@ -76,7 +76,7 @@ public class CustomerModel
     /**
      * Setter for customer phone number.
      *
-     * @param phoneNumber
+     * @param phoneNumber The customer phone number.
      */
     public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
 
@@ -92,7 +92,7 @@ public class CustomerModel
     /**
      * Adds appointment to customer appointments.
      *
-     * @param appointment
+     * @param appointment A new customer appointment.
      */
     public void addAppointment(AppointmentModel appointment) { appointments.add(appointment); }
 
@@ -101,10 +101,9 @@ public class CustomerModel
      * The lambda in this method filters the list, searching for a matching ID.
      * I decided to use the stream and lambda combination in this method
      * because it was more succinct and readable, avoiding the need to loop through
-     * the collection with some kind of foreach loop. I'm pretty comfortable with Linq in C#
-     * and this syntax is a close match for Java.
+     * the collection with some kind of foreach loop.
      *
-     * @param id
+     * @param id The appointment ID.
      * @return Returns appointment or null if no appointment is found.
      */
     public AppointmentModel getAppointment(int id)
@@ -128,7 +127,7 @@ public class CustomerModel
      * Another example of a lambda being more succinct, here I was able to remove
      * the appointment using a single line instead of an if statement nested inside of a loop.
      *
-     * @param id
+     * @param id The appointment ID.
      */
     public void removeAppointment(int id)
     {
@@ -150,7 +149,7 @@ public class CustomerModel
     /**
      * Setter for division ID.
      *
-     * @param ID
+     * @param ID The division ID.
      */
     public void setDivisionID(int ID)
     {

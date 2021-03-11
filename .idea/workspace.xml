@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="ANALYZE_TEST_SOURCES" value="false" />
+  </component>
   <component name="BranchesTreeState">
     <expand>
       <path>
@@ -20,7 +23,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="efe0c708-2113-4624-bce0-8eddac3d9022" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/UI/JavaFX/ViewHandlers/MainViewHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UI/JavaFX/ViewHandlers/MainViewHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/UserData/Models/CustomerModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/UserData/Models/CustomerModel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +63,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../JavaFX/openjfx-11.0.2_windows-x64_bin-sdk/javafx-sdk-11.0.2/JavaFx" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../WGU_SOFTWARE_II" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.14550781" />
     <property name="project.structure.side.proportion" value="0.29548565" />
@@ -143,8 +152,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
-        <item itemvalue="JUnit.UserDataServiceTest" />
         <item itemvalue="JUnit.ValidationTest" />
+        <item itemvalue="JUnit.UserDataServiceTest" />
         <item itemvalue="JUnit.All in AppointmentScheduleApp (2)" />
         <item itemvalue="JUnit.LocalizationServiceTest" />
       </list>
@@ -183,12 +192,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/app/UI/JavaFX/Controllers/LoginController.java</url>
-          <line>111</line>
+          <line>112</line>
           <option name="timeStamp" value="26" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/app/UI/JavaFX/ViewHandlers/MainViewHandler.java</url>
-          <line>55</line>
+          <line>56</line>
           <option name="timeStamp" value="29" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">

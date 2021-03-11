@@ -44,6 +44,7 @@ public class MainViewHandler
      * @param alertService AlertService dependency.
      * @param validationService ValidationService dependency.
      * @param loggingService Application logging utility.
+     * @param reportService Application report utility.
      */
     public MainViewHandler(PropertiesService propertiesService, LocalizationService localizationService,
                            DataAccessFactory dataAccessFactory, Locale locale, ZoneId zoneId,

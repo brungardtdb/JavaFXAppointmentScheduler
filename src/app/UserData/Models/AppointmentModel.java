@@ -5,6 +5,7 @@ import net.bytebuddy.asm.Advice;
 
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
@@ -159,11 +160,11 @@ public class AppointmentModel
     /**
      * Method for getting start date in local date time.
      *
-     * @return Local date time of start date.
+     * @return Local formatted date time of start date.
      */
-    public LocalDateTime getLocalStartDate()
+    public String getFormattedLocalStartDate()
     {
-        return this.startDate.toLocalDateTime();
+        return GetFormattedDateTime(this.startDate.toLocalDateTime());
     }
 
     private ZonedDateTime endDate;
@@ -187,10 +188,25 @@ public class AppointmentModel
     /**
      * Method for getting end date in local date time.
      *
-     * @return End date in local date time.
+     * @return End date in formatted local date time.
      */
-    public LocalDateTime getLocalEndDate()
+    public String getFormattedLocalEndDate()
     {
-        return this.endDate.toLocalDateTime();
+        return GetFormattedDateTime(this.endDate.toLocalDateTime());
+    }
+
+    /**
+     * Utility for formatting local date and time into a readable string for displaying to the end user.
+     *
+     * @param localDateTime The local date time for the appointment.
+     * @return A formatted string containing the local date and time in a readable format.
+     */
+    private String GetFormattedDateTime(LocalDateTime localDateTime)
+    {
+        String formattedDateTime = "";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/YYYY");
+        formattedDateTime += formatter.format(localDateTime.toLocalDate());
+        formattedDateTime += " " + localDateTime.toLocalTime();
+        return formattedDateTime;
     }
 }

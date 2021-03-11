@@ -91,27 +91,7 @@ public class ValidationService
     {
         ZoneId zoneId = ZoneId.of("US/Eastern");
         ZonedDateTime userZoneDateTime = ZonedDateTime.ofInstant(zonedDateTime.toInstant(), zoneId);
-        boolean output = (IsWeekDay(userZoneDateTime) && InBusinessHours(userZoneDateTime.getHour()));
-        return output;
-    }
-
-    /**
-     * Determines if ZonedDateTime is inside of a weekday.
-     *
-     * @param zonedDateTime ZonedDateTime to validate.
-     * @return True if inside a weekday, otherwise false.
-     */
-    private boolean IsWeekDay(ZonedDateTime zonedDateTime)
-    {
-        switch (zonedDateTime.getDayOfWeek())
-        {
-            case MONDAY:
-            case TUESDAY:
-            case WEDNESDAY:
-            case THURSDAY:
-            case FRIDAY: return true;
-            default: return false;
-        }
+        return InBusinessHours(userZoneDateTime.getHour());
     }
 
     /**
