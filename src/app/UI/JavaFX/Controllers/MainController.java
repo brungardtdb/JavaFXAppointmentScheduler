@@ -101,6 +101,8 @@ public class MainController
      * @param zoneId User's ZoneId.
      * @param alertService AlertService dependency.
      * @param validationService ValidationService dependency.
+     * @param loggingService LoggingService dependency.
+     * @param reportService ReportService dependency.
      * @throws Exception
      */
     public void Initialize(PropertiesService propertiesService, LocalizationService localizationService,

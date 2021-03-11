@@ -70,6 +70,7 @@ public class LoginController
      * @param alertService The service for providing custom alerts to the user.
      * @param validationService The service for performing business logic validations.
      * @param loggingService Application logging utility.
+     * @param reportService Application report utility.
      * @throws Exception Java.io.FileNotFoundException.
      */
     public void Initialize(PropertiesService propertiesService, LocalizationService localizationService,
